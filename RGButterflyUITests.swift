@@ -38,8 +38,9 @@ class RGButterflyUITests: XCTestCase {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Main ViewController UI Testing
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // (1) Photo Library
+    // (1) Photo Library and Take Photo (top left icon)
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     // Select an image from the Photo Library
     //
     func testPhotoLibrarySelection() {
@@ -65,5 +66,55 @@ class RGButterflyUITests: XCTestCase {
         app.navigationBars["RGButterfly"].buttons["photo 2"].tap()
         app.alerts["Photo Selection"].buttons["My Photo Library"].tap()
         app.navigationBars["Photos"].buttons["Cancel"].tap()
+    }
+    
+    // Take Photo (should give alerts error in the simulator)
+    //
+    func testTakePhoto() {
+        let app = XCUIApplication()
+        app.navigationBars["RGButterfly"].buttons["photo 2"].tap()
+        
+        let takeNewPhotoButton = app.alerts["Photo Selection"].buttons["Take New Photo"]
+        takeNewPhotoButton.tap()
+    }
+
+    
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // (2) Search (top right)
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Simple tap
+    //
+    func testSearchTap() {
+        
+        let app = XCUIApplication()
+        let rgbutterflyNavigationBar = app.navigationBars["RGButterfly"]
+        let searchButton = rgbutterflyNavigationBar.buttons["search"]
+        searchButton.tap()
+        
+    }
+    
+    // Test on iPhone
+    //
+    func testSearchAssociation() {
+        
+    }
+    
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // (3) Switch Listings
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Need to expand to Full Listing and Cancel
+    //
+    func testSwitchListings() {
+        let app = XCUIApplication()
+        let button = app.toolbars.children(matching: .button).element(boundBy: 1)
+        button.tap()
+        
+        let colorsListingsAlert = app.alerts["Colors Listings"]
+        colorsListingsAlert.buttons["Match Associations"].tap()
+        button.tap()
+        colorsListingsAlert.buttons["Subjective Colors"].tap()
+        button.tap()
+        colorsListingsAlert.buttons["Keywords Listing"].tap()
+        button.tap()
     }
 }
