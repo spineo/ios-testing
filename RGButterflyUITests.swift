@@ -47,8 +47,6 @@ class RGButterflyUITests: XCTestCase {
         let app = XCUIApplication()
         app.navigationBars["RGButterfly"].buttons["photo 2"].tap()
         app.alerts["Photo Selection"].buttons["My Photo Library"].tap()
-        app.tables.buttons["Moments"].tap()
-        app.collectionViews["PhotosGridView"].cells["Photo, Landscape, March 12, 2011, 7:17 PM"].tap()
     }
     
     // Cancel button at the 'Photo Selection' popup
@@ -90,7 +88,6 @@ class RGButterflyUITests: XCTestCase {
         let rgbutterflyNavigationBar = app.navigationBars["RGButterfly"]
         let searchButton = rgbutterflyNavigationBar.buttons["search"]
         searchButton.tap()
-        
     }
     
     // Test on iPhone
@@ -116,5 +113,61 @@ class RGButterflyUITests: XCTestCase {
         button.tap()
         colorsListingsAlert.buttons["Keywords Listing"].tap()
         button.tap()
+    }
+    
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // (4) Settings
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // About and Feedback: Go into the sections and scroll
+    //
+    func testSettingsAboutAndFeedBack() {
+        let app = XCUIApplication()
+        app.toolbars.children(matching: .button).element(boundBy: 2).tap()
+        
+        let tablesQuery = app.tables
+        tablesQuery.staticTexts["About this App"].tap()
+        
+        let textView = app.children(matching: .window).element(boundBy: 0).children(matching: .other).element(boundBy: 2).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .textView).element
+        textView.tap()
+        app.navigationBars["About this App"].buttons["arrow"].tap()
+        tablesQuery.staticTexts["Disclaimer"].tap()
+        textView.swipeUp()
+        app.navigationBars["Disclaimer"].buttons["arrow"].tap()
+        tablesQuery.staticTexts["Provide Feedback"].tap()
+        
+        // Send email
+        //
+        app.navigationBars["Feedback"].buttons["Send"].tap()
+    }
+    
+    // Test the Database Switches, Save, and Exit
+    //
+    func testSettingsDatabaseSwitches() {
+        XCUIDevice.shared().orientation = .portrait
+        
+        let app = XCUIApplication()
+        app.toolbars.buttons["settings"].tap()
+        
+        let tablesQuery = app.tables
+        tablesQuery.switches["Perform Check for Database Update"].tap()
+        tablesQuery.switches["Do Not Check for Database Update"].tap()
+        tablesQuery.switches["Do Not Perform a Force Database Update"].tap()
+        tablesQuery.switches["Update Even if Versions are Unchanged"].tap()
+        
+        let rgbutterflySettingsNavigationBar = app.navigationBars["RGButterfly Settings"]
+        rgbutterflySettingsNavigationBar.buttons["Save"].tap()
+        rgbutterflySettingsNavigationBar.buttons["arrow"].tap()
+    }
+    
+    // Test the scroll and Read-Only/Alert Switches
+    //
+    func testSettingsIntoViewAndScroll() {
+        XCUIDevice.shared().orientation = .portrait
+        
+        let app = XCUIApplication()
+        app.toolbars.buttons["settings"].tap()
+        app.tables.staticTexts["Read-Only Settings"].swipeUp()
+        app.navigationBars["RGButterfly Settings"].buttons["arrow"].tap()
+        
     }
 }
