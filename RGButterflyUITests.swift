@@ -170,4 +170,68 @@ class RGButterflyUITests: XCTestCase {
         app.navigationBars["RGButterfly Settings"].buttons["arrow"].tap()
         
     }
+    
+    func testSettingsReadOnlySwitches() {
+        XCUIDevice.shared().orientation = .portrait
+        
+        let app = XCUIApplication()
+        app.toolbars.buttons["settings"].tap()
+        
+        let tablesQuery2 = app.tables
+        let paintSwatchesSetToReadWriteSwitch = tablesQuery2.switches["Paint Swatches set to Read/Write"]
+        paintSwatchesSetToReadWriteSwitch.tap()
+
+        
+        let tablesQuery = tablesQuery2
+        tablesQuery.switches["Paint Swatches set to Read-Only"].tap()
+        tablesQuery.staticTexts["Paint Swatches set to Read/Write"].tap()
+        tablesQuery.switches["Mix Associations set to Read/Write"].press(forDuration: 0.6);
+        tablesQuery.switches["Mix Associations set to Read-Only"].tap()
+    }
+    
+    // Revisit: Passes with below configuration but got pop-up 'Xcode UI Testing - Timestamped Event Matching Error' 
+    // when starting test by incrementing the 'TAP AREA SETTINGS' stepper
+    //
+    func testSettingsSteppersAndButtons() {
+        XCUIDevice.shared().orientation = .portrait
+        
+        let app = XCUIApplication()
+        app.toolbars.buttons["settings"].tap()
+        
+        let tablesQuery = app.tables
+        tablesQuery.cells.containing(.staticText, identifier:"Change the Size/Shape of the Tap Areas").buttons["Decrement"].tap()
+        tablesQuery.cells.containing(.staticText, identifier:"Change the Size/Shape of the Tap Areas").buttons["Decrement"].tap()
+        
+        let changeTheDefaultNumberOfTapAreaMatchesCellsQuery = tablesQuery.cells.containing(.staticText, identifier:"Change the Default Number of Tap Area matches")
+        changeTheDefaultNumberOfTapAreaMatchesCellsQuery.buttons["Increment"].tap()
+        changeTheDefaultNumberOfTapAreaMatchesCellsQuery.buttons["Decrement"].tap()
+        
+        let tablesQuery2 = tablesQuery
+        tablesQuery2.buttons["Circle"].tap()
+        tablesQuery2.buttons["Rect"].tap()
+    }
+    
+    // Failing: 'Xcode UI Testing - Timestamped Event Matching Error'
+    //
+    func testRGBAndPaintToggle() {
+        
+    }
+    
+    // To be implemented
+    //
+    func testSettingsMixRatiosInput() {
+
+    }
+    
+    // To be re-implemented (Fails)
+    //
+    func testAlertsSwitch() {
+        XCUIDevice.shared().orientation = .portrait
+        XCUIApplication().toolbars.buttons["settings"].tap()
+        
+        let tablesQuery = XCUIApplication().tables
+        tablesQuery.switches["Turn On All Alerts"].tap()
+        tablesQuery.switches["Turn Off All Alerts"].tap()
+        
+    }
 }
