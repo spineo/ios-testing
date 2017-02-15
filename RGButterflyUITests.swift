@@ -234,4 +234,40 @@ class RGButterflyUITests: XCTestCase {
         tablesQuery.switches["Turn Off All Alerts"].tap()
         
     }
+    
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // (5) Full Listing Categories: All, Ref, Gen (Main VC)
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Needs Completion: Unable to capture, probably needs pre-filter to limit number
+    //
+    func testFullListingCategories() {
+        let app = XCUIApplication()
+        app.toolbars.children(matching: .button).element(boundBy: 1).tap()
+        app.alerts["Colors Listings"].buttons["Full Colors Listings"].tap()
+    }
+    
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // (6) Main VC to Children VCs
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    // From 'Color Associations' listing to Associations
+    //
+    func testMainToAssoc() {
+        XCUIDevice.shared().orientation = .portrait
+        XCUIApplication().tables.staticTexts["Alizarin Crimson Hue + Burnt Siena"].tap()
+    }
+    
+    // Switch to 'Keywords' listing and then to Swatch Detail
+    //
+    func testKeywordsToDetail() {
+        XCUIDevice.shared().orientation = .portrait
+        
+        let app = XCUIApplication()
+        app.toolbars.buttons["text list 1"].tap()
+        app.alerts["Colors Listings"].buttons["Keywords Listing"].tap()
+        
+        let cell = app.tables.children(matching: .cell).element(boundBy: 1)
+        cell.staticTexts["Burnt Umber + Cadmium Yellow Medium 1:3"].tap()
+        cell.children(matching: .textField).element.tap()
+    }
 }
