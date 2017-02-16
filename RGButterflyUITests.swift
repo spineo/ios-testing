@@ -250,14 +250,34 @@ class RGButterflyUITests: XCTestCase {
     // (6) Main VC to Children VCs
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
-    // From 'Color Associations' listing to Associations
+    // From 'Color Associations' listing segue to Mix Association
     //
-    func testMainToAssoc() {
+    func testColorsListToMixAssoc() {
         XCUIDevice.shared().orientation = .portrait
         XCUIApplication().tables.staticTexts["Alizarin Crimson Hue + Burnt Siena"].tap()
     }
     
-    // Switch to 'Keywords' listing and then to Swatch Detail
+    // Switch to Match Listing and segue to Match Association
+    // Failing: 'Xcode UI Testing - Timestamped Event Matching Error' on segue to Match Association
+    //
+    func testMatchListToMatchAssoc() {
+        XCUIDevice.shared().orientation = .portrait
+        let app = XCUIApplication()
+        app.toolbars.buttons["text list 1"].tap()
+        app.alerts["Colors Listings"].buttons["Match Associations"].tap()
+    }
+    
+    // Switch to Full Colors Listing and segue to Detail
+    //
+    func testFullListToDetail() {
+        XCUIDevice.shared().orientation = .portrait
+        
+        let app = XCUIApplication()
+        app.toolbars.buttons["text list 1"].tap()
+        app.alerts["Colors Listings"].buttons["Full Colors Listings"].tap()
+    }
+    
+    // Switch to Keywords Listing and segue to Swatch Detail
     //
     func testKeywordsToDetail() {
         XCUIDevice.shared().orientation = .portrait
@@ -269,5 +289,31 @@ class RGButterflyUITests: XCTestCase {
         let cell = app.tables.children(matching: .cell).element(boundBy: 1)
         cell.staticTexts["Burnt Umber + Cadmium Yellow Medium 1:3"].tap()
         cell.children(matching: .textField).element.tap()
+    }
+    
+    // Switch to Subjective Colors, uncollapse one element, and segue to Detail
+    //
+    func testSubjColorsUncollapseToDetail() {
+        XCUIDevice.shared().orientation = .portrait
+        
+        let app = XCUIApplication()
+        app.toolbars.buttons["text list 1"].tap()
+        app.alerts["Colors Listings"].buttons["Subjective Colors"].tap()
+        
+        let tablesQuery = app.tables
+        tablesQuery.otherElements.containing(.button, identifier:"Other").buttons["arrow down"].tap()
+        tablesQuery.staticTexts["Cobalt Blue + Titanium White 1:9"].tap()
+        
+    }
+    
+    // Switch to Subjective Colors and Uncollapse all
+    //
+    func testSubjColorsUncollapseAll() {
+        XCUIDevice.shared().orientation = .portrait
+        
+        let app = XCUIApplication()
+        app.toolbars.buttons["text list 1"].tap()
+        app.alerts["Colors Listings"].buttons["Subjective Colors"].tap()
+        app.navigationBars["RGButterfly"].buttons["search"].tap()
     }
 }
