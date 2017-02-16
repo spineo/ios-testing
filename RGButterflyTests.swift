@@ -22,6 +22,8 @@ class RGButterflyTests: XCTestCase {
         super.tearDown()
     }
     
+    // InitViewController Unit Tests
+    //
     func testInitViewController() {
         var initVC: InitViewController = InitViewController()
         initVC = storyboard.instantiateInitialViewController() as! InitViewController
@@ -32,6 +34,26 @@ class RGButterflyTests: XCTestCase {
         XCTAssertNotNil(view)
     }
     
+    // Main ViewController Unit Tests
+    //
+    func testViewController() {
+        var mainVC: ViewController = ViewController()
+        mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        
+        // The navigation items and toolbar item title and buttons
+        //
+        var imageLibButton: UIBarButtonItem = UIBarButtonItem()
+        imageLibButton = mainVC.navigationItem.leftBarButtonItem!
+        XCTAssertTrue(imageLibButton.tag == Int(IMAGELIB_BTN_TAG))
+        
+        // Starts Nil
+        //
+        XCTAssertNil(mainVC.navigationItem.rightBarButtonItem)
+        
+        var title: String = String()
+        title = mainVC.navigationItem.title!
+        XCTAssertNotNil(title)
+    }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
