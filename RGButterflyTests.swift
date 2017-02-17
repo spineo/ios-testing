@@ -5,7 +5,6 @@
 //  Created by Stuart Pineo on 2/9/17.
 //  Copyright © 2017 Stuart Pineo. All rights reserved.
 //
-
 import XCTest
 
 // Basic Tests
