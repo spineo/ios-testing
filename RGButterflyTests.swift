@@ -8,10 +8,15 @@
 
 import XCTest
 
-
+// Basic Tests
+// View Controllers exists
+// Controller/NavController titles are not null
+// Buttons have the correct tags
+//
 class RGButterflyTests: XCTestCase {
   
     let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+    var topLeftButton: UIBarButtonItem = UIBarButtonItem()
     
     override func setUp() {
         super.setUp()
@@ -32,6 +37,7 @@ class RGButterflyTests: XCTestCase {
         view = initVC.view
         
         XCTAssertNotNil(view)
+        XCTAssertNotNil(initVC.title!)
     }
     
     // Main ViewController Unit Tests
@@ -42,17 +48,80 @@ class RGButterflyTests: XCTestCase {
         
         // The navigation items and toolbar item title and buttons
         //
-        var imageLibButton: UIBarButtonItem = UIBarButtonItem()
-        imageLibButton = mainVC.navigationItem.leftBarButtonItem!
-        XCTAssertTrue(imageLibButton.tag == Int(IMAGELIB_BTN_TAG))
+        topLeftButton = mainVC.navigationItem.leftBarButtonItem!
         
-        // Starts Nil
-        //
+        XCTAssertTrue(topLeftButton.tag == Int(IMAGELIB_BTN_TAG))
         XCTAssertNil(mainVC.navigationItem.rightBarButtonItem)
+        XCTAssertNotNil(mainVC.navigationItem.title!)
+    }
+    
+    // SettingsTableViewController
+    //
+    func testSettingsViewController() {
+        var settingsTVC: SettingsTableViewController = SettingsTableViewController()
+        settingsTVC = storyboard.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
         
-        var title: String = String()
-        title = mainVC.navigationItem.title!
-        XCTAssertNotNil(title)
+        topLeftButton = settingsTVC.navigationItem.leftBarButtonItem!
+
+        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertNotNil(settingsTVC.navigationItem.title!)
+    }
+    
+    // AboutViewController
+    //
+    func testAboutViewController() {
+        var aboutVC: AboutViewController = AboutViewController()
+        aboutVC = storyboard.instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
+
+        topLeftButton = aboutVC.navigationItem.leftBarButtonItem!
+        
+        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertNotNil(aboutVC.navigationItem.title!)
+    }
+    
+    // AboutViewController
+    //
+    func testDisclaimerViewController() {
+        var disclaimerVC: DisclaimerViewController = DisclaimerViewController()
+        disclaimerVC = storyboard.instantiateViewController(withIdentifier: "DisclaimerViewController") as! DisclaimerViewController
+        
+        topLeftButton = disclaimerVC.navigationItem.leftBarButtonItem!
+
+        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertNotNil(disclaimerVC.navigationItem.title!)
+    }
+    
+    // PickerViewController
+    //
+    func testPickerViewController() {
+        var pickerVC: PickerViewController = PickerViewController()
+        pickerVC = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
+
+        XCTAssertNotNil(pickerVC.title!)
+    }
+    
+    // UIImageViewController
+    //
+    func testUIImageViewController() {
+        var imageVC: UIImageViewController = UIImageViewController()
+        imageVC = storyboard.instantiateViewController(withIdentifier: "UIImageViewController") as! UIImageViewController
+        
+        topLeftButton = imageVC.navigationItem.leftBarButtonItem!
+        
+        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertNotNil(imageVC.navigationItem.title!)
+    }
+    
+    // MatchTableViewController
+    //
+    func testMatchTableViewController() {
+        var matchTVC: MatchTableViewController = MatchTableViewController()
+        matchTVC = storyboard.instantiateViewController(withIdentifier: "MatchTableViewController") as! MatchTableViewController
+        
+        topLeftButton = matchTVC.navigationItem.leftBarButtonItem!
+        
+        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertNotNil(matchTVC.navigationItem.title!)
     }
     
     func testPerformanceExample() {
