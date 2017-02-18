@@ -15,10 +15,16 @@ import XCTest
 //
 class RGButterflyTests: XCTestCase {
   
-    let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-    var view: UIView = UIView()
-    var tableView: UITableView = UITableView()
+    let storyboard   : UIStoryboard    = UIStoryboard(name: "Main", bundle: Bundle.main)
+    var view         : UIView          = UIView()
+    var tableView    : UITableView     = UITableView()
+    var tableViewCell: UITableViewCell = UITableViewCell()
+    var scrollView   : UIScrollView    = UIScrollView()
+    var imageView    : UIImageView     = UIImageView()
     var topLeftButton: UIBarButtonItem = UIBarButtonItem()
+    
+    var hasView      : Bool = Bool()
+    var subviewsCount: Int  = Int()
 
     override func setUp() {
         super.setUp()
@@ -67,10 +73,9 @@ class RGButterflyTests: XCTestCase {
         var settingsTVC: SettingsTableViewController = SettingsTableViewController()
         settingsTVC = storyboard.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
         
-        tableView     = settingsTVC.tableView
         topLeftButton = settingsTVC.navigationItem.leftBarButtonItem!
         
-        XCTAssertNotNil(tableView)
+        XCTAssertNotNil(settingsTVC.tableView)
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(settingsTVC.navigationItem.title!)
         XCTAssertNotNil(settingsTVC.title!)
@@ -84,6 +89,7 @@ class RGButterflyTests: XCTestCase {
 
         topLeftButton = aboutVC.navigationItem.leftBarButtonItem!
         
+        XCTAssertNotNil(aboutVC.view)
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(aboutVC.navigationItem.title!)
         XCTAssertNotNil(aboutVC.title!)
@@ -97,6 +103,7 @@ class RGButterflyTests: XCTestCase {
         
         topLeftButton = disclaimerVC.navigationItem.leftBarButtonItem!
 
+        XCTAssertNotNil(disclaimerVC.view)
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(disclaimerVC.navigationItem.title!)
         XCTAssertNotNil(disclaimerVC.title!)
@@ -108,6 +115,7 @@ class RGButterflyTests: XCTestCase {
         var pickerVC: PickerViewController = PickerViewController()
         pickerVC = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
 
+        XCTAssertNotNil(pickerVC.view)
         XCTAssertNotNil(pickerVC.title!)
     }
     
@@ -117,8 +125,16 @@ class RGButterflyTests: XCTestCase {
         var imageVC: UIImageViewController = UIImageViewController()
         imageVC = storyboard.instantiateViewController(withIdentifier: "UIImageViewController") as! UIImageViewController
         
+        view          = imageVC.view
+        tableView     = view.viewWithTag(Int(TABLEVIEW_TAG))      as! UITableView
+        scrollView    = view.viewWithTag(Int(SCROLLVIEW_TAG))     as! UIScrollView
+        imageView     = view.viewWithTag(Int(IMAGEVIEW_TAG))      as! UIImageView
         topLeftButton = imageVC.navigationItem.leftBarButtonItem!
-        
+
+        XCTAssertNotNil(view)
+        XCTAssertNotNil(tableView)
+        XCTAssertNotNil(scrollView)
+        XCTAssertNotNil(imageView)
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(imageVC.navigationItem.title!)
         XCTAssertNotNil(imageVC.title!)
