@@ -9,14 +9,17 @@ import XCTest
 
 // Basic Tests
 // View Controllers exists
-// Controller/NavController titles are not null
-// Buttons have the correct tags
+// Controller Views/Subviews exist
+// ViewController and/or NavController titles are not null
+// Buttons exist and have the correct tags
 //
 class RGButterflyTests: XCTestCase {
   
     let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+    var view: UIView = UIView()
+    var tableView: UITableView = UITableView()
     var topLeftButton: UIBarButtonItem = UIBarButtonItem()
-    
+
     override func setUp() {
         super.setUp()
     }
@@ -32,7 +35,6 @@ class RGButterflyTests: XCTestCase {
         var initVC: InitViewController = InitViewController()
         initVC = storyboard.instantiateInitialViewController() as! InitViewController
         
-        var view: UIView = UIView()
         view = initVC.view
         
         XCTAssertNotNil(view)
@@ -45,13 +47,18 @@ class RGButterflyTests: XCTestCase {
         var mainVC: ViewController = ViewController()
         mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
         
-        // The navigation items and toolbar item title and buttons
+        // The views, navigation items and toolbar item title and buttons
         //
+        view          = mainVC.view
+        tableView     = view.subviews.first as! UITableView
         topLeftButton = mainVC.navigationItem.leftBarButtonItem!
-        
+
+        XCTAssertNotNil(view)
+        XCTAssertNotNil(tableView)
         XCTAssertTrue(topLeftButton.tag == Int(IMAGELIB_BTN_TAG))
-        XCTAssertNil(mainVC.navigationItem.rightBarButtonItem)
+        XCTAssertNotNil(mainVC.navigationItem.rightBarButtonItem)
         XCTAssertNotNil(mainVC.navigationItem.title!)
+        XCTAssertNotNil(mainVC.title!)
     }
     
     // SettingsTableViewController
@@ -60,10 +67,13 @@ class RGButterflyTests: XCTestCase {
         var settingsTVC: SettingsTableViewController = SettingsTableViewController()
         settingsTVC = storyboard.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
         
+        tableView     = settingsTVC.tableView
         topLeftButton = settingsTVC.navigationItem.leftBarButtonItem!
-
+        
+        XCTAssertNotNil(tableView)
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(settingsTVC.navigationItem.title!)
+        XCTAssertNotNil(settingsTVC.title!)
     }
     
     // AboutViewController
@@ -76,6 +86,7 @@ class RGButterflyTests: XCTestCase {
         
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(aboutVC.navigationItem.title!)
+        XCTAssertNotNil(aboutVC.title!)
     }
     
     // AboutViewController
@@ -88,6 +99,7 @@ class RGButterflyTests: XCTestCase {
 
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(disclaimerVC.navigationItem.title!)
+        XCTAssertNotNil(disclaimerVC.title!)
     }
     
     // PickerViewController
@@ -109,6 +121,7 @@ class RGButterflyTests: XCTestCase {
         
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(imageVC.navigationItem.title!)
+        XCTAssertNotNil(imageVC.title!)
     }
     
     // MatchTableViewController
@@ -121,6 +134,7 @@ class RGButterflyTests: XCTestCase {
         
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(matchTVC.navigationItem.title!)
+        XCTAssertNotNil(matchTVC.title!)
     }
     
     // AssocTableViewController
@@ -133,6 +147,7 @@ class RGButterflyTests: XCTestCase {
         
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(assocTVC.navigationItem.title!)
+        XCTAssertNotNil(assocTVC.title!)
     }
     
     // SwatchDetailTableViewController
@@ -145,6 +160,7 @@ class RGButterflyTests: XCTestCase {
         
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(detailTVC.navigationItem.title!)
+        XCTAssertNotNil(detailTVC.title!)
     }
     
     // AddMixTableViewController
@@ -157,6 +173,7 @@ class RGButterflyTests: XCTestCase {
         
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(addMixTVC.navigationItem.title!)
+        XCTAssertNotNil(addMixTVC.title!)
     }
     
     func testPerformanceExample() {
