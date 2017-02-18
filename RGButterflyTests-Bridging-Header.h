@@ -11,3 +11,6 @@
 #import "PickerViewController.h"
 #import "UIImageViewController.h"
 #import "MatchTableViewController.h"
+#import "AssocTableViewController.h"
+#import "SwatchDetailTableViewController.h"
+#import "AddMixTableViewController.h"

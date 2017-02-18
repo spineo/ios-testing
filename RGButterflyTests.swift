@@ -123,6 +123,42 @@ class RGButterflyTests: XCTestCase {
         XCTAssertNotNil(matchTVC.navigationItem.title!)
     }
     
+    // AssocTableViewController
+    //
+    func testAssocTableViewController() {
+        var assocTVC: AssocTableViewController = AssocTableViewController()
+        assocTVC = storyboard.instantiateViewController(withIdentifier: "AssocTableViewController") as! AssocTableViewController
+        
+        topLeftButton = assocTVC.navigationItem.leftBarButtonItem!
+        
+        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertNotNil(assocTVC.navigationItem.title!)
+    }
+    
+    // SwatchDetailTableViewController
+    //
+    func testSwatchDetailTableViewController() {
+        var detailTVC: SwatchDetailTableViewController = SwatchDetailTableViewController()
+        detailTVC = storyboard.instantiateViewController(withIdentifier: "SwatchDetailTableViewController") as! SwatchDetailTableViewController
+        
+        topLeftButton = detailTVC.navigationItem.leftBarButtonItem!
+        
+        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertNotNil(detailTVC.navigationItem.title!)
+    }
+    
+    // AddMixTableViewController
+    //
+    func testAddMixTableViewController() {
+        var addMixTVC: AddMixTableViewController = AddMixTableViewController()
+        addMixTVC = storyboard.instantiateViewController(withIdentifier: "AddMixTableViewController") as! AddMixTableViewController
+        
+        topLeftButton = addMixTVC.navigationItem.leftBarButtonItem!
+        
+        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertNotNil(addMixTVC.navigationItem.title!)
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
