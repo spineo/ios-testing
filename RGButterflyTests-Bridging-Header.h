@@ -10,7 +10,11 @@
 #import "DisclaimerViewController.h"
 #import "PickerViewController.h"
 #import "UIImageViewController.h"
+
 #import "MatchTableViewController.h"
+#import "PaintSwatches.h"
+#import "TapArea.h"
+
 #import "AssocTableViewController.h"
 #import "SwatchDetailTableViewController.h"
 #import "AddMixTableViewController.h"

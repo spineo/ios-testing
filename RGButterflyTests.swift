@@ -126,9 +126,9 @@ class RGButterflyTests: XCTestCase {
         imageVC = storyboard.instantiateViewController(withIdentifier: "UIImageViewController") as! UIImageViewController
         
         view          = imageVC.view
-        tableView     = view.viewWithTag(Int(TABLEVIEW_TAG))      as! UITableView
-        scrollView    = view.viewWithTag(Int(SCROLLVIEW_TAG))     as! UIScrollView
-        imageView     = view.viewWithTag(Int(IMAGEVIEW_TAG))      as! UIImageView
+        tableView     = view.viewWithTag(Int(TABLEVIEW_TAG))  as! UITableView
+        scrollView    = view.viewWithTag(Int(SCROLLVIEW_TAG)) as! UIScrollView
+        imageView     = view.viewWithTag(Int(IMAGEVIEW_TAG))  as! UIImageView
         topLeftButton = imageVC.navigationItem.leftBarButtonItem!
 
         XCTAssertNotNil(view)
@@ -145,9 +145,11 @@ class RGButterflyTests: XCTestCase {
     func testMatchTableViewController() {
         var matchTVC: MatchTableViewController = MatchTableViewController()
         matchTVC = storyboard.instantiateViewController(withIdentifier: "MatchTableViewController") as! MatchTableViewController
-        
+
+        tableView     = matchTVC.tableView
         topLeftButton = matchTVC.navigationItem.leftBarButtonItem!
-        
+
+        XCTAssertNotNil(tableView)
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(matchTVC.navigationItem.title!)
         XCTAssertNotNil(matchTVC.title!)
@@ -159,8 +161,10 @@ class RGButterflyTests: XCTestCase {
         var assocTVC: AssocTableViewController = AssocTableViewController()
         assocTVC = storyboard.instantiateViewController(withIdentifier: "AssocTableViewController") as! AssocTableViewController
         
+        tableView     = assocTVC.tableView
         topLeftButton = assocTVC.navigationItem.leftBarButtonItem!
         
+        XCTAssertNotNil(tableView)
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(assocTVC.navigationItem.title!)
         XCTAssertNotNil(assocTVC.title!)
@@ -172,8 +176,10 @@ class RGButterflyTests: XCTestCase {
         var detailTVC: SwatchDetailTableViewController = SwatchDetailTableViewController()
         detailTVC = storyboard.instantiateViewController(withIdentifier: "SwatchDetailTableViewController") as! SwatchDetailTableViewController
         
+        tableView     = detailTVC.tableView
         topLeftButton = detailTVC.navigationItem.leftBarButtonItem!
         
+        XCTAssertNotNil(tableView)
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(detailTVC.navigationItem.title!)
         XCTAssertNotNil(detailTVC.title!)
@@ -185,8 +191,10 @@ class RGButterflyTests: XCTestCase {
         var addMixTVC: AddMixTableViewController = AddMixTableViewController()
         addMixTVC = storyboard.instantiateViewController(withIdentifier: "AddMixTableViewController") as! AddMixTableViewController
         
+        tableView     = addMixTVC.tableView
         topLeftButton = addMixTVC.navigationItem.leftBarButtonItem!
         
+        XCTAssertNotNil(tableView)
         XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(addMixTVC.navigationItem.title!)
         XCTAssertNotNil(addMixTVC.title!)
@@ -198,5 +206,4 @@ class RGButterflyTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    
 }
