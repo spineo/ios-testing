@@ -15,13 +15,19 @@ import XCTest
 //
 class RGButterflyTests: XCTestCase {
   
-    let storyboard   : UIStoryboard    = UIStoryboard(name: "Main", bundle: Bundle.main)
-    var view         : UIView          = UIView()
-    var tableView    : UITableView     = UITableView()
-    var tableViewCell: UITableViewCell = UITableViewCell()
-    var scrollView   : UIScrollView    = UIScrollView()
-    var imageView    : UIImageView     = UIImageView()
-    var topLeftButton: UIBarButtonItem = UIBarButtonItem()
+    let storyboard    : UIStoryboard    = UIStoryboard(name: "Main", bundle: Bundle.main)
+    var view          : UIView          = UIView()
+    var tableView     : UITableView     = UITableView()
+    var tableViewCell : UITableViewCell = UITableViewCell()
+    var scrollView    : UIScrollView    = UIScrollView()
+    var imageView     : UIImageView     = UIImageView()
+    var topLeftButton : UIBarButtonItem = UIBarButtonItem()
+    var topRightButton: UIBarButtonItem = UIBarButtonItem()
+    var toolbar       : UIToolbar       = UIToolbar()
+    var toolbarItems  : [AnyObject]     = [AnyObject]()
+    var homeButton    : UIBarButtonItem = UIBarButtonItem()
+    var listingButton : UIBarButtonItem = UIBarButtonItem()
+    var settingsButton: UIBarButtonItem = UIBarButtonItem()
     
     var hasView      : Bool = Bool()
     var subviewsCount: Int  = Int()
@@ -55,16 +61,39 @@ class RGButterflyTests: XCTestCase {
         
         // The views, navigation items and toolbar item title and buttons
         //
-        view          = mainVC.view
-        tableView     = view.subviews.first as! UITableView
-        topLeftButton = mainVC.navigationItem.leftBarButtonItem!
+        view           = mainVC.view
+        tableView      = view.subviews.first as! UITableView
+        topLeftButton  = mainVC.navigationItem.leftBarButtonItem!
+        topRightButton = mainVC.navigationItem.rightBarButtonItem!
 
+        toolbarItems    = mainVC.toolbarItems!
+        settingsButton   = toolbarItems.popLast() as! UIBarButtonItem
+        toolbarItems.popLast()
+        listingButton    = toolbarItems.popLast() as! UIBarButtonItem
+        toolbarItems.popLast()
+        homeButton       = toolbarItems.popLast() as! UIBarButtonItem
+        
+
+        // Views
+        //
         XCTAssertNotNil(view)
         XCTAssertNotNil(tableView)
+        
+        // Nav Buttons
+        //
         XCTAssertTrue(topLeftButton.tag == Int(IMAGELIB_BTN_TAG))
-        XCTAssertNotNil(mainVC.navigationItem.rightBarButtonItem)
+        XCTAssertTrue(topRightButton.tag == Int(SEARCH_BTN_TAG))
+        
+        // Titles
+        //
         XCTAssertNotNil(mainVC.navigationItem.title!)
         XCTAssertNotNil(mainVC.title!)
+        
+        // Toolbar Items
+        //
+        XCTAssertTrue(homeButton.tag     == Int(HOME_BTN_TAG))
+        XCTAssertTrue(listingButton.tag  == Int(LISTING_BTN_TAG))
+        XCTAssertTrue(settingsButton.tag == Int(SETTINGS_BTN_TAG))
     }
     
     // SettingsTableViewController
