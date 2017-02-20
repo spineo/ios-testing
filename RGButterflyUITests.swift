@@ -220,7 +220,6 @@ class RGButterflyUITests: XCTestCase {
     // To be implemented
     //
     func testSettingsMixRatiosInput() {
-
     }
     
     // To be re-implemented (Fails)
@@ -294,26 +293,32 @@ class RGButterflyUITests: XCTestCase {
     // Switch to Subjective Colors, uncollapse one element, and segue to Detail
     //
     func testSubjColorsUncollapseToDetail() {
-        XCUIDevice.shared().orientation = .portrait
-        
-        let app = XCUIApplication()
-        app.toolbars.buttons["text list 1"].tap()
-        app.alerts["Colors Listings"].buttons["Subjective Colors"].tap()
-        
-        let tablesQuery = app.tables
-        tablesQuery.otherElements.containing(.button, identifier:"Other").buttons["arrow down"].tap()
-        tablesQuery.staticTexts["Cobalt Blue + Titanium White 1:9"].tap()
+
         
     }
     
     // Switch to Subjective Colors and Uncollapse all
     //
     func testSubjColorsUncollapseAll() {
+    }
+    
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // (7) Main View Controller to Match Association (currently fails)
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    func testViewControllerToMatchAssoc() {
+    }
+    
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // (7) Main View Controller to Color Association and Swatch Detail (currently fails)
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    func testViewControllerToColorAssocToDetail() {
         XCUIDevice.shared().orientation = .portrait
+        XCUIDevice.shared().orientation = .portrait
+        XCUIApplication().children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.tap()
+
+
         
-        let app = XCUIApplication()
-        app.toolbars.buttons["text list 1"].tap()
-        app.alerts["Colors Listings"].buttons["Subjective Colors"].tap()
-        app.navigationBars["RGButterfly"].buttons["search"].tap()
     }
 }
