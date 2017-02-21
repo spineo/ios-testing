@@ -14,7 +14,8 @@ import XCTest
 // ViewController and/or NavController titles are not null
 // Buttons exist and have the correct tags
 // Toolbar Items Buttons are in the correct order, with correct tag
-// Check for buttons state
+// Check for buttons enabled state
+// Test for segues
 //
 class RGButterflyTests: XCTestCase {
   
@@ -67,6 +68,12 @@ class RGButterflyTests: XCTestCase {
         
         XCTAssertNotNil(view)
         XCTAssertNotNil(initVC.title!)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:initVC)
+        XCTAssertEqual(identifiers.count, 1, "Segue count")
+        XCTAssertTrue(identifiers.contains("InitViewControllerSegue"), "Segue identifier should exist.")
     }
     
     // Main ViewController Unit Tests
@@ -96,8 +103,8 @@ class RGButterflyTests: XCTestCase {
         
         // Nav Buttons
         //
-        XCTAssertTrue(imageLibButton.tag == Int(IMAGELIB_BTN_TAG))
-        XCTAssertTrue(searchButton.tag   == Int(SEARCH_BTN_TAG))
+        XCTAssertEqual(imageLibButton.tag, Int(IMAGELIB_BTN_TAG))
+        XCTAssertEqual(searchButton.tag, Int(SEARCH_BTN_TAG))
         
         // Titles
         //
@@ -119,6 +126,10 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(homeButton.isEnabled)
         XCTAssertTrue(listingButton.isEnabled)
         XCTAssertTrue(settingsButton.isEnabled)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:mainVC)
     }
     
     // SettingsTableViewController
@@ -393,6 +404,13 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(backButton.isEnabled)
         XCTAssertTrue(searchButton.isEnabled)
         XCTAssertFalse(doneButton.isEnabled)
+    }
+    
+    // Segues check
+    //
+    func segues(ofViewController viewController: UIViewController) -> [String] {
+        let identifiers = (viewController.value(forKey: "storyboardSegueTemplates") as? [AnyObject])?.flatMap({ $0.value(forKey: "identifier") as? String }) ?? []
+        return identifiers
     }
     
     func testPerformanceExample() {
