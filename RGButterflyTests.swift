@@ -97,7 +97,7 @@ class RGButterflyTests: XCTestCase {
         // Nav Buttons
         //
         XCTAssertTrue(imageLibButton.tag == Int(IMAGELIB_BTN_TAG))
-        XCTAssertTrue(searchButton.tag == Int(SEARCH_BTN_TAG))
+        XCTAssertTrue(searchButton.tag   == Int(SEARCH_BTN_TAG))
         
         // Titles
         //
@@ -253,6 +253,14 @@ class RGButterflyTests: XCTestCase {
         // Check enabled
         //
         XCTAssertTrue(backButton.isEnabled)
+        XCTAssertTrue(homeButton.isEnabled)
+        XCTAssertFalse(decrAlgButton.isEnabled)
+        XCTAssertTrue(matchButton.isEnabled)
+        XCTAssertFalse(incrAlgButton.isEnabled)
+        XCTAssertFalse(viewButton.isEnabled)
+        XCTAssertFalse(decrTapButton.isEnabled)
+        XCTAssertFalse(incrTapButton.isEnabled)
+        XCTAssertTrue(settingsButton.isEnabled)
     }
     
     // MatchTableViewController
@@ -295,6 +303,12 @@ class RGButterflyTests: XCTestCase {
         // Check enabled
         //
         XCTAssertTrue(backButton.isEnabled)
+        XCTAssertTrue(rgbButton.isEnabled)
+        XCTAssertTrue(decrAlgButton.isEnabled)
+        XCTAssertTrue(matchButton.isEnabled)
+        XCTAssertTrue(incrAlgButton.isEnabled)
+        XCTAssertFalse(decrTapButton.isEnabled)
+        XCTAssertFalse(incrTapButton.isEnabled)
     }
     
     // AssocTableViewController
@@ -325,6 +339,8 @@ class RGButterflyTests: XCTestCase {
         // Check enabled
         //
         XCTAssertTrue(backButton.isEnabled)
+        XCTAssertTrue(homeButton.isEnabled)
+        XCTAssertTrue(settingsButton.isEnabled)
     }
     
     // SwatchDetailTableViewController
@@ -353,15 +369,17 @@ class RGButterflyTests: XCTestCase {
         var addMixTVC: AddMixTableViewController = AddMixTableViewController()
         addMixTVC = storyboard.instantiateViewController(withIdentifier: "AddMixTableViewController") as! AddMixTableViewController
         
-        tableView  = addMixTVC.tableView
-        backButton = addMixTVC.navigationItem.leftBarButtonItem!
+        tableView    = addMixTVC.tableView
+        backButton   = addMixTVC.navigationItem.leftBarButtonItem!
+        searchButton = addMixTVC.navigationItem.rightBarButtonItem!
         
         toolbarItems  = addMixTVC.toolbarItems!
         flexibleSpace = toolbarItems.removeFirst() as! UIBarButtonItem
         doneButton    = toolbarItems.removeFirst() as! UIBarButtonItem
         
         XCTAssertNotNil(tableView)
-        XCTAssertTrue(backButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertTrue(backButton.tag   == Int(BACK_BTN_TAG))
+        XCTAssertTrue(searchButton.tag == Int(SEARCH_BTN_TAG))
         XCTAssertNotNil(addMixTVC.navigationItem.title!)
         XCTAssertNotNil(addMixTVC.title!)
         
@@ -373,6 +391,8 @@ class RGButterflyTests: XCTestCase {
         // Check enabled
         //
         XCTAssertTrue(backButton.isEnabled)
+        XCTAssertTrue(searchButton.isEnabled)
+        XCTAssertFalse(doneButton.isEnabled)
     }
     
     func testPerformanceExample() {
