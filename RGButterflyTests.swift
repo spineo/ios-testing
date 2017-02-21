@@ -14,6 +14,7 @@ import XCTest
 // ViewController and/or NavController titles are not null
 // Buttons exist and have the correct tags
 // Toolbar Items Buttons are in the correct order, with correct tag
+// Check for buttons state
 //
 class RGButterflyTests: XCTestCase {
   
@@ -23,8 +24,9 @@ class RGButterflyTests: XCTestCase {
     var tableViewCell : UITableViewCell = UITableViewCell()
     var scrollView    : UIScrollView    = UIScrollView()
     var imageView     : UIImageView     = UIImageView()
-    var topLeftButton : UIBarButtonItem = UIBarButtonItem()
-    var topRightButton: UIBarButtonItem = UIBarButtonItem()
+    var imageLibButton: UIBarButtonItem = UIBarButtonItem()
+    var backButton    : UIBarButtonItem = UIBarButtonItem()
+    var searchButton  : UIBarButtonItem = UIBarButtonItem()
     var toolbar       : UIToolbar       = UIToolbar()
     var toolbarItems  : [AnyObject]     = [AnyObject]()
     var homeButton    : UIBarButtonItem = UIBarButtonItem()
@@ -77,8 +79,8 @@ class RGButterflyTests: XCTestCase {
         //
         view           = mainVC.view
         tableView      = view.subviews.first as! UITableView
-        topLeftButton  = mainVC.navigationItem.leftBarButtonItem!
-        topRightButton = mainVC.navigationItem.rightBarButtonItem!
+        imageLibButton = mainVC.navigationItem.leftBarButtonItem!
+        searchButton   = mainVC.navigationItem.rightBarButtonItem!
 
         toolbarItems    = mainVC.toolbarItems!
         homeButton      = toolbarItems.removeFirst() as! UIBarButtonItem
@@ -94,8 +96,8 @@ class RGButterflyTests: XCTestCase {
         
         // Nav Buttons
         //
-        XCTAssertTrue(topLeftButton.tag == Int(IMAGELIB_BTN_TAG))
-        XCTAssertTrue(topRightButton.tag == Int(SEARCH_BTN_TAG))
+        XCTAssertTrue(imageLibButton.tag == Int(IMAGELIB_BTN_TAG))
+        XCTAssertTrue(searchButton.tag == Int(SEARCH_BTN_TAG))
         
         // Titles
         //
@@ -105,10 +107,18 @@ class RGButterflyTests: XCTestCase {
         // Toolbar Items
         //
         XCTAssertTrue(homeButton.tag     == Int(HOME_BTN_TAG))
-        XCTAssertTrue(flexibleSpace.tag == Int(FLEXIBLE_SPACE_TAG))
+        XCTAssertTrue(flexibleSpace.tag  == Int(FLEXIBLE_SPACE_TAG))
         XCTAssertTrue(listingButton.tag  == Int(LISTING_BTN_TAG))
         XCTAssertTrue(flexibleSpace2.tag == Int(FLEXIBLE_SPACE_TAG))
         XCTAssertTrue(settingsButton.tag == Int(SETTINGS_BTN_TAG))
+        
+        // Check enabled
+        //
+        XCTAssertTrue(searchButton.isEnabled)
+        XCTAssertTrue(imageLibButton.isEnabled)
+        XCTAssertTrue(homeButton.isEnabled)
+        XCTAssertTrue(listingButton.isEnabled)
+        XCTAssertTrue(settingsButton.isEnabled)
     }
     
     // SettingsTableViewController
@@ -117,7 +127,7 @@ class RGButterflyTests: XCTestCase {
         var settingsTVC: SettingsTableViewController = SettingsTableViewController()
         settingsTVC = storyboard.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
         
-        topLeftButton = settingsTVC.navigationItem.leftBarButtonItem!
+        backButton = settingsTVC.navigationItem.leftBarButtonItem!
         
         toolbarItems    = settingsTVC.toolbarItems!
         homeButton      = toolbarItems.removeFirst() as! UIBarButtonItem
@@ -125,7 +135,7 @@ class RGButterflyTests: XCTestCase {
         settingsButton  = toolbarItems.removeFirst() as! UIBarButtonItem
         
         XCTAssertNotNil(settingsTVC.tableView)
-        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertTrue(backButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(settingsTVC.navigationItem.title!)
         XCTAssertNotNil(settingsTVC.title!)
         
@@ -134,6 +144,12 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(homeButton.tag     == Int(HOME_BTN_TAG))
         XCTAssertTrue(flexibleSpace.tag == Int(FLEXIBLE_SPACE_TAG))
         XCTAssertTrue(settingsButton.tag == Int(SETTINGS_BTN_TAG))
+        
+        // Check enabled
+        //
+        XCTAssertTrue(backButton.isEnabled)
+        XCTAssertTrue(homeButton.isEnabled)
+        XCTAssertTrue(settingsButton.isEnabled)
     }
     
     // AboutViewController
@@ -142,12 +158,16 @@ class RGButterflyTests: XCTestCase {
         var aboutVC: AboutViewController = AboutViewController()
         aboutVC = storyboard.instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
 
-        topLeftButton = aboutVC.navigationItem.leftBarButtonItem!
+        backButton = aboutVC.navigationItem.leftBarButtonItem!
         
         XCTAssertNotNil(aboutVC.view)
-        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertTrue(backButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(aboutVC.navigationItem.title!)
         XCTAssertNotNil(aboutVC.title!)
+        
+        // Check enabled
+        //
+        XCTAssertTrue(backButton.isEnabled)
     }
     
     // DisclaimerViewController
@@ -156,12 +176,16 @@ class RGButterflyTests: XCTestCase {
         var disclaimerVC: DisclaimerViewController = DisclaimerViewController()
         disclaimerVC = storyboard.instantiateViewController(withIdentifier: "DisclaimerViewController") as! DisclaimerViewController
         
-        topLeftButton = disclaimerVC.navigationItem.leftBarButtonItem!
+        backButton = disclaimerVC.navigationItem.leftBarButtonItem!
 
         XCTAssertNotNil(disclaimerVC.view)
-        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertTrue(backButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(disclaimerVC.navigationItem.title!)
         XCTAssertNotNil(disclaimerVC.title!)
+        
+        // Check enabled
+        //
+        XCTAssertTrue(backButton.isEnabled)
     }
     
     // PickerViewController
@@ -169,9 +193,16 @@ class RGButterflyTests: XCTestCase {
     func testPickerViewController() {
         var pickerVC: PickerViewController = PickerViewController()
         pickerVC = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
+        
+        backButton = pickerVC.navigationItem.leftBarButtonItem!
 
         XCTAssertNotNil(pickerVC.view)
         XCTAssertNotNil(pickerVC.title!)
+        XCTAssertTrue(backButton.tag == Int(BACK_BTN_TAG))
+        
+        // Check enabled
+        //
+        XCTAssertTrue(backButton.isEnabled)
     }
     
     // UIImageViewController
@@ -184,7 +215,7 @@ class RGButterflyTests: XCTestCase {
         tableView       = view.viewWithTag(Int(TABLEVIEW_TAG))  as! UITableView
         scrollView      = view.viewWithTag(Int(SCROLLVIEW_TAG)) as! UIScrollView
         imageView       = view.viewWithTag(Int(IMAGEVIEW_TAG))  as! UIImageView
-        topLeftButton   = imageVC.navigationItem.leftBarButtonItem!
+        backButton      = imageVC.navigationItem.leftBarButtonItem!
         
         toolbarItems    = imageVC.toolbarItems!
         homeButton      = toolbarItems.removeFirst() as! UIBarButtonItem
@@ -202,7 +233,7 @@ class RGButterflyTests: XCTestCase {
         XCTAssertNotNil(tableView)
         XCTAssertNotNil(scrollView)
         XCTAssertNotNil(imageView)
-        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertTrue(backButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(imageVC.navigationItem.title!)
         XCTAssertNotNil(imageVC.title!)
         
@@ -218,6 +249,10 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(decrTapButton.tag  == Int(DECR_TAP_BTN_TAG))
         XCTAssertTrue(incrTapButton.tag  == Int(INCR_TAP_BTN_TAG))
         XCTAssertTrue(settingsButton.tag == Int(SETTINGS_BTN_TAG))
+        
+        // Check enabled
+        //
+        XCTAssertTrue(backButton.isEnabled)
     }
     
     // MatchTableViewController
@@ -226,8 +261,8 @@ class RGButterflyTests: XCTestCase {
         var matchTVC: MatchTableViewController = MatchTableViewController()
         matchTVC = storyboard.instantiateViewController(withIdentifier: "MatchTableViewController") as! MatchTableViewController
 
-        tableView     = matchTVC.tableView
-        topLeftButton = matchTVC.navigationItem.leftBarButtonItem!
+        tableView  = matchTVC.tableView
+        backButton = matchTVC.navigationItem.leftBarButtonItem!
         
         toolbarItems    = matchTVC.toolbarItems!
         rgbButton       = toolbarItems.removeFirst() as! UIBarButtonItem
@@ -241,7 +276,7 @@ class RGButterflyTests: XCTestCase {
         incrTapButton   = toolbarItems.removeFirst() as! UIBarButtonItem
 
         XCTAssertNotNil(tableView)
-        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertTrue(backButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(matchTVC.navigationItem.title!)
         XCTAssertNotNil(matchTVC.title!)
         
@@ -256,6 +291,10 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(decrTapButton.tag  == Int(DECR_TAP_BTN_TAG))
         XCTAssertTrue(fixedSpace.tag     == Int(FIXED_SPACE_TAG))
         XCTAssertTrue(incrTapButton.tag  == Int(INCR_TAP_BTN_TAG))
+        
+        // Check enabled
+        //
+        XCTAssertTrue(backButton.isEnabled)
     }
     
     // AssocTableViewController
@@ -264,8 +303,8 @@ class RGButterflyTests: XCTestCase {
         var assocTVC: AssocTableViewController = AssocTableViewController()
         assocTVC = storyboard.instantiateViewController(withIdentifier: "AssocTableViewController") as! AssocTableViewController
         
-        tableView     = assocTVC.tableView
-        topLeftButton = assocTVC.navigationItem.leftBarButtonItem!
+        tableView  = assocTVC.tableView
+        backButton = assocTVC.navigationItem.leftBarButtonItem!
         
         toolbarItems    = assocTVC.toolbarItems!
         homeButton      = toolbarItems.removeFirst() as! UIBarButtonItem
@@ -273,7 +312,7 @@ class RGButterflyTests: XCTestCase {
         settingsButton  = toolbarItems.removeFirst() as! UIBarButtonItem
         
         XCTAssertNotNil(tableView)
-        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertTrue(backButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(assocTVC.navigationItem.title!)
         XCTAssertNotNil(assocTVC.title!)
         
@@ -282,6 +321,10 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(homeButton.tag     == Int(HOME_BTN_TAG))
         XCTAssertTrue(flexibleSpace.tag  == Int(FLEXIBLE_SPACE_TAG))
         XCTAssertTrue(settingsButton.tag == Int(SETTINGS_BTN_TAG))
+        
+        // Check enabled
+        //
+        XCTAssertTrue(backButton.isEnabled)
     }
     
     // SwatchDetailTableViewController
@@ -290,14 +333,18 @@ class RGButterflyTests: XCTestCase {
         var detailTVC: SwatchDetailTableViewController = SwatchDetailTableViewController()
         detailTVC = storyboard.instantiateViewController(withIdentifier: "SwatchDetailTableViewController") as! SwatchDetailTableViewController
         
-        tableView     = detailTVC.tableView
-        topLeftButton = detailTVC.navigationItem.leftBarButtonItem!
+        tableView  = detailTVC.tableView
+        backButton = detailTVC.navigationItem.leftBarButtonItem!
         
         XCTAssertNotNil(tableView)
-        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertTrue(backButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(detailTVC.navigationItem.title!)
         XCTAssertNotNil(detailTVC.title!)
         XCTAssertNil(detailTVC.toolbarItems)
+        
+        // Check enabled
+        //
+        XCTAssertTrue(backButton.isEnabled)
     }
     
     // AddMixTableViewController
@@ -306,15 +353,15 @@ class RGButterflyTests: XCTestCase {
         var addMixTVC: AddMixTableViewController = AddMixTableViewController()
         addMixTVC = storyboard.instantiateViewController(withIdentifier: "AddMixTableViewController") as! AddMixTableViewController
         
-        tableView     = addMixTVC.tableView
-        topLeftButton = addMixTVC.navigationItem.leftBarButtonItem!
+        tableView  = addMixTVC.tableView
+        backButton = addMixTVC.navigationItem.leftBarButtonItem!
         
         toolbarItems  = addMixTVC.toolbarItems!
         flexibleSpace = toolbarItems.removeFirst() as! UIBarButtonItem
         doneButton    = toolbarItems.removeFirst() as! UIBarButtonItem
         
         XCTAssertNotNil(tableView)
-        XCTAssertTrue(topLeftButton.tag == Int(BACK_BTN_TAG))
+        XCTAssertTrue(backButton.tag == Int(BACK_BTN_TAG))
         XCTAssertNotNil(addMixTVC.navigationItem.title!)
         XCTAssertNotNil(addMixTVC.title!)
         
@@ -322,6 +369,10 @@ class RGButterflyTests: XCTestCase {
         //
         XCTAssertTrue(flexibleSpace.tag  == Int(FLEXIBLE_SPACE_TAG))
         XCTAssertTrue(doneButton.tag     == Int(DONE_BTN_TAG))
+        
+        // Check enabled
+        //
+        XCTAssertTrue(backButton.isEnabled)
     }
     
     func testPerformanceExample() {
