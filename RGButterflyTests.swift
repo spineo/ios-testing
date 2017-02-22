@@ -130,6 +130,11 @@ class RGButterflyTests: XCTestCase {
         // Test for segues
         //
         let identifiers = segues(ofViewController:mainVC)
+        let seguesList = ["MainSwatchDetailSegue", "VCToAssocSegue", "ImagePickerSegue", "ImageSelectionSegue", "SettingsSegue"]
+        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
+        for segue in seguesList {
+            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
+        }
     }
     
     // SettingsTableViewController
@@ -161,6 +166,15 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(backButton.isEnabled)
         XCTAssertTrue(homeButton.isEnabled)
         XCTAssertTrue(settingsButton.isEnabled)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:settingsTVC)
+        let seguesList = ["AboutSegue", "DisclaimerSegue", "UnwindToViewControllerSegue"]
+        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
+        for segue in seguesList {
+            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
+        }
     }
     
     // AboutViewController
@@ -179,6 +193,11 @@ class RGButterflyTests: XCTestCase {
         // Check enabled
         //
         XCTAssertTrue(backButton.isEnabled)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:aboutVC)
+        XCTAssertEqual(identifiers.count, 0, "Segue count")
     }
     
     // DisclaimerViewController
@@ -197,6 +216,11 @@ class RGButterflyTests: XCTestCase {
         // Check enabled
         //
         XCTAssertTrue(backButton.isEnabled)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:disclaimerVC)
+        XCTAssertEqual(identifiers.count, 0, "Segue count")
     }
     
     // PickerViewController
@@ -214,6 +238,12 @@ class RGButterflyTests: XCTestCase {
         // Check enabled
         //
         XCTAssertTrue(backButton.isEnabled)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:pickerVC)
+        XCTAssertEqual(identifiers.count, 1, "Segue count")
+        XCTAssertTrue(identifiers.contains("ImageViewSegue"), "Segue identifier should exist.")
     }
     
     // UIImageViewController
@@ -272,6 +302,15 @@ class RGButterflyTests: XCTestCase {
         XCTAssertFalse(decrTapButton.isEnabled)
         XCTAssertFalse(incrTapButton.isEnabled)
         XCTAssertTrue(settingsButton.isEnabled)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:imageVC)
+        let seguesList = ["AssocTableViewSegue", "AssocToDetailSegue", "MatchTableViewSegue", "unwindToVCSegue", "SettingsSegue"]
+        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
+        for segue in seguesList {
+            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
+        }
     }
     
     // MatchTableViewController
@@ -320,6 +359,15 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(incrAlgButton.isEnabled)
         XCTAssertFalse(decrTapButton.isEnabled)
         XCTAssertFalse(incrTapButton.isEnabled)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:matchTVC)
+        let seguesList = ["unwindToImageViewFromMatch", "ShowSwatchDetailSegue", "unwindToImageViewFromMatch"]
+        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
+        for segue in seguesList {
+            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
+        }
     }
     
     // AssocTableViewController
@@ -352,6 +400,15 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(backButton.isEnabled)
         XCTAssertTrue(homeButton.isEnabled)
         XCTAssertTrue(settingsButton.isEnabled)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:assocTVC)
+        let seguesList = ["AddMixSegue", "AssocSwatchDetailSegue", "unwindToImageViewFromAssoc", "unwindToVC", "SettingsSegue"]
+        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
+        for segue in seguesList {
+            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
+        }
     }
     
     // SwatchDetailTableViewController
