@@ -71,9 +71,7 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:initVC)
-        XCTAssertEqual(identifiers.count, 1, "Segue count")
-        XCTAssertTrue(identifiers.contains("InitViewControllerSegue"), "Segue identifier should exist.")
+        runSeguesTests(viewController:initVC, seguesList:["InitViewControllerSegue"])
     }
     
     // Main ViewController Unit Tests
@@ -129,12 +127,7 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:mainVC)
-        let seguesList = ["MainSwatchDetailSegue", "VCToAssocSegue", "ImagePickerSegue", "ImageSelectionSegue", "SettingsSegue"]
-        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
-        for segue in seguesList {
-            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
-        }
+        runSeguesTests(viewController:mainVC, seguesList:["MainSwatchDetailSegue", "VCToAssocSegue", "ImagePickerSegue", "ImageSelectionSegue", "SettingsSegue"])
     }
     
     // SettingsTableViewController
@@ -169,12 +162,7 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:settingsTVC)
-        let seguesList = ["AboutSegue", "DisclaimerSegue", "UnwindToViewControllerSegue"]
-        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
-        for segue in seguesList {
-            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
-        }
+        runSeguesTests(viewController:settingsTVC, seguesList:["AboutSegue", "DisclaimerSegue", "UnwindToViewControllerSegue"])
     }
     
     // AboutViewController
@@ -196,7 +184,7 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:aboutVC)
+        let identifiers = getSeguesIdentifiers(viewController:aboutVC)
         XCTAssertEqual(identifiers.count, 0, "Segue count")
     }
     
@@ -219,7 +207,7 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:disclaimerVC)
+        let identifiers = getSeguesIdentifiers(viewController:disclaimerVC)
         XCTAssertEqual(identifiers.count, 0, "Segue count")
     }
     
@@ -241,9 +229,7 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:pickerVC)
-        XCTAssertEqual(identifiers.count, 1, "Segue count")
-        XCTAssertTrue(identifiers.contains("ImageViewSegue"), "Segue identifier should exist.")
+        runSeguesTests(viewController:pickerVC, seguesList:["ImageViewSegue"])
     }
     
     // UIImageViewController
@@ -305,12 +291,7 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:imageVC)
-        let seguesList = ["AssocTableViewSegue", "AssocToDetailSegue", "MatchTableViewSegue", "unwindToVCSegue", "SettingsSegue"]
-        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
-        for segue in seguesList {
-            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
-        }
+        runSeguesTests(viewController:imageVC, seguesList:["AssocTableViewSegue", "AssocToDetailSegue", "MatchTableViewSegue", "unwindToVCSegue", "SettingsSegue"])
     }
     
     // MatchTableViewController
@@ -362,12 +343,7 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:matchTVC)
-        let seguesList = ["unwindToImageViewFromMatch", "ShowSwatchDetailSegue", "unwindToImageViewFromMatch"]
-        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
-        for segue in seguesList {
-            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
-        }
+        runSeguesTests(viewController:matchTVC, seguesList:["unwindToImageViewFromMatch", "ShowSwatchDetailSegue", "unwindToImageViewFromMatch"])
     }
     
     // AssocTableViewController
@@ -403,12 +379,7 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:assocTVC)
-        let seguesList = ["AddMixSegue", "AssocSwatchDetailSegue", "unwindToImageViewFromAssoc", "unwindToVC", "SettingsSegue"]
-        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
-        for segue in seguesList {
-            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
-        }
+        runSeguesTests(viewController:assocTVC, seguesList:["AddMixSegue", "AssocSwatchDetailSegue", "unwindToImageViewFromAssoc", "unwindToVC", "SettingsSegue"])
     }
     
     // SwatchDetailTableViewController
@@ -432,12 +403,7 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:detailTVC)
-        let seguesList = ["DetailToAssocSegue", "DetailToRefSegue"]
-        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
-        for segue in seguesList {
-            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
-        }
+        runSeguesTests(viewController:detailTVC, seguesList:["DetailToAssocSegue", "DetailToRefSegue"])
     }
     
     // AddMixTableViewController
@@ -473,19 +439,30 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        let identifiers = segues(ofViewController:addMixTVC)
-        let seguesList = ["unwindToAssocFromAdd1", "unwindToAssocFromAdd2", "unwindToAssocFromAdd3"]
+        runSeguesTests(viewController:addMixTVC, seguesList:["unwindToAssocFromAdd1", "unwindToAssocFromAdd2", "unwindToAssocFromAdd3"])
+    }
+    
+    // Test for segues
+    //
+    func runSeguesTests(viewController: UIViewController, seguesList:[String]) {
+        let identifiers = getSeguesIdentifiers(viewController:viewController)
         XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
         for segue in seguesList {
             XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
         }
+        //XCTAssertTrue(identifiers.contains("InitViewControllerSegue"), "Segue identifier should exist.")
     }
+    
     
     // Segues check
     //
-    func segues(ofViewController viewController: UIViewController) -> [String] {
+    func getSeguesIdentifiers(viewController: UIViewController) -> [String] {
         let identifiers = (viewController.value(forKey: "storyboardSegueTemplates") as? [AnyObject])?.flatMap({ $0.value(forKey: "identifier") as? String }) ?? []
         return identifiers
+    }
+    
+    func segueTest(identifiers:[String]) {
+        XCTAssertTrue(identifiers.contains("InitViewControllerSegue"), "Segue identifier should exist.")
     }
     
     func testPerformanceExample() {
