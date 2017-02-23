@@ -429,6 +429,15 @@ class RGButterflyTests: XCTestCase {
         // Check enabled
         //
         XCTAssertTrue(backButton.isEnabled)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:detailTVC)
+        let seguesList = ["DetailToAssocSegue", "DetailToRefSegue"]
+        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
+        for segue in seguesList {
+            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
+        }
     }
     
     // AddMixTableViewController
@@ -461,6 +470,15 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(backButton.isEnabled)
         XCTAssertTrue(searchButton.isEnabled)
         XCTAssertFalse(doneButton.isEnabled)
+        
+        // Test for segues
+        //
+        let identifiers = segues(ofViewController:addMixTVC)
+        let seguesList = ["unwindToAssocFromAdd1", "unwindToAssocFromAdd2", "unwindToAssocFromAdd3"]
+        XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
+        for segue in seguesList {
+            XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
+        }
     }
     
     // Segues check
