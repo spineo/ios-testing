@@ -18,3 +18,5 @@
 #import "AssocTableViewController.h"
 #import "SwatchDetailTableViewController.h"
 #import "AddMixTableViewController.h"
+
+#import "UIImageViewNavigationController.h"

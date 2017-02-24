@@ -125,6 +125,12 @@ class RGButterflyTests: XCTestCase {
         // Test for segues
         //
         runSeguesTests(viewController:mainVC, seguesList:["MainSwatchDetailSegue", "VCToAssocSegue", "ImagePickerSegue", "ImageSelectionSegue", "SettingsSegue"])
+        
+        // Test the NavigationController
+        //
+        var mainNC: UINavigationController = UINavigationController()
+        mainNC = storyboard.instantiateViewController(withIdentifier: "NavViewController") as! UINavigationController
+        XCTAssertTrue(mainNC.topViewController is ViewController, "ViewController is embedded in UINavigationController")
     }
     
     // SettingsTableViewController
@@ -160,6 +166,12 @@ class RGButterflyTests: XCTestCase {
         // Test for segues
         //
         runSeguesTests(viewController:settingsTVC, seguesList:["AboutSegue", "DisclaimerSegue", "UnwindToViewControllerSegue"])
+        
+        // Test the NavigationController
+        //
+        var settingsNC: UINavigationController = UINavigationController()
+        settingsNC = storyboard.instantiateViewController(withIdentifier: "NavSettingsTableViewController") as! UINavigationController
+        XCTAssertTrue(settingsNC.topViewController is SettingsTableViewController, "SettingsTableViewController is embedded in UINavigationController")
     }
     
     // AboutViewController
@@ -183,6 +195,12 @@ class RGButterflyTests: XCTestCase {
         //
         let identifiers = getSeguesIdentifiers(viewController:aboutVC)
         XCTAssertEqual(identifiers.count, 0, "Segue count")
+        
+        // Test the NavigationController
+        //
+        var aboutNC: UINavigationController = UINavigationController()
+        aboutNC = storyboard.instantiateViewController(withIdentifier: "NavAboutViewController") as! UINavigationController
+        XCTAssertTrue(aboutNC.topViewController is AboutViewController, "AboutViewController is embedded in UINavigationController")
     }
     
     // DisclaimerViewController
@@ -206,6 +224,12 @@ class RGButterflyTests: XCTestCase {
         //
         let identifiers = getSeguesIdentifiers(viewController:disclaimerVC)
         XCTAssertEqual(identifiers.count, 0, "Segue count")
+        
+        // Test the NavigationController
+        //
+        var disclaimerNC: UINavigationController = UINavigationController()
+        disclaimerNC = storyboard.instantiateViewController(withIdentifier: "NavDisclaimerViewController") as! UINavigationController
+        XCTAssertTrue(disclaimerNC.topViewController is DisclaimerViewController, "DisclaimerViewController is embedded in UINavigationController")
     }
     
     // PickerViewController
@@ -289,6 +313,12 @@ class RGButterflyTests: XCTestCase {
         // Test for segues
         //
         runSeguesTests(viewController:imageVC, seguesList:["AssocTableViewSegue", "AssocToDetailSegue", "MatchTableViewSegue", "unwindToVCSegue", "SettingsSegue"])
+        
+        // Test the NavigationController
+        //
+        var imageNC: UIImageViewNavigationController = UIImageViewNavigationController()
+        imageNC = storyboard.instantiateViewController(withIdentifier: "NavUIImageViewController") as! UIImageViewNavigationController
+        XCTAssertTrue(imageNC.topViewController is UIImageViewController, "UIImageViewController is embedded in UIImageViewNavigationController")
     }
     
     // MatchTableViewController
@@ -341,6 +371,12 @@ class RGButterflyTests: XCTestCase {
         // Test for segues
         //
         runSeguesTests(viewController:matchTVC, seguesList:["unwindToImageViewFromMatch", "ShowSwatchDetailSegue", "unwindToImageViewFromMatch"])
+        
+        // Test the NavigationController
+        //
+        var matchNC: UINavigationController = UINavigationController()
+        matchNC = storyboard.instantiateViewController(withIdentifier: "NavMatchTableViewController") as! UINavigationController
+        XCTAssertTrue(matchNC.topViewController is MatchTableViewController, "MatchTableViewController is embedded in UINavigationController")
     }
     
     // AssocTableViewController
@@ -377,6 +413,12 @@ class RGButterflyTests: XCTestCase {
         // Test for segues
         //
         runSeguesTests(viewController:assocTVC, seguesList:["AddMixSegue", "AssocSwatchDetailSegue", "unwindToImageViewFromAssoc", "unwindToVC", "SettingsSegue"])
+        
+        // Test the NavigationController
+        //
+        var assocNC: UINavigationController = UINavigationController()
+        assocNC = storyboard.instantiateViewController(withIdentifier: "NavAssocTableViewController") as! UINavigationController
+        XCTAssertTrue(assocNC.topViewController is AssocTableViewController, "AssocTableViewController is embedded in UINavigationController")
     }
     
     // SwatchDetailTableViewController
@@ -401,6 +443,12 @@ class RGButterflyTests: XCTestCase {
         // Test for segues
         //
         runSeguesTests(viewController:detailTVC, seguesList:["DetailToAssocSegue", "DetailToRefSegue"])
+        
+        // Test the NavigationController
+        //
+        var detailNC: UINavigationController = UINavigationController()
+        detailNC = storyboard.instantiateViewController(withIdentifier: "NavSwatchDetailTableViewController") as! UINavigationController
+        XCTAssertTrue(detailNC.topViewController is SwatchDetailTableViewController, "SwatchDetailTableViewController is embedded in UINavigationController")
     }
     
     // AddMixTableViewController
@@ -437,6 +485,12 @@ class RGButterflyTests: XCTestCase {
         // Test for segues
         //
         runSeguesTests(viewController:addMixTVC, seguesList:["unwindToAssocFromAdd1", "unwindToAssocFromAdd2", "unwindToAssocFromAdd3"])
+        
+        // Test the NavigationController
+        //
+        var addMixNC: UINavigationController = UINavigationController()
+        addMixNC = storyboard.instantiateViewController(withIdentifier: "NavAddMixTableViewController") as! UINavigationController
+        XCTAssertTrue(addMixNC.topViewController is AddMixTableViewController, "AddMixTableViewController is embedded in UINavigationController")
     }
     
     // Test for segues
