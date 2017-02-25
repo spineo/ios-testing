@@ -15,7 +15,8 @@ import XCTest
 // Buttons exist and have the correct tags
 // Toolbar Items Buttons are in the correct order, with correct tag
 // Check for buttons enabled state
-// Test for segues
+// Segues identifiers
+// NavigationControllers identifiers
 //
 class RGButterflyTests: XCTestCase {
   
@@ -61,6 +62,9 @@ class RGButterflyTests: XCTestCase {
         var initVC: InitViewController = InitViewController()
         initVC = storyboard.instantiateInitialViewController() as! InitViewController
         
+        initVC.viewDidLoad()
+        initVC.viewDidAppear(true)
+        
         view = initVC.view
         
         XCTAssertNotNil(view)
@@ -69,6 +73,11 @@ class RGButterflyTests: XCTestCase {
         // Test for segues
         //
         runSeguesTests(viewController:initVC, seguesList:["InitViewControllerSegue"])
+        
+        // Check the update label
+        //
+        let updateLabel = view.viewWithTag(Int(INIT_LABEL_TAG)) as? UILabel
+        XCTAssertEqual(updateLabel?.text, "", "Initial empty value")
     }
     
     // Main ViewController Unit Tests
