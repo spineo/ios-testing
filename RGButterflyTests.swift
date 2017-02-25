@@ -74,10 +74,24 @@ class RGButterflyTests: XCTestCase {
         //
         runSeguesTests(viewController:initVC, seguesList:["InitViewControllerSegue"])
         
-        // Check the update label
+        // Test the background image (currently fails_
+        //
+        //XCTAssertEqual(view.backgroundColor, UIColor(patternImage: UIImage(named:BACKGROUND_IMAGE_TITLE)!))
+        
+        // Check the update label and spinner initial states
         //
         let updateLabel = view.viewWithTag(Int(INIT_LABEL_TAG)) as? UILabel
         XCTAssertEqual(updateLabel?.text, "", "Initial empty value")
+
+        let spinner     = view.viewWithTag(Int(INIT_SPINNER_TAG)) as? UIActivityIndicatorView
+        XCTAssert((spinner?.isAnimating)!, "Spinner active")
+
+        // Final state
+        //
+        initVC.viewWillDisappear(true)
+        XCTAssertFalse((spinner?.isAnimating)!, "Spinner inactive")
+        
+        // Need to invoke the UIAlertController actions (states for initVC.updateStat)
     }
     
     // Main ViewController Unit Tests
@@ -510,7 +524,6 @@ class RGButterflyTests: XCTestCase {
         for segue in seguesList {
             XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
         }
-        //XCTAssertTrue(identifiers.contains("InitViewControllerSegue"), "Segue identifier should exist.")
     }
     
     
