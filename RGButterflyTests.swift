@@ -64,11 +64,11 @@ class RGButterflyTests: XCTestCase {
         
         // Check the requirements
         //
-        if (!netConnectivity()) {
+        if (!HTTPUtils.networkIsReachable()) {
             XCTFail("No network connectivty")
         }
     
-        if (!RESTConnectivity()) {
+        if (!HTTPUtils.urlIsReachable(DB_ROOT_URL)) {
             XCTFail("No REST API connectivty")
         }
 
@@ -561,18 +561,6 @@ class RGButterflyTests: XCTestCase {
         var addMixNC: UINavigationController = UINavigationController()
         addMixNC = storyboard.instantiateViewController(withIdentifier: "NavAddMixTableViewController") as! UINavigationController
         XCTAssertTrue(addMixNC.topViewController is AddMixTableViewController, "AddMixTableViewController is embedded in UINavigationController")
-    }
-    
-    // Check Network Connectivity
-    //
-    func netConnectivity() -> Bool {
-        return HTTPUtils.networkIsReachable()
-    }
-    
-    // Check Connectivity to the REST API (i.e., Jenkins)
-    //
-    func RESTConnectivity() -> Bool {
-        return true;
     }
     
     // Backup NSDefaults
