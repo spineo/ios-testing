@@ -46,21 +46,51 @@ class RGButterflyTests: XCTestCase {
     var flexibleSpace : UIBarButtonItem = UIBarButtonItem()
     var flexibleSpace2: UIBarButtonItem = UIBarButtonItem()
     var fixedSpace    : UIBarButtonItem = UIBarButtonItem()
+    
+    // Requirements flags
+    //
+    var netConnect    : Bool            = Bool()
+    var restConnect   : Bool            = Bool()
+    
+    // UserDefaults
+    //
+    var userDefaults  : UserDefaults    = UserDefaults()
+
+    var pollUpdate    : Bool            = Bool()
+
 
     override func setUp() {
         super.setUp()
+        
+        // Check the requirements
+        //
+        if (!netConnectivity()) {
+            XCTFail("No network connectivty")
+        }
+    
+        if (!RESTConnectivity()) {
+            XCTFail("No REST API connectivty")
+        }
+
+        userDefaults      = UserDefaults.standard
+        
+        backupUserDefaults()
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        
+        restoreUserDefaults()
     }
     
     // InitViewController Unit Tests
     //
-    func testInitViewController() {
+    func testInitViewController_pollUpdate() {
         var initVC: InitViewController = InitViewController()
         initVC = storyboard.instantiateInitialViewController() as! InitViewController
+        
+        userDefaults.setValue(true, forKey:DB_POLL_UPDATE_KEY)
         
         initVC.viewDidLoad()
         initVC.viewDidAppear(true)
@@ -74,14 +104,15 @@ class RGButterflyTests: XCTestCase {
         //
         runSeguesTests(viewController:initVC, seguesList:["InitViewControllerSegue"])
         
-        // Test the background image (currently fails_
+        
+        // Test the background image (currently fails)
         //
         //XCTAssertEqual(view.backgroundColor, UIColor(patternImage: UIImage(named:BACKGROUND_IMAGE_TITLE)!))
         
         // Check the update label and spinner initial states
         //
         let updateLabel = view.viewWithTag(Int(INIT_LABEL_TAG)) as? UILabel
-        XCTAssertEqual(updateLabel?.text, "", "Initial empty value")
+        XCTAssertEqual(updateLabel?.text, SPINNER_LABEL_LOAD, "Initial spinner label")
 
         let spinner     = view.viewWithTag(Int(INIT_SPINNER_TAG)) as? UIActivityIndicatorView
         XCTAssert((spinner?.isAnimating)!, "Spinner active")
@@ -93,6 +124,19 @@ class RGButterflyTests: XCTestCase {
         
         // Need to invoke the UIAlertController actions (states for initVC.updateStat)
     }
+    
+    // InitViewController Unit Tests (without pollUpdate, all dynamic checks are skipped)
+    // Static checks were performed in the preceding testInitViewController_pollUpdate
+    //
+    func testInitViewController_NoPollUpdate() {
+        var initVC: InitViewController = InitViewController()
+        initVC = storyboard.instantiateInitialViewController() as! InitViewController
+        
+        userDefaults.setValue(false, forKey:DB_POLL_UPDATE_KEY)
+        
+        initVC.viewDidLoad()
+    }
+
     
     // Main ViewController Unit Tests
     //
@@ -154,6 +198,9 @@ class RGButterflyTests: XCTestCase {
         var mainNC: UINavigationController = UINavigationController()
         mainNC = storyboard.instantiateViewController(withIdentifier: "NavViewController") as! UINavigationController
         XCTAssertTrue(mainNC.topViewController is ViewController, "ViewController is embedded in UINavigationController")
+        
+        // Test the delegates
+        //
     }
     
     // SettingsTableViewController
@@ -514,6 +561,30 @@ class RGButterflyTests: XCTestCase {
         var addMixNC: UINavigationController = UINavigationController()
         addMixNC = storyboard.instantiateViewController(withIdentifier: "NavAddMixTableViewController") as! UINavigationController
         XCTAssertTrue(addMixNC.topViewController is AddMixTableViewController, "AddMixTableViewController is embedded in UINavigationController")
+    }
+    
+    // Check Network Connectivity
+    //
+    func netConnectivity() -> Bool {
+        return HTTPUtils.networkIsReachable()
+    }
+    
+    // Check Connectivity to the REST API (i.e., Jenkins)
+    //
+    func RESTConnectivity() -> Bool {
+        return true;
+    }
+    
+    // Backup NSDefaults
+    //
+    func backupUserDefaults() {
+        pollUpdate = userDefaults.bool(forKey:DB_POLL_UPDATE_KEY)
+    }
+    
+    // Restore NSDefaults
+    //
+    func restoreUserDefaults() {
+        userDefaults.setValue(pollUpdate, forKey:DB_POLL_UPDATE_KEY)
     }
     
     // Test for segues

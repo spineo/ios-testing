@@ -20,3 +20,9 @@
 #import "AddMixTableViewController.h"
 
 #import "UIImageViewNavigationController.h"
+
+// HTTPUtils and External Utilities (for testing the requirements)
+//
+#import "HTTPUtils.h"
+#import "NSData+Base64.h"
+#import "Reachability.h"
