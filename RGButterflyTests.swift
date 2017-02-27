@@ -7,6 +7,11 @@
 //
 import XCTest
 
+// Pre-Conditions
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Network Connectivity
+// REST API return HTTP code 200
+//
 // Static Elements Tests
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // View Controllers exists
@@ -46,31 +51,18 @@ class RGButterflyTests: XCTestCase {
     var flexibleSpace : UIBarButtonItem = UIBarButtonItem()
     var flexibleSpace2: UIBarButtonItem = UIBarButtonItem()
     var fixedSpace    : UIBarButtonItem = UIBarButtonItem()
-    
-    // Requirements flags
-    //
-    var netConnect    : Bool            = Bool()
-    var restConnect   : Bool            = Bool()
+
+    var entityCount   : Int             = Int()
+    var fileCount     : Int             = Int()
     
     // UserDefaults
     //
     var userDefaults  : UserDefaults    = UserDefaults()
-
     var pollUpdate    : Bool            = Bool()
 
 
     override func setUp() {
         super.setUp()
-        
-        // Check the requirements
-        //
-        if (!HTTPUtils.networkIsReachable()) {
-            XCTFail("No network connectivty")
-        }
-    
-        if (!HTTPUtils.urlIsReachable(DB_ROOT_URL)) {
-            XCTFail("No REST API connectivty")
-        }
 
         userDefaults      = UserDefaults.standard
         
@@ -84,14 +76,42 @@ class RGButterflyTests: XCTestCase {
         restoreUserDefaults()
     }
     
+    // Test the Datamodel Entities
+    //
+    func testDatamodelEntities() {
+        let dictionaryEntities = ["AssociationType", "BodyType", "CanvasCoverage", "MatchAlgorithm", "PaintBrand", "PigmentType", "SubjectiveColor"]
+        
+        // Test the dictionaries
+        //
+        for entity in dictionaryEntities {
+            fileCount   = Int(FileUtils.fileLineCount(entity, fileType:"txt"))
+            entityCount = Int(ManagedObjectUtils.fetchCount(entity))
+            
+            XCTAssertEqual(fileCount, entityCount, "File and Entity count for \(entity)! match.")
+        }
+    }
+    
     // InitViewController Unit Tests
+    // Two paths checked: pollUpdate and noPollUpdate (actual database update skipped for now)
     //
     func testInitViewController_pollUpdate() {
+        // Check the requirements
+        //
+        if (!HTTPUtils.networkIsReachable()) {
+            XCTFail("No network connectivty")
+        }
+        
+        if (!HTTPUtils.urlIsReachable(DB_ROOT_URL)) {
+            XCTFail("No REST API connectivty")
+        }
+        
         var initVC: InitViewController = InitViewController()
         initVC = storyboard.instantiateInitialViewController() as! InitViewController
         
         userDefaults.setValue(true, forKey:DB_POLL_UPDATE_KEY)
         
+        // Instantiate
+        //
         initVC.viewDidLoad()
         initVC.viewDidAppear(true)
         
@@ -128,7 +148,7 @@ class RGButterflyTests: XCTestCase {
     // InitViewController Unit Tests (without pollUpdate, all dynamic checks are skipped)
     // Static checks were performed in the preceding testInitViewController_pollUpdate
     //
-    func testInitViewController_NoPollUpdate() {
+    func testInitViewController_noPollUpdate() {
         var initVC: InitViewController = InitViewController()
         initVC = storyboard.instantiateInitialViewController() as! InitViewController
         
@@ -143,6 +163,14 @@ class RGButterflyTests: XCTestCase {
     func testViewController() {
         var mainVC: ViewController = ViewController()
         mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        
+        // Instantiate
+        //
+        mainVC.viewDidLoad()
+        
+        mainVC.viewWillAppear(true)
+        mainVC.viewDidAppear(true)
+        mainVC.viewDidDisappear(true)
         
         // The views, navigation items and toolbar item title and buttons
         //
@@ -563,13 +591,13 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(addMixNC.topViewController is AddMixTableViewController, "AddMixTableViewController is embedded in UINavigationController")
     }
     
-    // Backup NSDefaults
+    // Backup UserDefaults
     //
     func backupUserDefaults() {
         pollUpdate = userDefaults.bool(forKey:DB_POLL_UPDATE_KEY)
     }
     
-    // Restore NSDefaults
+    // Restore UserDefaults
     //
     func restoreUserDefaults() {
         userDefaults.setValue(pollUpdate, forKey:DB_POLL_UPDATE_KEY)

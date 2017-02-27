@@ -26,3 +26,8 @@
 #import "HTTPUtils.h"
 #import "NSData+Base64.h"
 #import "Reachability.h"
+
+// Entity Tests
+//
+#import "FileUtils.h"
+#import "ManagedObjectUtils.h"
