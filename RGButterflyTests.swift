@@ -79,7 +79,8 @@ class RGButterflyTests: XCTestCase {
     // Test the Datamodel Entities
     //
     func testDatamodelEntities() {
-        let dictionaryEntities = ["AssociationType", "BodyType", "CanvasCoverage", "MatchAlgorithm", "PaintBrand", "PigmentType", "SubjectiveColor"]
+        let dictionaryEntities = ["AssociationType", "BodyType", "CanvasCoverage",
+                                  "MatchAlgorithm", "PaintBrand", "PigmentType", "SubjectiveColor"]
         
         // Test the dictionaries
         //
@@ -219,7 +220,8 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        runSeguesTests(viewController:mainVC, seguesList:["MainSwatchDetailSegue", "VCToAssocSegue", "ImagePickerSegue", "ImageSelectionSegue", "SettingsSegue"])
+        runSeguesTests(viewController:mainVC, seguesList:["MainSwatchDetailSegue", "VCToAssocSegue", "ImagePickerSegue",
+                                                          "ImageSelectionSegue", "SettingsSegue"])
         
         // Test the NavigationController
         //
@@ -410,7 +412,8 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        runSeguesTests(viewController:imageVC, seguesList:["AssocTableViewSegue", "AssocToDetailSegue", "MatchTableViewSegue", "unwindToVCSegue", "SettingsSegue"])
+        runSeguesTests(viewController:imageVC, seguesList:["AssocTableViewSegue", "AssocToDetailSegue",
+                                                           "MatchTableViewSegue", "unwindToVCSegue", "SettingsSegue"])
         
         // Test the NavigationController
         //
@@ -510,7 +513,8 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        runSeguesTests(viewController:assocTVC, seguesList:["AddMixSegue", "AssocSwatchDetailSegue", "unwindToImageViewFromAssoc", "unwindToVC", "SettingsSegue"])
+        runSeguesTests(viewController:assocTVC, seguesList:["AddMixSegue", "AssocSwatchDetailSegue",
+                                                            "unwindToImageViewFromAssoc", "unwindToVC", "SettingsSegue"])
         
         // Test the NavigationController
         //
@@ -582,7 +586,8 @@ class RGButterflyTests: XCTestCase {
         
         // Test for segues
         //
-        runSeguesTests(viewController:addMixTVC, seguesList:["unwindToAssocFromAdd1", "unwindToAssocFromAdd2", "unwindToAssocFromAdd3"])
+        runSeguesTests(viewController:addMixTVC, seguesList:["unwindToAssocFromAdd1", "unwindToAssocFromAdd2",
+                                                             "unwindToAssocFromAdd3"])
         
         // Test the NavigationController
         //
@@ -617,7 +622,8 @@ class RGButterflyTests: XCTestCase {
     // Segues check
     //
     func getSeguesIdentifiers(viewController: UIViewController) -> [String] {
-        let identifiers = (viewController.value(forKey: "storyboardSegueTemplates") as? [AnyObject])?.flatMap({ $0.value(forKey: "identifier") as? String }) ?? []
+        let identifiers = (viewController.value(forKey: "storyboardSegueTemplates") as?
+            [AnyObject])?.flatMap({ $0.value(forKey: "identifier") as? String }) ?? []
         return identifiers
     }
     
