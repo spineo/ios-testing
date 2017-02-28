@@ -79,8 +79,8 @@ class RGButterflyTests: XCTestCase {
     // Test the Datamodel Entities
     //
     func testDatamodelEntities() {
-        let dictionaryEntities = ["AssociationType", "BodyType", "CanvasCoverage",
-                                  "MatchAlgorithm", "PaintBrand", "PigmentType", "SubjectiveColor"]
+        let dictionaryEntities = ["AssociationType", "BodyType", "CanvasCoverage", "MatchAlgorithm",
+                                  "PaintBrand", "PaintSwatchType", "PigmentType", "SubjectiveColor"]
         
         // Test the dictionaries
         //
@@ -88,7 +88,25 @@ class RGButterflyTests: XCTestCase {
             fileCount   = Int(FileUtils.fileLineCount(entity, fileType:"txt"))
             entityCount = Int(ManagedObjectUtils.fetchCount(entity))
             
+            XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
             XCTAssertEqual(fileCount, entityCount, "File and Entity count for \(entity)! match.")
+        }
+        
+        // Test the main entities count
+        //
+        let mainEntities = ["Keyword", "MatchAssociation", "MixAssociation", "MixAssocKeyword",
+                            "MixAssocSwatch", "PaintSwatch", "SwatchKeyword", "TapArea", "TapAreaSwatch"]
+        for entity in mainEntities {
+            entityCount = Int(ManagedObjectUtils.fetchCount(entity))
+            XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
+        }
+        
+        // Currently zero count
+        //
+        let otherEntities = ["MatchAssocKeyword", "TapAreaKeyword"]
+        for entity in otherEntities {
+            entityCount = Int(ManagedObjectUtils.fetchCount(entity))
+            XCTAssertEqual(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
         }
     }
     
