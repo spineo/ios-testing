@@ -30,4 +30,4 @@
 // Entity Tests
 //
 #import "FileUtils.h"
-#import "ManagedObjectUtils.h"
+#import "CoreDataUtils.h"

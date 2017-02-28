@@ -86,7 +86,7 @@ class RGButterflyTests: XCTestCase {
         //
         for entity in dictionaryEntities {
             fileCount   = Int(FileUtils.fileLineCount(entity, fileType:"txt"))
-            entityCount = Int(ManagedObjectUtils.fetchCount(entity))
+            entityCount = Int(CoreDataUtils.fetchCount(entity))
             
             XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
             XCTAssertEqual(fileCount, entityCount, "File and Entity count for \(entity)! match.")
@@ -97,7 +97,7 @@ class RGButterflyTests: XCTestCase {
         let mainEntities = ["Keyword", "MatchAssociation", "MixAssociation", "MixAssocKeyword",
                             "MixAssocSwatch", "PaintSwatch", "SwatchKeyword", "TapArea", "TapAreaSwatch"]
         for entity in mainEntities {
-            entityCount = Int(ManagedObjectUtils.fetchCount(entity))
+            entityCount = Int(CoreDataUtils.fetchCount(entity))
             XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
         }
         
@@ -105,7 +105,7 @@ class RGButterflyTests: XCTestCase {
         //
         let otherEntities = ["MatchAssocKeyword", "TapAreaKeyword"]
         for entity in otherEntities {
-            entityCount = Int(ManagedObjectUtils.fetchCount(entity))
+            entityCount = Int(CoreDataUtils.fetchCount(entity))
             XCTAssertEqual(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
         }
     }
