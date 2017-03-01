@@ -62,15 +62,23 @@ class RGButterflyTests: XCTestCase {
     
     // CoreDataUtils
     //
-    var entities      : [AnyObject]     = [AnyObject]()
+    var coreDataObj   : CoreDataUtils     = CoreDataUtils()
+    var objects       : [AnyObject]       = [AnyObject]()
+    var objSet        : NSSet             = NSSet()
+    var objName       : String            = String()
+    var mixAssoc      : MixAssociation    = MixAssociation()
+    var matchAssoc    : MatchAssociations = MatchAssociations()
 
     
     override func setUp() {
         super.setUp()
 
         userDefaults      = UserDefaults.standard
-        
         backupUserDefaults()
+        
+        // Initialize CoreDataUtils
+        //
+        coreDataObj = CoreDataUtils.init()
     }
     
     override func tearDown() {
@@ -80,21 +88,17 @@ class RGButterflyTests: XCTestCase {
         restoreUserDefaults()
     }
     
-    // Test the Datamodel Entities
+    // Test the Datamodel Entity Counts
     //
-    func testDatamodelEntities() {
+    func testEntityCounts() {
         let dictionaryEntities = ["AssociationType", "BodyType", "CanvasCoverage", "MatchAlgorithm",
                                   "PaintBrand", "PaintSwatchType", "PigmentType", "SubjectiveColor"]
-        
-        // Initialize CoreDataUtils
-        //
-        let coreDataObj = CoreDataUtils.init()
         
         // Test the dictionaries
         //
         for entity in dictionaryEntities {
             fileCount   = Int(FileUtils.fileLineCount(entity, fileType:"txt"))
-            entityCount = Int((coreDataObj?.fetchCount(entity))!)
+            entityCount = Int(coreDataObj.fetchCount(entity))
             
             XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
             XCTAssertEqual(fileCount, entityCount, "File and Entity count for \(entity)! match.")
@@ -105,7 +109,7 @@ class RGButterflyTests: XCTestCase {
         let mainEntities = ["Keyword", "MatchAssociation", "MixAssociation", "MixAssocSwatch",
                             "PaintSwatch", "SwatchKeyword", "TapArea", "TapAreaSwatch"]
         for entity in mainEntities {
-            entityCount = Int((coreDataObj?.fetchCount(entity))!)
+            entityCount = Int(coreDataObj.fetchCount(entity))
             XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
         }
         
@@ -113,14 +117,22 @@ class RGButterflyTests: XCTestCase {
         //
         let otherKeywordEntities = ["MixAssocKeyword", "MatchAssocKeyword", "TapAreaKeyword"]
         for entity in otherKeywordEntities {
-            entityCount = Int((coreDataObj?.fetchCount(entity))!)
+            entityCount = Int(coreDataObj.fetchCount(entity))
             XCTAssertGreaterThanOrEqual(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
         }
+    }
+    
+    // Test Datamodel Entity relations
+    //
+    func testEntityRelations() {
         
-        // Test the relations
+        // Ensure that no orphan relations exist
         //
-        for entity in mainEntities {
-            entities = coreDataObj?.fetchEntity(entity)! as! [AnyObject]
+        objects = coreDataObj.fetchEntity("MixAssociation")! as! [MixAssociation]
+        for mixAssoc in objects {
+            objSet  = mixAssoc.mix_assoc_swatch as NSSet
+            objName = mixAssoc.name as String
+            XCTAssertGreaterThan(objSet.count, 0, "MixAssociation id '\(objName)!' has no elements.")
         }
 
     }
