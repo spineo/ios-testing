@@ -59,8 +59,12 @@ class RGButterflyTests: XCTestCase {
     //
     var userDefaults  : UserDefaults    = UserDefaults()
     var pollUpdate    : Bool            = Bool()
+    
+    // CoreDataUtils
+    //
+    var entities      : [AnyObject]     = [AnyObject]()
 
-
+    
     override func setUp() {
         super.setUp()
 
@@ -82,11 +86,15 @@ class RGButterflyTests: XCTestCase {
         let dictionaryEntities = ["AssociationType", "BodyType", "CanvasCoverage", "MatchAlgorithm",
                                   "PaintBrand", "PaintSwatchType", "PigmentType", "SubjectiveColor"]
         
+        // Initialize CoreDataUtils
+        //
+        let coreDataObj = CoreDataUtils.init()
+        
         // Test the dictionaries
         //
         for entity in dictionaryEntities {
             fileCount   = Int(FileUtils.fileLineCount(entity, fileType:"txt"))
-            entityCount = Int(CoreDataUtils.fetchCount(entity))
+            entityCount = Int((coreDataObj?.fetchCount(entity))!)
             
             XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
             XCTAssertEqual(fileCount, entityCount, "File and Entity count for \(entity)! match.")
@@ -94,20 +102,27 @@ class RGButterflyTests: XCTestCase {
         
         // Test the main entities count
         //
-        let mainEntities = ["Keyword", "MatchAssociation", "MixAssociation", "MixAssocKeyword",
-                            "MixAssocSwatch", "PaintSwatch", "SwatchKeyword", "TapArea", "TapAreaSwatch"]
+        let mainEntities = ["Keyword", "MatchAssociation", "MixAssociation", "MixAssocSwatch",
+                            "PaintSwatch", "SwatchKeyword", "TapArea", "TapAreaSwatch"]
         for entity in mainEntities {
-            entityCount = Int(CoreDataUtils.fetchCount(entity))
+            entityCount = Int((coreDataObj?.fetchCount(entity))!)
             XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
         }
         
-        // Currently zero count
+        // Greater than or equal to zero
         //
-        let otherEntities = ["MatchAssocKeyword", "TapAreaKeyword"]
-        for entity in otherEntities {
-            entityCount = Int(CoreDataUtils.fetchCount(entity))
-            XCTAssertEqual(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
+        let otherKeywordEntities = ["MixAssocKeyword", "MatchAssocKeyword", "TapAreaKeyword"]
+        for entity in otherKeywordEntities {
+            entityCount = Int((coreDataObj?.fetchCount(entity))!)
+            XCTAssertGreaterThanOrEqual(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
         }
+        
+        // Test the relations
+        //
+        for entity in mainEntities {
+            entities = coreDataObj?.fetchEntity(entity)! as! [AnyObject]
+        }
+
     }
     
     // InitViewController Unit Tests
