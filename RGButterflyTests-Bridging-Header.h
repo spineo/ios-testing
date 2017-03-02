@@ -31,3 +31,4 @@
 //
 #import "FileUtils.h"
 #import "CoreDataUtils.h"
+#import "PaintSwatchType.h"

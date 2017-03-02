@@ -54,6 +54,8 @@ class RGButterflyTests: XCTestCase {
 
     var entityCount   : Int             = Int()
     var fileCount     : Int             = Int()
+    var dict_id       : Int             = Int()
+    var type_id       : Int             = Int()
     
     // UserDefaults
     //
@@ -66,8 +68,7 @@ class RGButterflyTests: XCTestCase {
     var objects       : [AnyObject]       = [AnyObject]()
     var objSet        : NSSet             = NSSet()
     var objName       : String            = String()
-    var mixAssoc      : MixAssociation    = MixAssociation()
-    var matchAssoc    : MatchAssociations = MatchAssociations()
+    var swatchType    : PaintSwatchType   = PaintSwatchType()
 
     
     override func setUp() {
@@ -125,14 +126,38 @@ class RGButterflyTests: XCTestCase {
     // Test Datamodel Entity relations
     //
     func testEntityRelations() {
-        
-        // Ensure that no orphan relations exist
+
+        // MixAssociation must have children
         //
         objects = coreDataObj.fetchEntity("MixAssociation")! as! [MixAssociation]
-        for mixAssoc in objects {
-            objSet  = mixAssoc.mix_assoc_swatch as NSSet
-            objName = mixAssoc.name as String
-            XCTAssertGreaterThan(objSet.count, 0, "MixAssociation id '\(objName)!' has no elements.")
+        for assoc in objects {
+            objSet  = assoc.mix_assoc_swatch as NSSet
+            objName = assoc.name as String
+            XCTAssertGreaterThan(objSet.count, 0, "MixAssociation '\(objName)!' has no children.")
+        }
+
+        // MatchAssociation must have children
+        //
+        objects = coreDataObj.fetchEntity("MatchAssociation")! as! [MatchAssociations]
+        for assoc in objects {
+            objSet  = assoc.tap_area as NSSet
+            objName = assoc.name as String
+            XCTAssertGreaterThan(objSet.count, 0, "MatchAssociation '\(objName)!' has no children.")
+        }
+        
+        // PaintSwatch must be attached to a Mix Association
+        //
+        //swatchType = coreDataObj.queryDictionary("PaintSwatchType", nameValue:"MixAssoc")! as! PaintSwatchType
+        //dict_id = Int(swatchType.order!);
+        objects = coreDataObj.fetchEntity("PaintSwatch")! as! [PaintSwatches]
+        for swatch in objects {
+            //type_id = swatch.type_id
+            //if (type_id == 2) {
+            //    print("****************** TEST ***************")
+            //    objSet  = swatch.mix_assoc_swatch as NSSet
+            //    objName = swatch.name as String
+            //    XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)!' has no parent Mix Association.")
+            //}
         }
 
     }
