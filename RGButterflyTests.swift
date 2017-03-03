@@ -147,19 +147,14 @@ class RGButterflyTests: XCTestCase {
         
         // PaintSwatch must be attached to a Mix Association
         //
-        //swatchType = coreDataObj.queryDictionary("PaintSwatchType", nameValue:"MixAssoc")! as! PaintSwatchType
-        //dict_id = Int(swatchType.order!);
-        objects = coreDataObj.fetchEntity("PaintSwatch")! as! [PaintSwatches]
+        let typeObj = coreDataObj.queryDictionary("PaintSwatchType", nameValue:"MixAssoc") as! PaintSwatchType!
+        type_id = typeObj?.order as Int!
+        objects = coreDataObj.fetchedEntityHasId("PaintSwatch", attrName:"type_id", value:Int32(type_id))! as! [PaintSwatches]
         for swatch in objects {
-            //type_id = swatch.type_id
-            //if (type_id == 2) {
-            //    print("****************** TEST ***************")
-            //    objSet  = swatch.mix_assoc_swatch as NSSet
-            //    objName = swatch.name as String
-            //    XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)!' has no parent Mix Association.")
-            //}
+            objSet  = swatch.mix_assoc_swatch as NSSet
+            objName = swatch.name as String
+            XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)!' has no parent Mix Association.")
         }
-
     }
     
     // InitViewController Unit Tests
