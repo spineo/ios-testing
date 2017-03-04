@@ -145,15 +145,10 @@ class RGButterflyTests: XCTestCase {
             XCTAssertGreaterThan(objSet.count, 0, "MatchAssociation '\(objName)!' has no children.")
         }
         
-        // PaintSwatch must be attached to a Mix Association
+        // Check for orphans
         //
-        let typeObj = coreDataObj.queryDictionary("PaintSwatchType", nameValue:"MixAssoc") as! PaintSwatchType!
-        type_id = typeObj?.order as Int!
-        objects = coreDataObj.fetchedEntityHasId("PaintSwatch", attrName:"type_id", value:Int32(type_id))! as! [PaintSwatches]
-        for swatch in objects {
-            objSet  = swatch.mix_assoc_swatch as NSSet
-            objName = swatch.name as String
-            XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)!' has no parent Mix Association.")
+        for type in ["Unknown", "Reference", "MixAssoc", "MatchAssoc", "Ref & Mix", "Generic"] {
+            verifyPaintSwatches(type:type)
         }
     }
     
@@ -659,6 +654,21 @@ class RGButterflyTests: XCTestCase {
         var addMixNC: UINavigationController = UINavigationController()
         addMixNC = storyboard.instantiateViewController(withIdentifier: "NavAddMixTableViewController") as! UINavigationController
         XCTAssertTrue(addMixNC.topViewController is AddMixTableViewController, "AddMixTableViewController is embedded in UINavigationController")
+    }
+    
+    func verifyPaintSwatches(type:String) {
+        // PaintSwatch must be attached to a Mix Association
+        //
+        let typeObj = coreDataObj.queryDictionary("PaintSwatchType", nameValue:type) as! PaintSwatchType!
+        if typeObj != nil {
+            type_id = typeObj?.order as Int!
+            objects = coreDataObj.fetchedEntityHasId("PaintSwatch", attrName:"type_id", value:Int32(type_id))! as! [PaintSwatches]
+            for swatch in objects {
+                objSet  = swatch.mix_assoc_swatch as NSSet
+                objName = swatch.name as String
+                XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)!' has no parent for type '\(type)!'.")
+            }
+        }
     }
     
     // Backup UserDefaults
