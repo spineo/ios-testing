@@ -32,3 +32,5 @@
 #import "FileUtils.h"
 #import "CoreDataUtils.h"
 #import "PaintSwatchType.h"
+#import "Keyword.h"
+#import "SwatchKeyword.h"

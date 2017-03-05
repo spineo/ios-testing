@@ -65,8 +65,9 @@ class RGButterflyTests: XCTestCase {
     // CoreDataUtils
     //
     var coreDataObj   : CoreDataUtils     = CoreDataUtils()
-    var objects       : [AnyObject]       = [AnyObject]()
+    var objects       = [AnyObject]()
     var objSet        : NSSet             = NSSet()
+    var objArray      = [AnyObject]()
     var objName       : String            = String()
     var swatchType    : PaintSwatchType   = PaintSwatchType()
 
@@ -101,8 +102,8 @@ class RGButterflyTests: XCTestCase {
             fileCount   = Int(FileUtils.fileLineCount(entity, fileType:"txt"))
             entityCount = Int(coreDataObj.fetchCount(entity))
             
-            XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
-            XCTAssertEqual(fileCount, entityCount, "File and Entity count for \(entity)! match.")
+            XCTAssertGreaterThan(entityCount, 0, "'\(entity)' count is \(entityCount)!")
+            XCTAssertEqual(fileCount, entityCount, "File and Entity count for \(entity) match.")
         }
         
         // Test the main entities count
@@ -111,7 +112,7 @@ class RGButterflyTests: XCTestCase {
                             "PaintSwatch", "SwatchKeyword", "TapArea", "TapAreaSwatch"]
         for entity in mainEntities {
             entityCount = Int(coreDataObj.fetchCount(entity))
-            XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
+            XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)")
         }
         
         // Greater than or equal to zero
@@ -119,7 +120,7 @@ class RGButterflyTests: XCTestCase {
         let otherKeywordEntities = ["MixAssocKeyword", "MatchAssocKeyword", "TapAreaKeyword"]
         for entity in otherKeywordEntities {
             entityCount = Int(coreDataObj.fetchCount(entity))
-            XCTAssertGreaterThanOrEqual(entityCount, 0, "'\(entity)!' count is \(entityCount)!")
+            XCTAssertGreaterThanOrEqual(entityCount, 0, "'\(entity)' count is \(entityCount)!")
         }
     }
     
@@ -133,7 +134,7 @@ class RGButterflyTests: XCTestCase {
         for assoc in objects {
             objSet  = assoc.mix_assoc_swatch as NSSet
             objName = assoc.name as String
-            XCTAssertGreaterThan(objSet.count, 0, "MixAssociation '\(objName)!' has no children.")
+            XCTAssertGreaterThan(objSet.count, 0, "MixAssociation '\(objName)' has no children.")
         }
 
         // MatchAssociation must have children
@@ -142,7 +143,7 @@ class RGButterflyTests: XCTestCase {
         for assoc in objects {
             objSet  = assoc.tap_area as NSSet
             objName = assoc.name as String
-            XCTAssertGreaterThan(objSet.count, 0, "MatchAssociation '\(objName)!' has no children.")
+            XCTAssertGreaterThan(objSet.count, 0, "MatchAssociation '\(objName)' has no children.")
         }
         
         // Check for PaintSwatch orphans (skipping "MatchAssoc")
@@ -150,8 +151,20 @@ class RGButterflyTests: XCTestCase {
         for type in ["Unknown", "Reference", "MixAssoc", "Ref & Mix", "Generic"] {
             verifyPaintSwatchesTypes(type:type)
         }
+        
+        // Check for Keyword orphans
+        //
+        objects = coreDataObj.fetchEntity("Keyword") as [AnyObject]
+        var swatchKw = Set<SwatchKeyword>()
+        for kw in objects {
+            if kw.swatch_keyword != nil {
+                swatchKw = kw.swatch_keyword!! as Set<SwatchKeyword>
+                objName  = kw.name! as String
+                XCTAssertGreaterThan(swatchKw.count, 0, "Keyword '\(objName)' has no parent association.")
+            }
+        }
     }
-    
+
     // InitViewController Unit Tests
     // Two paths checked: pollUpdate and noPollUpdate (actual database update skipped for now)
     //
@@ -666,7 +679,7 @@ class RGButterflyTests: XCTestCase {
             for swatch in objects {
                 objSet  = swatch.mix_assoc_swatch as NSSet
                 objName = swatch.name as String
-                XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)!' has no parent for type '\(type)!'.")
+                XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)' has no parent for type '\(type)!'.")
             }
         }
     }
