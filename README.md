@@ -3,6 +3,6 @@ Unit and UI Testing in Swift with XCTest framework and Accessibility. Requiremen
 
 Dependencies: XCTest/XCTest.h (The XCTest file need to be added as a compile target to Tests under 'BuildPhases' for this to build)
 
-Requirements:
+Requirements (InitViewController tests)
 There is Network Connectivity
 The Jenkins server is running during the test
