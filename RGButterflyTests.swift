@@ -149,8 +149,13 @@ class RGButterflyTests: XCTestCase {
         // Check for PaintSwatch orphans (skipping "MatchAssoc")
         //
         for type in ["Unknown", "Reference", "MixAssoc", "Ref & Mix", "Generic"] {
-            verifyPaintSwatchesTypes(type:type)
+            verifyMixSwatchTypes(type:type)
         }
+        
+        // Verify MatchAssoc
+        //
+        verifyMatchSwatchTypes(type:"MatchAssoc")
+
         
         // Check for Keyword orphans
         //
@@ -669,7 +674,7 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(addMixNC.topViewController is AddMixTableViewController, "AddMixTableViewController is embedded in UINavigationController")
     }
     
-    func verifyPaintSwatchesTypes(type:String) {
+    func verifyMixSwatchTypes(type:String) {
         // PaintSwatch must be attached to a Mix Association
         //
         let typeObj = coreDataObj.queryDictionary("PaintSwatchType", nameValue:type) as! PaintSwatchType!
@@ -682,6 +687,10 @@ class RGButterflyTests: XCTestCase {
                 XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)' has no parent for type '\(type)!'.")
             }
         }
+    }
+    
+    func verifyMatchSwatchTypes(type:String) {
+        
     }
     
     // Backup UserDefaults
