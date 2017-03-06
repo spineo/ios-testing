@@ -122,6 +122,11 @@ class RGButterflyTests: XCTestCase {
             entityCount = Int(coreDataObj.fetchCount(entity))
             XCTAssertGreaterThanOrEqual(entityCount, 0, "'\(entity)' count is \(entityCount)!")
         }
+        
+        
+        // Verify PaintSwatches(MatchAssoc) and TapAreas aggregate counts match
+        //
+        verifyPaintSwatchesAndTapAreasCount()
     }
     
     // Test Datamodel Entity relations
@@ -151,10 +156,6 @@ class RGButterflyTests: XCTestCase {
         for type in ["Unknown", "Reference", "MixAssoc", "Ref & Mix", "Generic"] {
             verifyMixSwatchTypes(type:type)
         }
-        
-        // Verify MatchAssoc
-        //
-        verifyMatchSwatchTypes(type:"MatchAssoc")
 
         
         // Check for Keyword orphans
@@ -688,9 +689,21 @@ class RGButterflyTests: XCTestCase {
             }
         }
     }
-    
-    func verifyMatchSwatchTypes(type:String) {
+
+    func verifyPaintSwatchesAndTapAreasCount() {
         
+        // PaintSwatches count for "MatchAssoc"
+        //
+        let typeObj = coreDataObj.queryDictionary("PaintSwatchType", nameValue:"MatchAssoc") as! PaintSwatchType!
+        type_id = typeObj?.order as Int!
+        let paintSwatchesCount = coreDataObj.fetchedEntityHasId("PaintSwatch", attrName:"type_id", value:Int32(type_id)).count
+        
+        // TapAreas Count
+        //
+        let tapAreasCount      = Int(coreDataObj.fetchCount("TapArea"))
+
+        XCTAssertGreaterThan(paintSwatchesCount, 0, "PaintSwatches count is zero.")
+        XCTAssertEqual(paintSwatchesCount, tapAreasCount, "Aggregate Paint Swatches (MatchAssoc) count of \(paintSwatchesCount) does not match Tap Areas aggregate count of \(tapAreasCount).")
     }
     
     // Backup UserDefaults
@@ -713,8 +726,7 @@ class RGButterflyTests: XCTestCase {
         for segue in seguesList {
             XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
         }
-    }
-    
+    }    
     
     // Segues check
     //
