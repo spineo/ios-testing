@@ -34,3 +34,6 @@
 #import "PaintSwatchType.h"
 #import "Keyword.h"
 #import "SwatchKeyword.h"
+#import "MixAssociation.h"
+#import "MixAssocSwatch.h"
+#import "PaintSwatches.h"

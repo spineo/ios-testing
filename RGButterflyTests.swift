@@ -70,7 +70,10 @@ class RGButterflyTests: XCTestCase {
     var objArray      = [AnyObject]()
     var objName       : String            = String()
     var swatchType    : PaintSwatchType   = PaintSwatchType()
-
+    var mixAssoc      : MixAssociation    = MixAssociation()
+    var paintSwatch   : PaintSwatches     = PaintSwatches()
+    var assocSwatches = [MixAssocSwatch]()
+    var tapAreas      = [TapArea]()
     
     override func setUp() {
         super.setUp()
@@ -126,7 +129,16 @@ class RGButterflyTests: XCTestCase {
         
         // Verify PaintSwatches(MatchAssoc) and TapAreas aggregate counts match
         //
-        verifyPaintSwatchesAndTapAreasCount()
+        let typeObj = coreDataObj.queryDictionary("PaintSwatchType", nameValue:"MatchAssoc") as! PaintSwatchType!
+        type_id = typeObj?.order as Int!
+        let paintSwatchesCount = coreDataObj.fetchedEntityHasId("PaintSwatch", attrName:"type_id", value:Int32(type_id)).count
+        
+        // TapAreas Count
+        //
+        let tapAreasCount      = Int(coreDataObj.fetchCount("TapArea"))
+        
+        XCTAssertGreaterThan(paintSwatchesCount, 0, "PaintSwatches count is zero.")
+        XCTAssertEqual(paintSwatchesCount, tapAreasCount, "Aggregate Paint Swatches (MatchAssoc) count of \(paintSwatchesCount) does not match Tap Areas aggregate count of \(tapAreasCount).")
     }
     
     // Test Datamodel Entity relations
@@ -141,14 +153,27 @@ class RGButterflyTests: XCTestCase {
             objName = assoc.name as String
             XCTAssertGreaterThan(objSet.count, 0, "MixAssociation '\(objName)' has no children.")
         }
-
+        
+        // All MixAssocSwatches must be part of a MixAssociation
+        //
+        assocSwatches = coreDataObj.fetchEntity("MixAssocSwatch") as! [MixAssocSwatch]
+        for assoc in assocSwatches {
+            XCTAssertNotNil(assoc.mix_association, "Fount MixAssocSwatch that is not part of a MixAssociation.")
+        }
+        
         // MatchAssociation must have children
         //
         objects = coreDataObj.fetchEntity("MatchAssociation")! as! [MatchAssociations]
         for assoc in objects {
-            objSet  = assoc.tap_area as NSSet
             objName = assoc.name as String
             XCTAssertGreaterThan(objSet.count, 0, "MatchAssociation '\(objName)' has no children.")
+        }
+        
+        // All TapAreas must be part of a MatchAssociation
+        //
+        tapAreas = coreDataObj.fetchEntity("TapArea")! as! [TapArea]
+        for assoc in tapAreas {
+            XCTAssertNotNil(assoc.match_association, "Fount TapArea that is not part of a MatchAssociation.")
         }
         
         // Check for PaintSwatch orphans (skipping "MatchAssoc")
@@ -157,7 +182,6 @@ class RGButterflyTests: XCTestCase {
             verifyMixSwatchTypes(type:type)
         }
 
-        
         // Check for Keyword orphans
         //
         objects = coreDataObj.fetchEntity("Keyword") as [AnyObject]
@@ -689,22 +713,6 @@ class RGButterflyTests: XCTestCase {
             }
         }
     }
-
-    func verifyPaintSwatchesAndTapAreasCount() {
-        
-        // PaintSwatches count for "MatchAssoc"
-        //
-        let typeObj = coreDataObj.queryDictionary("PaintSwatchType", nameValue:"MatchAssoc") as! PaintSwatchType!
-        type_id = typeObj?.order as Int!
-        let paintSwatchesCount = coreDataObj.fetchedEntityHasId("PaintSwatch", attrName:"type_id", value:Int32(type_id)).count
-        
-        // TapAreas Count
-        //
-        let tapAreasCount      = Int(coreDataObj.fetchCount("TapArea"))
-
-        XCTAssertGreaterThan(paintSwatchesCount, 0, "PaintSwatches count is zero.")
-        XCTAssertEqual(paintSwatchesCount, tapAreasCount, "Aggregate Paint Swatches (MatchAssoc) count of \(paintSwatchesCount) does not match Tap Areas aggregate count of \(tapAreasCount).")
-    }
     
     // Backup UserDefaults
     //
@@ -726,7 +734,7 @@ class RGButterflyTests: XCTestCase {
         for segue in seguesList {
             XCTAssertTrue(identifiers.contains(segue), "Segue identifier should exist.")
         }
-    }    
+    }
     
     // Segues check
     //
