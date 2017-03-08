@@ -366,6 +366,17 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(homeButton.isEnabled)
         XCTAssertTrue(settingsButton.isEnabled)
         
+        // Instantiate and test tableView sections/rows count
+        //
+        settingsTVC.viewDidLoad()
+        let settingsTableView = settingsTVC.tableView
+        XCTAssertEqual(settingsTVC.numberOfSections(in:settingsTableView!), Int(SETTINGS_MAX_SECTIONS))
+        
+        for section in 1...SETTINGS_MAX_SECTIONS {
+            XCTAssertGreaterThan(settingsTVC.tableView.numberOfRows(inSection:Int(section)), 0)
+        }
+        
+
         // Test for segues
         //
         runSeguesTests(viewController:settingsTVC, seguesList:["AboutSegue", "DisclaimerSegue", "UnwindToViewControllerSegue"])
