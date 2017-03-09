@@ -267,18 +267,30 @@ class RGButterflyTests: XCTestCase {
     func testViewController() {
         var mainVC: ViewController = ViewController()
         mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        view   = mainVC.view
         
         // Instantiate
         //
         mainVC.viewDidLoad()
-        
         mainVC.viewWillAppear(true)
+        
+        // Check the update label and spinner initial states
+        //
+        let updateLabel = view.viewWithTag(Int(INIT_LABEL_TAG)) as? UILabel
+        XCTAssertEqual(updateLabel?.text, SPINNER_LABEL_LOAD, "Initial spinner label")
+        
+        let spinner     = view.viewWithTag(Int(INIT_SPINNER_TAG)) as? UIActivityIndicatorView
+        XCTAssert((spinner?.isAnimating)!, "Spinner active")
+        
         mainVC.viewDidAppear(true)
         mainVC.viewDidDisappear(true)
         
+        // Final state
+        //
+        XCTAssertFalse((spinner?.isAnimating)!, "Spinner inactive")
+        
         // The views, navigation items and toolbar item title and buttons
         //
-        view           = mainVC.view
         tableView      = view.subviews.first as! UITableView
         imageLibButton = mainVC.navigationItem.leftBarButtonItem!
         searchButton   = mainVC.navigationItem.rightBarButtonItem!
@@ -326,6 +338,14 @@ class RGButterflyTests: XCTestCase {
         runSeguesTests(viewController:mainVC, seguesList:["MainSwatchDetailSegue", "VCToAssocSegue", "ImagePickerSegue",
                                                           "ImageSelectionSegue", "SettingsSegue"])
         
+        // Count loaded objects
+        //
+        XCTAssertGreaterThan(mainVC.paintSwatches.count, 0, "Paint Swatches count is zero")
+
+        
+        // Instantiate and test tableView sections/rows count
+        //
+        
         // Test the NavigationController
         //
         var mainNC: UINavigationController = UINavigationController()
@@ -341,9 +361,10 @@ class RGButterflyTests: XCTestCase {
     func testSettingsViewController() {
         var settingsTVC: SettingsTableViewController = SettingsTableViewController()
         settingsTVC = storyboard.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
+        settingsTVC.viewDidLoad()
         
         backButton = settingsTVC.navigationItem.leftBarButtonItem!
-        
+
         toolbarItems    = settingsTVC.toolbarItems!
         homeButton      = toolbarItems.removeFirst() as! UIBarButtonItem
         flexibleSpace   = toolbarItems.removeFirst() as! UIBarButtonItem
@@ -368,7 +389,6 @@ class RGButterflyTests: XCTestCase {
         
         // Instantiate and test tableView sections/rows count
         //
-        settingsTVC.viewDidLoad()
         let settingsTableView = settingsTVC.tableView
         XCTAssertEqual(settingsTVC.numberOfSections(in:settingsTableView!), Int(SETTINGS_MAX_SECTIONS))
         
