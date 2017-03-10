@@ -31,6 +31,9 @@ class RGButterflyTests: XCTestCase {
     var tableViewCell : UITableViewCell = UITableViewCell()
     var scrollView    : UIScrollView    = UIScrollView()
     var imageView     : UIImageView     = UIImageView()
+    var titleView     : UIView          = UIView()
+    var searchBar     : UISearchBar     = UISearchBar()
+    var cancelButton  : UIButton        = UIButton()
     var imageLibButton: UIBarButtonItem = UIBarButtonItem()
     var backButton    : UIBarButtonItem = UIBarButtonItem()
     var searchButton  : UIBarButtonItem = UIBarButtonItem()
@@ -293,6 +296,7 @@ class RGButterflyTests: XCTestCase {
         //
         XCTAssertGreaterThan(mainVC.subjColorNames.count, 0, "No dictionary colors loaded")
         XCTAssertEqual(mainVC.keywordsIndexTitles.count, 26, "Not all alphabet letters showing")
+
         
         // The views, navigation items and toolbar item title and buttons
         //
@@ -306,11 +310,24 @@ class RGButterflyTests: XCTestCase {
         listingButton   = toolbarItems.removeFirst() as! UIBarButtonItem
         flexibleSpace2  = toolbarItems.removeFirst() as! UIBarButtonItem
         settingsButton  = toolbarItems.removeFirst() as! UIBarButtonItem
+        
+        // Title View
+        //
+        titleView       = mainVC.titleView
 
         // Views
         //
         XCTAssertNotNil(view)
         XCTAssertNotNil(tableView)
+        XCTAssertNotNil(titleView)
+        
+        // Search bar
+        //
+        searchBar = titleView.viewWithTag(Int(SEARCH_BAR_TAG)) as! UISearchBar
+        XCTAssertNotNil(searchBar)
+        cancelButton = titleView.viewWithTag(Int(CANCEL_BUTTON_TAG)) as! UIButton
+        XCTAssertNotNil(cancelButton)
+        
         
         // Nav Buttons
         //
@@ -350,12 +367,15 @@ class RGButterflyTests: XCTestCase {
         
         // Instantiate and test tableView sections/rows count
         //
+        mainVC.loadData()
+
         
         // Test the NavigationController
         //
         var mainNC: UINavigationController = UINavigationController()
         mainNC = storyboard.instantiateViewController(withIdentifier: "NavViewController") as! UINavigationController
         XCTAssertTrue(mainNC.topViewController is ViewController, "ViewController is embedded in UINavigationController")
+
         
         // Test the delegates
         //
