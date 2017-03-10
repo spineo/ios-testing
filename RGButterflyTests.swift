@@ -158,7 +158,7 @@ class RGButterflyTests: XCTestCase {
         //
         assocSwatches = coreDataObj.fetchEntity("MixAssocSwatch") as! [MixAssocSwatch]
         for assoc in assocSwatches {
-            XCTAssertNotNil(assoc.mix_association, "Fount MixAssocSwatch that is not part of a MixAssociation.")
+            XCTAssertNotNil(assoc.mix_association, "Found MixAssocSwatch that is not part of a MixAssociation.")
         }
         
         // MatchAssociation must have children
@@ -288,6 +288,11 @@ class RGButterflyTests: XCTestCase {
         // Final state
         //
         XCTAssertFalse((spinner?.isAnimating)!, "Spinner inactive")
+        
+        // Counts
+        //
+        XCTAssertGreaterThan(mainVC.subjColorNames.count, 0, "No dictionary colors loaded")
+        XCTAssertEqual(mainVC.keywordsIndexTitles.count, 26, "Not all alphabet letters showing")
         
         // The views, navigation items and toolbar item title and buttons
         //
