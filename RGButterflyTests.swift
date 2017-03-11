@@ -381,6 +381,10 @@ class RGButterflyTests: XCTestCase {
         mainNC = storyboard.instantiateViewController(withIdentifier: "NavViewController") as! UINavigationController
         XCTAssertTrue(mainNC.topViewController is ViewController, "ViewController is embedded in UINavigationController")
         
+        // Test actions
+        //
+        XCTAssertTrue(mainVC.canPerformAction(imageLibButton.action!, withSender:mainVC))
+        
         // Test the delegates
         //
     }
