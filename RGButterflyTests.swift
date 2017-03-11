@@ -369,35 +369,17 @@ class RGButterflyTests: XCTestCase {
         //
         let mainTableView = mainVC.colorTableView
         
-        verifyMainFetchedResults(viewController:mainVC, tableView:mainTableView!, listingType:MIX_TYPE)
-        
-        verifyMainFetchedResults(viewController:mainVC, tableView:mainTableView!, listingType:MATCH_TYPE)
-        
-        mainVC.listingType = FULL_LISTING_TYPE
-        mainVC.loadData()
-        entityCount = mainVC.sortedLettersDefaults.count
-        XCTAssertGreaterThan(Int(entityCount), 0)
-        XCTAssertEqual(mainVC.numberOfSections(in:tableView), entityCount)
-        
-        mainVC.listingType = KEYWORDS_TYPE
-        mainVC.loadData()
-        entityCount = mainVC.sortedLetters.count
-        XCTAssertGreaterThan(Int(entityCount), 0)
-        XCTAssertEqual(mainVC.numberOfSections(in:tableView), entityCount)
-        
-        mainVC.listingType = COLORS_TYPE
-        mainVC.loadData()
-        entityCount = mainVC.subjColorNames.count + 1
-        XCTAssertGreaterThan(Int(entityCount), 0)
-        XCTAssertEqual(mainVC.numberOfSections(in:tableView), entityCount)
-    
+        verifyMainVCSectionsCounts(viewController:mainVC, tableView:mainTableView!, listingType:MIX_TYPE)
+        verifyMainVCSectionsCounts(viewController:mainVC, tableView:mainTableView!, listingType:MATCH_TYPE)
+        verifyMainVCSectionsCounts(viewController:mainVC, tableView:mainTableView!, listingType:FULL_LISTING_TYPE)
+        verifyMainVCSectionsCounts(viewController:mainVC, tableView:mainTableView!, listingType:KEYWORDS_TYPE)
+        verifyMainVCSectionsCounts(viewController:mainVC, tableView:mainTableView!, listingType:COLORS_TYPE)
         
         // Test the NavigationController
         //
         var mainNC: UINavigationController = UINavigationController()
         mainNC = storyboard.instantiateViewController(withIdentifier: "NavViewController") as! UINavigationController
         XCTAssertTrue(mainNC.topViewController is ViewController, "ViewController is embedded in UINavigationController")
-
         
         // Test the delegates
         //
@@ -792,10 +774,10 @@ class RGButterflyTests: XCTestCase {
         }
     }
     
-    func verifyMainFetchedResults(viewController:ViewController, tableView:UITableView, listingType:String) {
+    func verifyMainVCSectionsCounts(viewController:ViewController, tableView:UITableView, listingType:String) {
         viewController.listingType = listingType
         viewController.loadData()
-        entityCount = (viewController.fetchedResultsController.sections?.count)!
+        entityCount = Int(viewController.sectionsCount)
         XCTAssertGreaterThan(Int(entityCount), 0)
         XCTAssertEqual(viewController.numberOfSections(in:tableView), entityCount)
     }
