@@ -367,8 +367,30 @@ class RGButterflyTests: XCTestCase {
         
         // Instantiate and test tableView sections/rows count
         //
+        let mainTableView = mainVC.colorTableView
+        
+        verifyMainFetchedResults(viewController:mainVC, tableView:mainTableView!, listingType:MIX_TYPE)
+        
+        verifyMainFetchedResults(viewController:mainVC, tableView:mainTableView!, listingType:MATCH_TYPE)
+        
+        mainVC.listingType = FULL_LISTING_TYPE
         mainVC.loadData()
-
+        entityCount = mainVC.sortedLettersDefaults.count
+        XCTAssertGreaterThan(Int(entityCount), 0)
+        XCTAssertEqual(mainVC.numberOfSections(in:tableView), entityCount)
+        
+        mainVC.listingType = KEYWORDS_TYPE
+        mainVC.loadData()
+        entityCount = mainVC.sortedLetters.count
+        XCTAssertGreaterThan(Int(entityCount), 0)
+        XCTAssertEqual(mainVC.numberOfSections(in:tableView), entityCount)
+        
+        mainVC.listingType = COLORS_TYPE
+        mainVC.loadData()
+        entityCount = mainVC.subjColorNames.count + 1
+        XCTAssertGreaterThan(Int(entityCount), 0)
+        XCTAssertEqual(mainVC.numberOfSections(in:tableView), entityCount)
+    
         
         // Test the NavigationController
         //
@@ -768,6 +790,14 @@ class RGButterflyTests: XCTestCase {
                 XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)' has no parent for type '\(type)!'.")
             }
         }
+    }
+    
+    func verifyMainFetchedResults(viewController:ViewController, tableView:UITableView, listingType:String) {
+        viewController.listingType = listingType
+        viewController.loadData()
+        entityCount = (viewController.fetchedResultsController.sections?.count)!
+        XCTAssertGreaterThan(Int(entityCount), 0)
+        XCTAssertEqual(viewController.numberOfSections(in:tableView), entityCount)
     }
     
     // Backup UserDefaults
