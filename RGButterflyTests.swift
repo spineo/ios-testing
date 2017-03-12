@@ -79,6 +79,8 @@ class RGButterflyTests: XCTestCase {
     var assocSwatches = [MixAssocSwatch]()
     var tapAreas      = [TapArea]()
     
+
+    
     override func setUp() {
         super.setUp()
 
@@ -230,7 +232,7 @@ class RGButterflyTests: XCTestCase {
     
     // Test for segues
     //
-    func runSeguesTests(viewController: UIViewController, seguesList:[String]) {
+    func runSeguesTests(viewController:UIViewController, seguesList:[String]) {
         let identifiers = getSeguesIdentifiers(viewController:viewController)
         XCTAssertEqual(identifiers.count, seguesList.count, "Segue count")
         for segue in seguesList {
@@ -248,6 +250,12 @@ class RGButterflyTests: XCTestCase {
     
     func segueTest(identifiers:[String]) {
         XCTAssertTrue(identifiers.contains("InitViewControllerSegue"), "Segue identifier should exist.")
+    }
+    
+    func verifyDirectSelectors(viewController:UIViewController, actionList:[String]) {
+        for action in actionList {
+            XCTAssertTrue(viewController.canPerformAction(Selector((action)), withSender:self))
+        }
     }
     
     func testPerformanceExample() {

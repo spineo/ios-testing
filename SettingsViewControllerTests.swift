@@ -69,5 +69,22 @@ class SettingsViewControllerTests: RGButterflyTests {
         var settingsNC: UINavigationController = UINavigationController()
         settingsNC = storyboard.instantiateViewController(withIdentifier: "NavSettingsTableViewController") as! UINavigationController
         XCTAssertTrue(settingsNC.topViewController is SettingsTableViewController, "SettingsTableViewController is embedded in UINavigationController")
+        
+        // Test selectors/actions
+        //
+        // Top Navigation Bar
+        //
+        XCTAssertTrue(settingsTVC.canPerformAction(Selector(("goBack:")), withSender:self))
+        XCTAssertTrue(settingsTVC.canPerformAction(#selector(NSManagedObjectContext.save), withSender:self))
+        
+        // TableView Actions
+        //
+        verifyDirectSelectors(viewController:settingsTVC, actionList:["setDbPollUpdateSwitchState:", "setDbForceUpdateSwitchState:", "setPSSwitchState:", "setMASwitchState:", "tapAreaStepperPressed", "changeShape", "matchNumStepperPressed", "doneWithNumberPad", "setRGBDisplayState", "doneWithTextView", "setAlertsFilterSwitchState:"])
+
+        // Bottom Toolbar (the 'Settings' button has no action)
+        //
+        var mainVC: ViewController = ViewController()
+        mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(Selector(("unwindToViewController:")), from:settingsTVC, withSender:self))
     }
 }
