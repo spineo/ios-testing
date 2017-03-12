@@ -141,4 +141,14 @@ class MainViewControllerTests: RGButterflyTests {
         // Test the delegates
         //
     }
+    
+    // Supporting methods
+    //
+    func verifyMainVCSectionsCounts(viewController:ViewController, tableView:UITableView, listingType:String) {
+        viewController.listingType = listingType
+        viewController.loadData()
+        entityCount = Int(viewController.sectionsCount)
+        XCTAssertGreaterThan(Int(entityCount), 0)
+        XCTAssertEqual(viewController.numberOfSections(in:tableView), entityCount)
+    }
 }

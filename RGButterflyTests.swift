@@ -199,6 +199,8 @@ class RGButterflyTests: XCTestCase {
         }
     }
     
+    // Supporting methods
+    //
     func verifyMixSwatchTypes(type:String) {
         // PaintSwatch must be attached to a Mix Association
         //
@@ -212,14 +214,6 @@ class RGButterflyTests: XCTestCase {
                 XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)' has no parent for type '\(type)!'.")
             }
         }
-    }
-    
-    func verifyMainVCSectionsCounts(viewController:ViewController, tableView:UITableView, listingType:String) {
-        viewController.listingType = listingType
-        viewController.loadData()
-        entityCount = Int(viewController.sectionsCount)
-        XCTAssertGreaterThan(Int(entityCount), 0)
-        XCTAssertEqual(viewController.numberOfSections(in:tableView), entityCount)
     }
     
     // Backup UserDefaults
