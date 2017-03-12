@@ -252,9 +252,9 @@ class RGButterflyTests: XCTestCase {
         XCTAssertTrue(identifiers.contains("InitViewControllerSegue"), "Segue identifier should exist.")
     }
     
-    func verifyDirectSelectors(viewController:UIViewController, actionList:[String]) {
+    func verifyDirectActions(viewController:UIViewController, actionList:[String]) {
         for action in actionList {
-            XCTAssertTrue(viewController.canPerformAction(Selector((action)), withSender:self))
+            XCTAssertTrue(viewController.canPerformAction(Selector((action)), withSender:self), "Action '\(action)' failed.")
         }
     }
     

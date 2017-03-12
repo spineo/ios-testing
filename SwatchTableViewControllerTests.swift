@@ -48,5 +48,13 @@ class SwatchTableViewControllerTests: RGButterflyTests {
         var detailNC: UINavigationController = UINavigationController()
         detailNC = storyboard.instantiateViewController(withIdentifier: "NavSwatchDetailTableViewController") as! UINavigationController
         XCTAssertTrue(detailNC.topViewController is SwatchDetailTableViewController, "SwatchDetailTableViewController is embedded in UINavigationController")
+        
+        // Top Navigation Bar action
+        //
+        XCTAssertTrue(detailTVC.canPerformAction(Selector(("goBack:")), withSender:self))
+        
+        // View internal
+        //
+        verifyDirectActions(viewController:detailTVC, actionList:["typesSelection", "colorSelection", "brandSelection", "bodySelection", "pigmentSelection", "coverageSelection"])
     }
 }

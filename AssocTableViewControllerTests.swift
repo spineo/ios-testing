@@ -61,5 +61,23 @@ class AssocTableViewControllerTests: RGButterflyTests {
         var assocNC: UINavigationController = UINavigationController()
         assocNC = storyboard.instantiateViewController(withIdentifier: "NavAssocTableViewController") as! UINavigationController
         XCTAssertTrue(assocNC.topViewController is AssocTableViewController, "AssocTableViewController is embedded in UINavigationController")
+        
+        // Test actions
+        //
+        // NavBar
+        //
+        var imageVC: UIImageViewController = UIImageViewController()
+        imageVC = storyboard.instantiateViewController(withIdentifier: "UIImageViewController") as! UIImageViewController
+        XCTAssertTrue(imageVC.canPerformUnwindSegueAction(Selector(("unwindToImageViewFromAssoc:")), from:assocTVC, withSender:self))
+        
+        // Internal Views
+        //
+        verifyDirectActions(viewController:assocTVC, actionList:["showAssocTypePicker", "showCoveragePicker", "showMixRatiosPicker", "applyRenaming", "ratiosSelection", "assocTypeSelection", "coverageSelection"])
+        
+        // Toolbar ('Settings' button is a segue)
+        //
+        var mainVC: ViewController = ViewController()
+        mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(Selector(("unwindToViewController:")), from:assocTVC, withSender:self))
     }
 }

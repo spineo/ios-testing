@@ -47,5 +47,9 @@ class AboutViewControllerTests: RGButterflyTests {
         var aboutNC: UINavigationController = UINavigationController()
         aboutNC = storyboard.instantiateViewController(withIdentifier: "NavAboutViewController") as! UINavigationController
         XCTAssertTrue(aboutNC.topViewController is AboutViewController, "AboutViewController is embedded in UINavigationController")
+        
+        // Top Navigation Bar action
+        //
+        XCTAssertTrue(aboutVC.canPerformAction(Selector(("goBack:")), withSender:self))
     }
 }

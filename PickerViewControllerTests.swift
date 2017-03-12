@@ -39,5 +39,9 @@ class PickerViewControllerTests: RGButterflyTests {
         // Test for segues
         //
         runSeguesTests(viewController:pickerVC, seguesList:["ImageViewSegue"])
+        
+        // Test selectors/actions
+        //
+        XCTAssertTrue(pickerVC.canPerformAction(Selector(("dismissPicker:")), withSender:self))
     }
 }

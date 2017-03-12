@@ -76,5 +76,21 @@ class MatchTableViewControllerTests: RGButterflyTests {
         var matchNC: UINavigationController = UINavigationController()
         matchNC = storyboard.instantiateViewController(withIdentifier: "NavMatchTableViewController") as! UINavigationController
         XCTAssertTrue(matchNC.topViewController is MatchTableViewController, "MatchTableViewController is embedded in UINavigationController")
+        
+        // Test actions
+        //
+        // NavBar
+        //
+        var imageVC: UIImageViewController = UIImageViewController()
+        imageVC = storyboard.instantiateViewController(withIdentifier: "UIImageViewController") as! UIImageViewController
+        XCTAssertTrue(imageVC.canPerformUnwindSegueAction(Selector(("unwindToImageViewFromMatch:")), from:matchTVC, withSender:self))
+        
+        // Internal Views
+        //
+        verifyDirectActions(viewController:matchTVC, actionList:["pressCell:"])
+        
+        // Toolbar
+        //
+        verifyDirectActions(viewController:matchTVC, actionList:["toggleRGB:", "decr:", "toggleAction:", "incr:", "removeTableRows:", "addTableRows:"])
     }
 }

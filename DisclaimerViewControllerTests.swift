@@ -47,5 +47,9 @@ class DisclaimerViewControllerTests: RGButterflyTests {
         var disclaimerNC: UINavigationController = UINavigationController()
         disclaimerNC = storyboard.instantiateViewController(withIdentifier: "NavDisclaimerViewController") as! UINavigationController
         XCTAssertTrue(disclaimerNC.topViewController is DisclaimerViewController, "DisclaimerViewController is embedded in UINavigationController")
+        
+        // Top Navigation Bar action
+        //
+        XCTAssertTrue(disclaimerVC.canPerformAction(Selector(("goBack:")), withSender:self))
     }
 }

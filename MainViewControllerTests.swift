@@ -136,7 +136,17 @@ class MainViewControllerTests: RGButterflyTests {
         
         // Test actions
         //
-        XCTAssertTrue(mainVC.canPerformAction(imageLibButton.action!, withSender:mainVC))
+        // NavBar
+        //
+        verifyDirectActions(viewController:mainVC, actionList:["showPhotoOptions:", "search"])
+        
+        // Tableview
+        //
+        verifyDirectActions(viewController:mainVC, actionList:["showAllColors", "filterByReference", "filterByGenerics", "searchBarSetFrames", "pressCancel", "expandAllSections", "expandOrCollapseSection:", "collapseAllSections", "mergeChanges:"])
+        
+        // Toolbar ('Home' button is inactive and 'Settings' button triggers a segue)
+        //
+        verifyDirectActions(viewController:mainVC, actionList:["showListingOptions:"])
         
         // Test the delegates
         //

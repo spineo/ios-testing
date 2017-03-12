@@ -87,5 +87,23 @@ class ImageViewControllerTests: RGButterflyTests {
         var imageNC: UIImageViewNavigationController = UIImageViewNavigationController()
         imageNC = storyboard.instantiateViewController(withIdentifier: "NavUIImageViewController") as! UIImageViewNavigationController
         XCTAssertTrue(imageNC.topViewController is UIImageViewController, "UIImageViewController is embedded in UIImageViewNavigationController")
+        
+        // Test actions
+        //
+        // NavBar
+        //
+        verifyDirectActions(viewController:imageVC, actionList:["goBack:", "editAlertShow:"])
+        
+        // View internal
+        //
+        verifyDirectActions(viewController:imageVC, actionList:["respondToTap:", "respondToPinch:", "handleLongPress:", "moveTapArea:", "selectMatchAction", "selectAssocAction", "scrollViewIncrease", "scrollViewDecrease"])
+        
+        // Toolbar ('View' and 'Settings' are segues)
+        //
+        var mainVC: ViewController = ViewController()
+        mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(Selector(("unwindToViewController:")), from:imageVC, withSender:self))
+        verifyDirectActions(viewController:imageVC, actionList:["decrMatchAlgorithm:", "showTypeOptions:", "incrMatchAlgorithm:", "segueToMatchOrAssoc:"])
+        // Disabled: "removeTableRows:" and "addTableRows:"
     }
 }

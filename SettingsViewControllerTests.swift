@@ -79,7 +79,7 @@ class SettingsViewControllerTests: RGButterflyTests {
         
         // TableView Actions
         //
-        verifyDirectSelectors(viewController:settingsTVC, actionList:["setDbPollUpdateSwitchState:", "setDbForceUpdateSwitchState:", "setPSSwitchState:", "setMASwitchState:", "tapAreaStepperPressed", "changeShape", "matchNumStepperPressed", "doneWithNumberPad", "setRGBDisplayState", "doneWithTextView", "setAlertsFilterSwitchState:"])
+        verifyDirectActions(viewController:settingsTVC, actionList:["setDbPollUpdateSwitchState:", "setDbForceUpdateSwitchState:", "setPSSwitchState:", "setMASwitchState:", "tapAreaStepperPressed", "changeShape", "matchNumStepperPressed", "doneWithNumberPad", "setRGBDisplayState", "doneWithTextView", "setAlertsFilterSwitchState:"])
 
         // Bottom Toolbar (the 'Settings' button has no action)
         //

@@ -61,5 +61,12 @@ class AddMixTableViewControllerTests: RGButterflyTests {
         var addMixNC: UINavigationController = UINavigationController()
         addMixNC = storyboard.instantiateViewController(withIdentifier: "NavAddMixTableViewController") as! UINavigationController
         XCTAssertTrue(addMixNC.topViewController is AddMixTableViewController, "AddMixTableViewController is embedded in UINavigationController")
+        
+        // Test selectors/actions
+        //
+        var assocTVC: AssocTableViewController = AssocTableViewController()
+        assocTVC = storyboard.instantiateViewController(withIdentifier: "AssocTableViewController") as! AssocTableViewController
+        XCTAssertTrue(assocTVC.canPerformUnwindSegueAction(Selector(("unwindToAssocFromAdd:")), from:addMixTVC, withSender:self))
+        XCTAssertTrue(addMixTVC.canPerformAction(Selector(("searchMix:")), withSender:self))
     }
 }
