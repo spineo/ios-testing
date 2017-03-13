@@ -124,8 +124,15 @@ class MainViewControllerTests: RGButterflyTests {
         //
         let mainTableView = mainVC.colorTableView
         let listingTypes = [MIX_TYPE, MATCH_TYPE, FULL_LISTING_TYPE, KEYWORDS_TYPE, COLORS_TYPE];
+
         for type in listingTypes {
             verifyMainVCSectionsCounts(viewController:mainVC, tableView:mainTableView!, listingType:type)
+            
+            // Verify the collection views
+            //
+            if (type == MIX_TYPE || type == MATCH_TYPE) {
+                verifyCollectionView(tableView:mainTableView!)
+            }
         }
         
         // Test the NavigationController

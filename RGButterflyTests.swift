@@ -258,6 +258,19 @@ class RGButterflyTests: XCTestCase {
         }
     }
     
+    func verifyCollectionView(tableView:UITableView) {
+        let refIndexPath = NSIndexPath(row:0, section:0)
+        let subviews = (tableView.cellForRow(at:refIndexPath
+            as IndexPath)?.contentView)?.subviews
+        for view in subviews! {
+            if view is UICollectionView {
+                let collectionView = view as! UICollectionView
+                XCTAssertGreaterThan(collectionView.numberOfSections, 0)
+                XCTAssertGreaterThan(collectionView.numberOfItems(inSection:0), 0)
+            }
+        }
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
