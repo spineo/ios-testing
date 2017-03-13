@@ -6,3 +6,5 @@ Dependencies: XCTest/XCTest.h (The XCTest file need to be added as a compile tar
 Requirements (InitViewController tests)
 There is Network Connectivity
 The Jenkins server is running during the test
+
+RGButterflyTests is the main class. Controller tests are broken down into subclasses.
