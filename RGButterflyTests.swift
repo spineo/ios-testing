@@ -258,15 +258,21 @@ class RGButterflyTests: XCTestCase {
         }
     }
     
-    func verifyCollectionView(tableView:UITableView) {
-        let refIndexPath = NSIndexPath(row:0, section:0)
-        let subviews = (tableView.cellForRow(at:refIndexPath
-            as IndexPath)?.contentView)?.subviews
-        for view in subviews! {
-            if view is UICollectionView {
-                let collectionView = view as! UICollectionView
-                XCTAssertGreaterThan(collectionView.numberOfSections, 0)
-                XCTAssertGreaterThan(collectionView.numberOfItems(inSection:0), 0)
+    func verifyCollectionView(viewController:ViewController, tableView:UITableView, listingType:String) {
+        viewController.listingType = listingType
+        viewController.loadData()
+
+        let maxIndex = viewController.tableView(tableView, numberOfRowsInSection:0) - 1
+        for row in 0...maxIndex {
+            let refIndexPath = NSIndexPath(row:row, section:0)
+            let cell = viewController.tableView(tableView, cellForRowAt:refIndexPath as IndexPath)
+            let subviews = (cell.contentView).subviews
+            for view in subviews {
+                if view is UICollectionView {
+                    let collectionView = view as! UICollectionView
+                    XCTAssertGreaterThan(collectionView.numberOfSections, 0)
+                    XCTAssertGreaterThan(collectionView.numberOfItems(inSection:0), 0)
+                }
             }
         }
     }

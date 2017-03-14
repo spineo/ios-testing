@@ -131,7 +131,7 @@ class MainViewControllerTests: RGButterflyTests {
             // Verify the collection views
             //
             if (type == MIX_TYPE || type == MATCH_TYPE) {
-                verifyCollectionView(tableView:mainTableView!)
+                verifyCollectionView(viewController:mainVC, tableView:mainTableView!, listingType:type)
             }
         }
         
