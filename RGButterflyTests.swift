@@ -78,9 +78,7 @@ class RGButterflyTests: XCTestCase {
     var paintSwatch   : PaintSwatches     = PaintSwatches()
     var assocSwatches = [MixAssocSwatch]()
     var tapAreas      = [TapArea]()
-    
-
-    
+ 
     override func setUp() {
         super.setUp()
 
@@ -201,7 +199,9 @@ class RGButterflyTests: XCTestCase {
         }
     }
     
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Supporting methods
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //
     func verifyMixSwatchTypes(type:String) {
         // PaintSwatch must be attached to a Mix Association
@@ -248,16 +248,17 @@ class RGButterflyTests: XCTestCase {
         return identifiers
     }
     
-    func segueTest(identifiers:[String]) {
-        XCTAssertTrue(identifiers.contains("InitViewControllerSegue"), "Segue identifier should exist.")
-    }
-    
+    // Verify that selector actions can be invoked
+    //
     func verifyDirectActions(viewController:UIViewController, actionList:[String]) {
         for action in actionList {
             XCTAssertTrue(viewController.canPerformAction(Selector((action)), withSender:self), "Action '\(action)' failed.")
         }
     }
     
+    // Verify that collection views are associated with specific tableView cells (i.e., Match/Mix)
+    // and each collection view contains more than zero items
+    //
     func verifyCollectionView(viewController:ViewController, tableView:UITableView, listingType:String) {
         viewController.listingType = listingType
         viewController.loadData()
