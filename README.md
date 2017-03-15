@@ -3,8 +3,8 @@ Unit and UI Testing in Swift with XCTest framework and Accessibility. Requiremen
 
 Dependencies: XCTest/XCTest.h (The XCTest file need to be added as a compile target to Tests under 'BuildPhases' for this to build)
 
-Requirements (InitViewController tests)
-There is Network Connectivity
-The Jenkins server is running during the test
+Requirements for InitViewControllerTests:
+* There is Network Connectivity
+* The Jenkins server is running during the test
 
-RGButterflyTests is the main class. Controller tests are broken down into subclasses.
+RGButterflyTests is the main class used for initialization and testing the datamodel counts and relations. Controller class tests test the controller components and relations.
