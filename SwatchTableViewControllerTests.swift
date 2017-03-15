@@ -56,5 +56,11 @@ class SwatchTableViewControllerTests: RGButterflyTests {
         // View internal
         //
         verifyDirectActions(viewController:detailTVC, actionList:["typesSelection", "colorSelection", "brandSelection", "bodySelection", "pigmentSelection", "coverageSelection"])
+        
+        // Verify tableView components
+        //
+        // No data load first
+        //
+        XCTAssertEqual(Int32(detailTVC.numberOfSections(in:tableView)), DETAIL_MAX_SECTION-3)
     }
 }
