@@ -157,6 +157,10 @@ class MainViewControllerTests: RGButterflyTests {
         
         // Test the delegates
         //
+        
+        // Test the IBOutlet
+        //
+        XCTAssertNotNil(mainVC.colorTableView, "IBOutlet 'colorTableView' is nil")
     }
     
     // Supporting methods

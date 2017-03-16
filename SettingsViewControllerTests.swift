@@ -85,6 +85,6 @@ class SettingsViewControllerTests: RGButterflyTests {
         //
         var mainVC: MainViewController = MainViewController()
         mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
-        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(Selector(("unwindToViewController:")), from:settingsTVC, withSender:self))
+        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(#selector(MainViewController.unwind(toViewController:)), from:settingsTVC, withSender:self))
     }
 }

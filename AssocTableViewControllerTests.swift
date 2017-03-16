@@ -78,6 +78,6 @@ class AssocTableViewControllerTests: RGButterflyTests {
         //
         var mainVC: MainViewController = MainViewController()
         mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
-        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(Selector(("unwindToViewController:")), from:assocTVC, withSender:self))
+        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(#selector(MainViewController.unwind(toViewController:)), from:assocTVC, withSender:self))
     }
 }

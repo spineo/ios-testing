@@ -102,8 +102,15 @@ class ImageViewControllerTests: RGButterflyTests {
         //
         var mainVC: MainViewController = MainViewController()
         mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
-        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(Selector(("unwindToViewController:")), from:imageVC, withSender:self))
+        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(#selector(MainViewController.unwind(toViewController:)), from:imageVC, withSender:self))
         verifyDirectActions(viewController:imageVC, actionList:["decrMatchAlgorithm:", "showTypeOptions:", "incrMatchAlgorithm:", "segueToMatchOrAssoc:"])
         // Disabled: "removeTableRows:" and "addTableRows:"
+
+        
+        // Test the IBOutlets
+        //
+        XCTAssertNotNil(imageVC.imageScrollView, "IBOutlet 'imageScrollView' is nil")
+        XCTAssertNotNil(imageVC.imageView, "IBOutlet 'imageView' is nil")
+        XCTAssertNotNil(imageVC.imageTableView, "IBOutlet 'imageTableView' is nil")
     }
 }
