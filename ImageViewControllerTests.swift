@@ -20,11 +20,11 @@ class ImageViewControllerTests: RGButterflyTests {
         super.tearDown()
     }
     
-    // UIImageViewController
+    // ImageViewController
     //
-    func testUIImageViewController() {
-        var imageVC: UIImageViewController = UIImageViewController()
-        imageVC = storyboard.instantiateViewController(withIdentifier: "UIImageViewController") as! UIImageViewController
+    func testImageViewController() {
+        var imageVC: ImageViewController = ImageViewController()
+        imageVC = storyboard.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
         
         view            = imageVC.view
         tableView       = view.viewWithTag(Int(TABLEVIEW_TAG))  as! UITableView
@@ -84,9 +84,9 @@ class ImageViewControllerTests: RGButterflyTests {
         
         // Test the NavigationController
         //
-        var imageNC: UIImageViewNavigationController = UIImageViewNavigationController()
-        imageNC = storyboard.instantiateViewController(withIdentifier: "NavUIImageViewController") as! UIImageViewNavigationController
-        XCTAssertTrue(imageNC.topViewController is UIImageViewController, "UIImageViewController is embedded in UIImageViewNavigationController")
+        var imageNC: ImageViewNavigationController = ImageViewNavigationController()
+        imageNC = storyboard.instantiateViewController(withIdentifier: "NavImageViewController") as! ImageViewNavigationController
+        XCTAssertTrue(imageNC.topViewController is ImageViewController, "ImageViewController is embedded in ImageViewNavigationController")
         
         // Test actions
         //
@@ -100,8 +100,8 @@ class ImageViewControllerTests: RGButterflyTests {
         
         // Toolbar ('View' and 'Settings' are segues)
         //
-        var mainVC: ViewController = ViewController()
-        mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        var mainVC: MainViewController = MainViewController()
+        mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         XCTAssertTrue(mainVC.canPerformUnwindSegueAction(Selector(("unwindToViewController:")), from:imageVC, withSender:self))
         verifyDirectActions(viewController:imageVC, actionList:["decrMatchAlgorithm:", "showTypeOptions:", "incrMatchAlgorithm:", "segueToMatchOrAssoc:"])
         // Disabled: "removeTableRows:" and "addTableRows:"

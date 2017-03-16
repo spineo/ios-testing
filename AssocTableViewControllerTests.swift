@@ -66,8 +66,8 @@ class AssocTableViewControllerTests: RGButterflyTests {
         //
         // NavBar
         //
-        var imageVC: UIImageViewController = UIImageViewController()
-        imageVC = storyboard.instantiateViewController(withIdentifier: "UIImageViewController") as! UIImageViewController
+        var imageVC: ImageViewController = ImageViewController()
+        imageVC = storyboard.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
         XCTAssertTrue(imageVC.canPerformUnwindSegueAction(Selector(("unwindToImageViewFromAssoc:")), from:assocTVC, withSender:self))
         
         // Internal Views
@@ -76,8 +76,8 @@ class AssocTableViewControllerTests: RGButterflyTests {
         
         // Toolbar ('Settings' button is a segue)
         //
-        var mainVC: ViewController = ViewController()
-        mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        var mainVC: MainViewController = MainViewController()
+        mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         XCTAssertTrue(mainVC.canPerformUnwindSegueAction(Selector(("unwindToViewController:")), from:assocTVC, withSender:self))
     }
 }

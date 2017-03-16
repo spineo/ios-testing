@@ -20,11 +20,11 @@ class MainViewControllerTests: RGButterflyTests {
         super.tearDown()
     }
     
-    // Main ViewController Unit Tests
+    // MainViewController Unit Tests
     //
     func testMainViewController() {
-        var mainVC: ViewController = ViewController()
-        mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        var mainVC: MainViewController = MainViewController()
+        mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         view   = mainVC.view
         
         // Instantiate
@@ -139,7 +139,7 @@ class MainViewControllerTests: RGButterflyTests {
         //
         var mainNC: UINavigationController = UINavigationController()
         mainNC = storyboard.instantiateViewController(withIdentifier: "NavViewController") as! UINavigationController
-        XCTAssertTrue(mainNC.topViewController is ViewController, "ViewController is embedded in UINavigationController")
+        XCTAssertTrue(mainNC.topViewController is MainViewController, "MainViewController is embedded in UINavigationController")
         
         // Test actions
         //
@@ -161,7 +161,7 @@ class MainViewControllerTests: RGButterflyTests {
     
     // Supporting methods
     //
-    func verifyMainVCSectionsCounts(viewController:ViewController, tableView:UITableView, listingType:String) {
+    func verifyMainVCSectionsCounts(viewController:MainViewController, tableView:UITableView, listingType:String) {
         viewController.listingType = listingType
         viewController.loadData()
         entityCount = Int(viewController.sectionsCount)

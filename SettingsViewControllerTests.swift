@@ -83,8 +83,8 @@ class SettingsViewControllerTests: RGButterflyTests {
 
         // Bottom Toolbar (the 'Settings' button has no action)
         //
-        var mainVC: ViewController = ViewController()
-        mainVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        var mainVC: MainViewController = MainViewController()
+        mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         XCTAssertTrue(mainVC.canPerformUnwindSegueAction(Selector(("unwindToViewController:")), from:settingsTVC, withSender:self))
     }
 }

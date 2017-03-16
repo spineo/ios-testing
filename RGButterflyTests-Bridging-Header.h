@@ -4,12 +4,12 @@
 #import <UIKit/UIKit.h>
 #import "GlobalSettings.h"
 #import "InitViewController.h"
-#import "ViewController.h"
+#import "MainViewController.h"
 #import "SettingsTableViewController.h"
 #import "AboutViewController.h"
 #import "DisclaimerViewController.h"
 #import "PickerViewController.h"
-#import "UIImageViewController.h"
+#import "ImageViewController.h"
 
 #import "MatchTableViewController.h"
 #import "PaintSwatches.h"
@@ -19,7 +19,7 @@
 #import "SwatchDetailTableViewController.h"
 #import "AddMixTableViewController.h"
 
-#import "UIImageViewNavigationController.h"
+#import "ImageViewNavigationController.h"
 
 // HTTPUtils and External Utilities (for testing the requirements)
 //

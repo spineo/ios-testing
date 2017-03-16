@@ -259,7 +259,7 @@ class RGButterflyTests: XCTestCase {
     // Verify that collection views are associated with specific tableView cells (i.e., Match/Mix)
     // and each collection view contains more than zero items
     //
-    func verifyCollectionView(viewController:ViewController, tableView:UITableView, listingType:String) {
+    func verifyCollectionView(viewController:MainViewController, tableView:UITableView, listingType:String) {
         viewController.listingType = listingType
         viewController.loadData()
 

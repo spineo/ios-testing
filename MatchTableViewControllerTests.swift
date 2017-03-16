@@ -81,8 +81,8 @@ class MatchTableViewControllerTests: RGButterflyTests {
         //
         // NavBar
         //
-        var imageVC: UIImageViewController = UIImageViewController()
-        imageVC = storyboard.instantiateViewController(withIdentifier: "UIImageViewController") as! UIImageViewController
+        var imageVC: ImageViewController = ImageViewController()
+        imageVC = storyboard.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
         XCTAssertTrue(imageVC.canPerformUnwindSegueAction(Selector(("unwindToImageViewFromMatch:")), from:matchTVC, withSender:self))
         
         // Internal Views
