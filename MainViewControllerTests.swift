@@ -10,9 +10,13 @@ import XCTest
 
 class MainViewControllerTests: RGButterflyTests {
     
+    var mainVC: MainViewController = MainViewController()
+    var listingTypes = [String]()
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        listingTypes = [MIX_TYPE, MATCH_TYPE, FULL_LISTING_TYPE, KEYWORDS_TYPE, COLORS_TYPE];
     }
     
     override func tearDown() {
@@ -23,14 +27,13 @@ class MainViewControllerTests: RGButterflyTests {
     // MainViewController Unit Tests
     //
     func testMainViewController() {
-        var mainVC: MainViewController = MainViewController()
-        mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
-        view   = mainVC.view
+        self.mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+        view   = self.mainVC.view
         
         // Instantiate
         //
-        mainVC.viewDidLoad()
-        mainVC.viewWillAppear(true)
+        self.mainVC.viewDidLoad()
+        self.mainVC.viewWillAppear(true)
         
         // Check the update label and spinner initial states
         //
@@ -40,8 +43,8 @@ class MainViewControllerTests: RGButterflyTests {
         let spinner     = view.viewWithTag(Int(INIT_SPINNER_TAG)) as? UIActivityIndicatorView
         XCTAssert((spinner?.isAnimating)!, "Spinner active")
         
-        mainVC.viewDidAppear(true)
-        mainVC.viewDidDisappear(true)
+        self.mainVC.viewDidAppear(true)
+        self.mainVC.viewDidDisappear(true)
         
         // Final state
         //
@@ -56,10 +59,10 @@ class MainViewControllerTests: RGButterflyTests {
         // The views, navigation items and toolbar item title and buttons
         //
         tableView      = view.subviews.first as! UITableView
-        imageLibButton = mainVC.navigationItem.leftBarButtonItem!
-        searchButton   = mainVC.navigationItem.rightBarButtonItem!
+        imageLibButton = self.mainVC.navigationItem.leftBarButtonItem!
+        searchButton   = self.mainVC.navigationItem.rightBarButtonItem!
         
-        toolbarItems    = mainVC.toolbarItems!
+        toolbarItems    = self.mainVC.toolbarItems!
         homeButton      = toolbarItems.removeFirst() as! UIBarButtonItem
         flexibleSpace   = toolbarItems.removeFirst() as! UIBarButtonItem
         listingButton   = toolbarItems.removeFirst() as! UIBarButtonItem
@@ -68,7 +71,7 @@ class MainViewControllerTests: RGButterflyTests {
         
         // Title View
         //
-        titleView       = mainVC.titleView
+        titleView       = self.mainVC.titleView
         
         // Views
         //
@@ -122,10 +125,9 @@ class MainViewControllerTests: RGButterflyTests {
         
         // Instantiate and test tableView sections/rows count
         //
-        let mainTableView = mainVC.colorTableView
-        let listingTypes = [MIX_TYPE, MATCH_TYPE, FULL_LISTING_TYPE, KEYWORDS_TYPE, COLORS_TYPE];
+        let mainTableView = self.mainVC.colorTableView
 
-        for type in listingTypes {
+        for type in self.listingTypes {
             verifyMainVCSectionsCounts(viewController:mainVC, tableView:mainTableView!, listingType:type)
             
             // Verify the collection views
@@ -161,6 +163,21 @@ class MainViewControllerTests: RGButterflyTests {
         // Test the IBOutlet
         //
         XCTAssertNotNil(mainVC.colorTableView, "IBOutlet 'colorTableView' is nil")
+    }
+
+    // Measure times to display each listing
+    //
+    func testListingDisplay() {
+        self.mainVC.viewDidLoad()
+        self.mainVC.viewWillAppear(true)
+
+        self.measure {
+            for type in self.listingTypes {
+                print("Measuring Listing Type '\(type)' for Performance.")
+                self.mainVC.listingType = type
+                self.mainVC.loadData()
+            }
+        }
     }
     
     // Supporting methods
