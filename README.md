@@ -101,6 +101,6 @@ _None not covered above_
 ### DisclaimerViewController
 _None not covered above_
 
-## Missing Tests
+## Nice to Have Tests
 * Class delegates
 * Layout Constraints
