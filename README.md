@@ -26,11 +26,44 @@ RGButterflyTests is the main class used for initialization and testing the datam
 * All PaintSwatches must be associated with a PaintSwatchType (with exception of 'MatchAssoc')
 * All Keywords must be associated with a SwatchKeyword 
 
+### Views
+* Main Controller View is not Nil
+* Main Controller View title is not Nil
+
+### TableViews
+* Any TableView associated with the Controller is not Nil
+* Based on context, table view contains the correct number of sections
+
+### Connections
+* All associated Segues are accessible
+* Views controllers are embedded in Navigation Controllers where applicable
+* Navigation Controllers have an associated identifier
+* Actions associated with item/view selectors exist
+* Unwind Actions associated with item/view selectors exist
+* IBOutlets associated with item/view are not Nil
+
+### TitleView/NavBar/Toolbar Items
+* SearchBars/Buttons associated with the TitleView are not Nil
+* NavBar buttons exist and are associated with assigned tag value
+* Toolbar items exist and are associated with assigned tag value
+* Toolbar items are enabled when applicable
+
 ## InitViewController
 * Network Connectivity
 * REST API Connectivity
+* Activity Indicator label appears after 'viewDidAppear'
+* Activity Indicator is animating after 'viewDidAppear'
 
 ## MainViewController
+* Activity Indicator label appears after 'viewDidAppear'
+* Activity Indicator is animating after 'viewDidAppear'
+* Activity Indicator stops animating after 'viewDidDisappear'
+* Subjective Color Names dictionary is loaded with greater than zero entities
+* Keyword Index Titles array contains 26 elements (i.e., alphabet letters)
+* PaintSwatches count is greater than zero
+* CollectionViews associated with a tableView cell are not nil
+* CollectionViews have more than zero items
+
 
 ## PickerViewController
 
