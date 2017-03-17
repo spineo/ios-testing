@@ -11,14 +11,14 @@ RGButterflyTests is the main class used for initialization and testing the datam
 
 ## Tests Common to All Controllers
 
-### Datamodel Counts
+#### Datamodel Counts
 * Dictionary entities exist and have count greater than zero
 * Dictionary entities count matches initialization file count
 * Main entities exist and have count greater than zero (with exception of secondary keywords entities)
 * Greater than zero PaintSwatches and TapAreas are associated with a MatchAssociation
 * Number of TapAreas and PaintSwatches associated with a MatchAssociation are equal
 
-### Datamodel Relations
+#### Datamodel Relations
 * MixAssociations have more than zero children
 * All MixAssociationSwatches must be part of a MixAssociation
 * MatchAssociations have more than zero children
@@ -26,35 +26,41 @@ RGButterflyTests is the main class used for initialization and testing the datam
 * All PaintSwatches must be associated with a PaintSwatchType (with exception of 'MatchAssoc')
 * All Keywords must be associated with a SwatchKeyword 
 
-### Views
+#### Controller
+* Controller can be instantiated with identifier
+
+#### Views
 * Main Controller View is not Nil
 * Main Controller View title is not Nil
 
-### TableViews
+#### TableViews
 * Any TableView associated with the Controller is not Nil
 * Based on context, table view contains the correct number of sections
 
-### Connections
+#### Connections
 * All associated Segues are accessible
 * Views controllers are embedded in Navigation Controllers where applicable
 * Navigation Controllers have an associated identifier
-* Actions associated with item/view selectors exist
-* Unwind Actions associated with item/view selectors exist
+* Actions associated with item/view selectors exist and can be performed
+* Unwind Segues associated with item/view selectors exist and can be performed
 * IBOutlets associated with item/view are not Nil
 
-### TitleView/NavBar/Toolbar Items
+#### TitleView/NavBar/Toolbar Items
 * SearchBars/Buttons associated with the TitleView are not Nil
 * NavBar buttons exist and are associated with assigned tag value
 * Toolbar items exist and are associated with assigned tag value
-* Toolbar items are enabled when applicable
+* Toolbar items are enabled/disabled based on context
+* Flexible/Fixed Space items accounted for
 
-## InitViewController
+## Controller-Specific Tests
+
+### InitViewController
 * Network Connectivity
 * REST API Connectivity
 * Activity Indicator label appears after 'viewDidAppear'
 * Activity Indicator is animating after 'viewDidAppear'
 
-## MainViewController
+### MainViewController
 * Activity Indicator label appears after 'viewDidAppear'
 * Activity Indicator is animating after 'viewDidAppear'
 * Activity Indicator stops animating after 'viewDidDisappear'
@@ -64,23 +70,37 @@ RGButterflyTests is the main class used for initialization and testing the datam
 * CollectionViews associated with a tableView cell are not nil
 * CollectionViews have more than zero items
 
+_Performance Tests: Measure time to load each type of listing_
 
-## PickerViewController
+### PickerViewController
+_None not covered above_
 
-## ImageViewController
+### ImageViewController
+* ScrollView can be accessed with identifier and is not Nil
+* ImageView can be accessed with identifier and is not Nil
 
-## AssocTableViewController
+### AssocTableViewController
+_None not covered above_
 
-## AddMixTableViewController
+### AddMixTableViewController
+_None not covered above_
 
-## MatchTableViewController
+### MatchTableViewController
+_None not covered above_
 
-## SwatchTableViewController
+### SwatchTableViewController
+_None not covered above_
 
-## SettingsViewController
+### SettingsViewController
+* tableView has the correct number of sections
+* Each tableView section has more than zero rows
 
-## AboutViewController
+### AboutViewController
+_None not covered above_
 
-## DisclaimerViewController
+### DisclaimerViewController
+_None not covered above_
 
-## Performance Tests
+## Missing Tests
+* Class delegates
+* Layout Constraints
