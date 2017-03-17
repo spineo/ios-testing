@@ -24,4 +24,30 @@ RGButterflyTests is the main class used for initialization and testing the datam
 * MatchAssociations have more than zero children
 * All TapAreas must be part of a MatchAssociation
 * All PaintSwatches must be associated with a PaintSwatchType (with exception of 'MatchAssoc')
-* All Keywords must be associated with a SwatchKeyword
+* All Keywords must be associated with a SwatchKeyword 
+
+## InitViewController
+* Network Connectivity
+* REST API Connectivity
+
+## MainViewController
+
+## PickerViewController
+
+## ImageViewController
+
+## AssocTableViewController
+
+## AddMixTableViewController
+
+## MatchTableViewController
+
+## SwatchTableViewController
+
+## SettingsViewController
+
+## AboutViewController
+
+## DisclaimerViewController
+
+## Performance Tests
