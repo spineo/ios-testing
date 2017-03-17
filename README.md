@@ -8,3 +8,20 @@ Requirements for InitViewControllerTests:
 * The Jenkins server is running during the test
 
 RGButterflyTests is the main class used for initialization and testing the datamodel counts and relations. Controller class tests test the controller components and relations.
+
+## Tests Common to All Controllers
+
+### Datamodel Counts
+* Dictionary entities exist and have count greater than zero
+* Dictionary entities count matches initialization file count
+* Main entities exist and have count greater than zero (with exception of secondary keywords entities)
+* Greater than zero PaintSwatches and TapAreas are associated with a MatchAssociation
+* Number of TapAreas and PaintSwatches associated with a MatchAssociation are equal
+
+### Datamodel Relations
+* MixAssociations have more than zero children
+* All MixAssociationSwatches must be part of a MixAssociation
+* MatchAssociations have more than zero children
+* All TapAreas must be part of a MatchAssociation
+* All PaintSwatches must be associated with a PaintSwatchType (with exception of 'MatchAssoc')
+* All Keywords must be associated with a SwatchKeyword
