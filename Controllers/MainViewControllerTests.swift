@@ -173,7 +173,7 @@ class MainViewControllerTests: RGButterflyTests {
 
         self.measure {
             for type in self.listingTypes {
-                print("Measuring Listing Type '\(type)' for Performance.")
+                print("*** Measuring Listing Type '\(type)' for Performance ***")
                 self.mainVC.listingType = type
                 self.mainVC.loadData()
             }
