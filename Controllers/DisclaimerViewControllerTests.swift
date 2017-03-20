@@ -8,7 +8,7 @@
 
 import XCTest
 
-class DisclaimerViewControllerTests: RGButterflyTests {
+class DisclaimerViewControllerTests: RGButterflyBaseTests {
     
     override func setUp() {
         super.setUp()

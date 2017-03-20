@@ -8,7 +8,7 @@
 
 import XCTest
 
-class PickerViewControllerTests: RGButterflyTests {
+class PickerViewControllerTests: RGButterflyBaseTests {
     
     override func setUp() {
         super.setUp()

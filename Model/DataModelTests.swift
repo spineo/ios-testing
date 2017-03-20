@@ -155,7 +155,7 @@ class DataModelTests: XCTestCase {
     // DataModelTests Supporting methods
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //
-    func verifyMixSwatchTypes(type:String) {
+    private func verifyMixSwatchTypes(type:String) {
 
         // PaintSwatch must be attached to an Association
         //

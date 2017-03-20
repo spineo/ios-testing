@@ -8,48 +8,71 @@
 
 import XCTest
 
-class AboutViewControllerTests: RGButterflyTests {
-    
+class AboutViewControllerTests: RGButterflyBaseTests {
+
+    let controllerName = "AboutViewController"
+    var controller: AboutViewController = AboutViewController()
+
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        controller = storyboard.instantiateViewController(withIdentifier: controllerName) as! AboutViewController
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
 
-    // AboutViewController
+    // AboutViewController exists
     //
-    func testAboutViewController() {
-        var aboutVC: AboutViewController = AboutViewController()
-        aboutVC = storyboard.instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
-        
-        backButton = aboutVC.navigationItem.leftBarButtonItem!
-        
-        XCTAssertNotNil(aboutVC.view)
+    func testControllerExists() {
+        XCTAssertNotNil(controller, "'\(controllerName)' is nil")
+    }
+    
+    // NavigationItem Back Button
+    //
+    func testBackButton() {
+        let backButton = controller.navigationItem.leftBarButtonItem!
+        XCTAssertNotNil(backButton)
         XCTAssertEqual(backButton.tag, Int(BACK_BTN_TAG))
-        XCTAssertNotNil(aboutVC.navigationItem.title!)
-        XCTAssertNotNil(aboutVC.title!)
-        
-        // Check enabled
-        //
         XCTAssertTrue(backButton.isEnabled)
-        
-        // Test for segues
-        //
-        let identifiers = getSeguesIdentifiers(viewController:aboutVC)
+    }
+    
+    // NavigationItem Title
+    //
+    func testNavTitle() {
+       XCTAssertNotNil(controller.navigationItem.title!)
+    }
+
+    // Main View
+    //
+    func testMainView() {
+       XCTAssertNotNil(controller.view)
+    }
+    
+    // Main View Title
+    //
+    func testMainViewTitle() {
+        XCTAssertNotNil(controller.title!)
+    }
+    
+    // Confirm no segues
+    //
+    func testSegues() {
+        let identifiers = getSeguesIdentifiers(viewController: controller)
         XCTAssertEqual(identifiers.count, 0, "Segue count")
+    }
         
-        // Test the NavigationController
-        //
-        var aboutNC: UINavigationController = UINavigationController()
-        aboutNC = storyboard.instantiateViewController(withIdentifier: "NavAboutViewController") as! UINavigationController
-        XCTAssertTrue(aboutNC.topViewController is AboutViewController, "AboutViewController is embedded in UINavigationController")
+    // Test the NavigationController
+    //
+    func testNavController() {
+        let navController = storyboard.instantiateViewController(withIdentifier: "NavAboutViewController") as! UINavigationController
+        XCTAssertTrue(navController.topViewController is AboutViewController, "'\(controllerName)' is embedded in UINavigationController")
+    }
         
-        // Top Navigation Bar action
-        //
-        XCTAssertTrue(aboutVC.canPerformAction(Selector(("goBack:")), withSender:self))
+    // Top Navigation Bar action
+    //
+    func testCanPerformActions() {
+        XCTAssertTrue(controller.canPerformAction(Selector(("goBack:")), withSender:self))
     }
 }

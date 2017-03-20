@@ -8,7 +8,7 @@
 
 import XCTest
 
-class MainViewControllerTests: RGButterflyTests {
+class MainViewControllerTests: RGButterflyBaseTests {
     
     var mainVC: MainViewController = MainViewController()
     var listingTypes = [String]()

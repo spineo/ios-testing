@@ -8,7 +8,7 @@
 
 import XCTest
 
-class MatchTableViewControllerTests: RGButterflyTests {
+class MatchTableViewControllerTests: RGButterflyBaseTests {
     
     override func setUp() {
         super.setUp()

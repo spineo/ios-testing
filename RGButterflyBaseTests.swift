@@ -1,6 +1,6 @@
 //
 //  RGButterflyTests.swift
-//  RGButterflyTests - RGButterfly Tests Main Class
+//  RGButterflyBaseTests - RGButterfly Base Tests Class contains common testing methods
 //
 //  Created by Stuart Pineo on 2/9/17.
 //  Copyright © 2017 Stuart Pineo. All rights reserved.
@@ -8,7 +8,7 @@
 import XCTest
 
 
-class RGButterflyTests: XCTestCase {
+class RGButterflyBaseTests: XCTestCase {
   
     let storyboard    : UIStoryboard    = UIStoryboard(name: "Main", bundle: Bundle.main)
     var view          : UIView          = UIView()

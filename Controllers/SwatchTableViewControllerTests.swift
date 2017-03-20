@@ -8,7 +8,7 @@
 
 import XCTest
 
-class SwatchTableViewControllerTests: RGButterflyTests {
+class SwatchTableViewControllerTests: RGButterflyBaseTests {
     
     override func setUp() {
         super.setUp()

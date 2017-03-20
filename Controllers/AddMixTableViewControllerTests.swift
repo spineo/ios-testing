@@ -8,65 +8,95 @@
 
 import XCTest
 
-class AddMixTableViewControllerTests: RGButterflyTests {
+class AddMixTableViewControllerTests: RGButterflyBaseTests {
+    
+    let controllerName = "AddMixTableViewController"
+    var controller: AddMixTableViewController = AddMixTableViewController()
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        controller = storyboard.instantiateViewController(withIdentifier: controllerName) as! AddMixTableViewController
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    // AddMixTableViewController
+    // AddMixTableViewController exists
     //
-    func testAddMixTableViewController() {
-        var addMixTVC: AddMixTableViewController = AddMixTableViewController()
-        addMixTVC = storyboard.instantiateViewController(withIdentifier: "AddMixTableViewController") as! AddMixTableViewController
+    func testControllerExists() {
+      XCTAssertNotNil(controller, "'\(controllerName)' is nil")
+    }
+    
+    // Controller title
+    //
+    func testControllerTitle() {
+        XCTAssertNotNil(controller.title!)
+    }
         
-        tableView    = addMixTVC.tableView
-        backButton   = addMixTVC.navigationItem.leftBarButtonItem!
-        searchButton = addMixTVC.navigationItem.rightBarButtonItem!
-        
-        toolbarItems  = addMixTVC.toolbarItems!
-        flexibleSpace = toolbarItems.removeFirst() as! UIBarButtonItem
-        doneButton    = toolbarItems.removeFirst() as! UIBarButtonItem
-        
-        XCTAssertNotNil(tableView)
-        XCTAssertEqual(backButton.tag,   Int(BACK_BTN_TAG))
-        XCTAssertEqual(searchButton.tag, Int(SEARCH_BTN_TAG))
-        XCTAssertNotNil(addMixTVC.navigationItem.title!)
-        XCTAssertNotNil(addMixTVC.title!)
-        
-        // Toolbar Items
-        //
-        XCTAssertEqual(flexibleSpace.tag, Int(FLEXIBLE_SPACE_TAG))
-        XCTAssertEqual(doneButton.tag,    Int(DONE_BTN_TAG))
-        
-        // Check enabled
-        //
+    // TableView exists
+    //
+    func testTableViewExists() {
+        let tableView    = controller.tableView
+        XCTAssertNotNil(tableView, "'\(controllerName)' tableview is nil")
+    }
+    
+    // NavigationItem Back Button
+    //
+    func testBackButton() {
+        let backButton   = controller.navigationItem.leftBarButtonItem!
+        XCTAssertNotNil(backButton)
+        XCTAssertEqual(backButton.tag, Int(BACK_BTN_TAG))
         XCTAssertTrue(backButton.isEnabled)
+    }
+    
+    // NavigationItem Title
+    //
+    func testNavTitle() {
+        XCTAssertNotNil(controller.navigationItem.title!)
+    }
+    
+    // NavigationItem Search Button
+    //
+    func testSearchButton() {
+        let searchButton = controller.navigationItem.rightBarButtonItem!
+        XCTAssertEqual(searchButton.tag, Int(SEARCH_BTN_TAG))
         XCTAssertTrue(searchButton.isEnabled)
+    }
+    
+    // Toolbar Items
+    //
+    func testToolbarItems() {
+        var toolbarItems  = controller.toolbarItems!
+        
+        let flexibleSpace = toolbarItems.removeFirst()
+        XCTAssertEqual(flexibleSpace.tag, Int(FLEXIBLE_SPACE_TAG))
+        
+        let doneButton    = toolbarItems.removeFirst()
+        XCTAssertEqual(doneButton.tag,    Int(DONE_BTN_TAG))
         XCTAssertFalse(doneButton.isEnabled)
+    }
+    
+    // Test for segues
+    //
+    func testSegues() {
+        runSeguesTests(viewController:controller, seguesList:["unwindToAssocFromAdd1", "unwindToAssocFromAdd2", "unwindToAssocFromAdd3"])
+    }
+    
         
-        // Test for segues
-        //
-        runSeguesTests(viewController:addMixTVC, seguesList:["unwindToAssocFromAdd1", "unwindToAssocFromAdd2",
-                                                             "unwindToAssocFromAdd3"])
-        
-        // Test the NavigationController
-        //
-        var addMixNC: UINavigationController = UINavigationController()
-        addMixNC = storyboard.instantiateViewController(withIdentifier: "NavAddMixTableViewController") as! UINavigationController
-        XCTAssertTrue(addMixNC.topViewController is AddMixTableViewController, "AddMixTableViewController is embedded in UINavigationController")
-        
-        // Test selectors/actions
-        //
-        var assocTVC: AssocTableViewController = AssocTableViewController()
-        assocTVC = storyboard.instantiateViewController(withIdentifier: "AssocTableViewController") as! AssocTableViewController
-        XCTAssertTrue(assocTVC.canPerformUnwindSegueAction(Selector(("unwindToAssocFromAdd:")), from:addMixTVC, withSender:self))
-        XCTAssertTrue(addMixTVC.canPerformAction(Selector(("searchMix:")), withSender:self))
+    // Test the NavigationController
+    //
+    func testNavController() {
+        let navController = storyboard.instantiateViewController(withIdentifier: "NavAddMixTableViewController") as! UINavigationController
+        XCTAssertTrue(navController.topViewController is AddMixTableViewController, "'\(controllerName)' is embedded in UINavigationController")
+    }
+    
+    // Test selectors/actions
+    //
+    func testActions() {
+        let assocTVC = storyboard.instantiateViewController(withIdentifier: "AssocTableViewController") as! AssocTableViewController
+        XCTAssertTrue(assocTVC.canPerformUnwindSegueAction(Selector(("unwindToAssocFromAdd:")), from:controller, withSender:self))
+        XCTAssertTrue(controller.canPerformAction(Selector(("searchMix:")), withSender:self))
     }
 }

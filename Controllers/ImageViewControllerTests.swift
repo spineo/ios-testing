@@ -8,7 +8,7 @@
 
 import XCTest
 
-class ImageViewControllerTests: RGButterflyTests {
+class ImageViewControllerTests: RGButterflyBaseTests {
     
     override func setUp() {
         super.setUp()
