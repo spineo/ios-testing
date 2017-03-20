@@ -26,7 +26,7 @@ RGButterflyTests is the main class used for initialization and testing the datam
 * All PaintSwatches must be associated with a PaintSwatchType (with exception of 'MatchAssoc')
 * All Keywords must be associated with a SwatchKeyword 
 
-#### Controller
+#### Controllers
 * Controller can be instantiated with identifier
 
 #### Views

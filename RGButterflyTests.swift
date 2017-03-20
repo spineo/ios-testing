@@ -1,6 +1,6 @@
 //
 //  RGButterflyTests.swift
-//  RGButterflyTests
+//  RGButterflyTests - RGButterfly Tests Main Class
 //
 //  Created by Stuart Pineo on 2/9/17.
 //  Copyright © 2017 Stuart Pineo. All rights reserved.
@@ -8,22 +8,6 @@
 import XCTest
 
 
-// Pre-Conditions
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Network Connectivity
-// REST API return HTTP code 200
-//
-// Static Elements Tests
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// View Controllers exists
-// Controller Views/Subviews exist
-// ViewController and/or NavController titles are not null
-// Buttons exist and have the correct tags
-// Toolbar Items Buttons are in the correct order, with correct tag
-// Check for buttons enabled state
-// Segues identifiers
-// NavigationControllers identifiers
-//
 class RGButterflyTests: XCTestCase {
   
     let storyboard    : UIStoryboard    = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -68,7 +52,6 @@ class RGButterflyTests: XCTestCase {
     
     // CoreDataUtils
     //
-    var coreDataObj   : CoreDataUtils     = CoreDataUtils()
     var objects       = [AnyObject]()
     var objSet        : NSSet             = NSSet()
     var objArray      = [AnyObject]()
@@ -84,10 +67,6 @@ class RGButterflyTests: XCTestCase {
 
         userDefaults      = UserDefaults.standard
         backupUserDefaults()
-        
-        // Initialize CoreDataUtils
-        //
-        coreDataObj = CoreDataUtils.init()
     }
     
     override func tearDown() {
@@ -97,126 +76,10 @@ class RGButterflyTests: XCTestCase {
         restoreUserDefaults()
     }
     
-    // Test the Datamodel Entity Counts
-    //
-    func testEntityCounts() {
-        let dictionaryEntities = ["AssociationType", "BodyType", "CanvasCoverage", "MatchAlgorithm",
-                                  "PaintBrand", "PaintSwatchType", "PigmentType", "SubjectiveColor"]
-        
-        // Test the dictionaries
-        //
-        for entity in dictionaryEntities {
-            fileCount   = Int(FileUtils.fileLineCount(entity, fileType:"txt"))
-            entityCount = Int(coreDataObj.fetchCount(entity))
-            
-            XCTAssertGreaterThan(entityCount, 0, "'\(entity)' count is \(entityCount)!")
-            XCTAssertEqual(fileCount, entityCount, "File and Entity count for \(entity) match.")
-        }
-        
-        // Test the main entities count
-        //
-        let mainEntities = ["Keyword", "MatchAssociation", "MixAssociation", "MixAssocSwatch",
-                            "PaintSwatch", "SwatchKeyword", "TapArea", "TapAreaSwatch"]
-        for entity in mainEntities {
-            entityCount = Int(coreDataObj.fetchCount(entity))
-            XCTAssertGreaterThan(entityCount, 0, "'\(entity)!' count is \(entityCount)")
-        }
-        
-        // Greater than or equal to zero
-        //
-        let otherKeywordEntities = ["MixAssocKeyword", "MatchAssocKeyword", "TapAreaKeyword"]
-        for entity in otherKeywordEntities {
-            entityCount = Int(coreDataObj.fetchCount(entity))
-            XCTAssertGreaterThanOrEqual(entityCount, 0, "'\(entity)' count is \(entityCount)!")
-        }
-        
-        
-        // Verify PaintSwatches(MatchAssoc) and TapAreas aggregate counts match
-        //
-        let typeObj = coreDataObj.queryDictionary("PaintSwatchType", nameValue:"MatchAssoc") as! PaintSwatchType!
-        type_id = typeObj?.order as Int!
-        let paintSwatchesCount = coreDataObj.fetchedEntityHasId("PaintSwatch", attrName:"type_id", value:Int32(type_id)).count
-        
-        // TapAreas Count
-        //
-        let tapAreasCount      = Int(coreDataObj.fetchCount("TapArea"))
-        
-        XCTAssertGreaterThan(paintSwatchesCount, 0, "PaintSwatches count is zero.")
-        XCTAssertEqual(paintSwatchesCount, tapAreasCount, "Aggregate Paint Swatches (MatchAssoc) count of \(paintSwatchesCount) does not match Tap Areas aggregate count of \(tapAreasCount).")
-    }
-    
-    // Test Datamodel Entity relations
-    //
-    func testEntityRelations() {
-
-        // MixAssociation must have children
-        //
-        objects = coreDataObj.fetchEntity("MixAssociation")! as! [MixAssociation]
-        for assoc in objects {
-            objSet  = assoc.mix_assoc_swatch as NSSet
-            objName = assoc.name as String
-            XCTAssertGreaterThan(objSet.count, 0, "MixAssociation '\(objName)' has no children.")
-        }
-        
-        // All MixAssocSwatches must be part of a MixAssociation
-        //
-        assocSwatches = coreDataObj.fetchEntity("MixAssocSwatch") as! [MixAssocSwatch]
-        for assoc in assocSwatches {
-            XCTAssertNotNil(assoc.mix_association, "Found MixAssocSwatch that is not part of a MixAssociation.")
-        }
-        
-        // MatchAssociation must have children
-        //
-        objects = coreDataObj.fetchEntity("MatchAssociation")! as! [MatchAssociations]
-        for assoc in objects {
-            objName = assoc.name as String
-            XCTAssertGreaterThan(objSet.count, 0, "MatchAssociation '\(objName)' has no children.")
-        }
-        
-        // All TapAreas must be part of a MatchAssociation
-        //
-        tapAreas = coreDataObj.fetchEntity("TapArea")! as! [TapArea]
-        for assoc in tapAreas {
-            XCTAssertNotNil(assoc.match_association, "Fount TapArea that is not part of a MatchAssociation.")
-        }
-        
-        // Check for PaintSwatch orphans (skipping "MatchAssoc")
-        //
-        for type in ["Unknown", "Reference", "MixAssoc", "Ref & Mix", "Generic"] {
-            verifyMixSwatchTypes(type:type)
-        }
-
-        // Check for Keyword orphans
-        //
-        objects = coreDataObj.fetchEntity("Keyword") as [AnyObject]
-        var swatchKw = Set<SwatchKeyword>()
-        for kw in objects {
-            if kw.swatch_keyword != nil {
-                swatchKw = kw.swatch_keyword!! as Set<SwatchKeyword>
-                objName  = kw.name! as String
-                XCTAssertGreaterThan(swatchKw.count, 0, "Keyword '\(objName)' has no parent association.")
-            }
-        }
-    }
-    
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Supporting methods
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //
-    func verifyMixSwatchTypes(type:String) {
-        // PaintSwatch must be attached to a Mix Association
-        //
-        let typeObj = coreDataObj.queryDictionary("PaintSwatchType", nameValue:type) as! PaintSwatchType!
-        if typeObj != nil {
-            type_id = typeObj?.order as Int!
-            objects = coreDataObj.fetchedEntityHasId("PaintSwatch", attrName:"type_id", value:Int32(type_id))! as! [PaintSwatches]
-            for swatch in objects {
-                objSet  = swatch.mix_assoc_swatch as NSSet
-                objName = swatch.name as String
-                XCTAssertGreaterThan(objSet.count, 0, "PaintSwatch '\(objName)' has no parent for type '\(type)!'.")
-            }
-        }
-    }
     
     // Backup UserDefaults
     //
@@ -275,13 +138,6 @@ class RGButterflyTests: XCTestCase {
                     XCTAssertGreaterThan(collectionView.numberOfItems(inSection:0), 0)
                 }
             }
-        }
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
         }
     }
 }
