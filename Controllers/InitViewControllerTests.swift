@@ -9,23 +9,13 @@ import XCTest
 
 class InitViewControllerTests: RGButterflyBaseTests {
     
+    let controllerName = "InitViewController"
+    var controller: InitViewController = InitViewController()
+    var spinner   : UIActivityIndicatorView = UIActivityIndicatorView()
+    
     override func setUp() {
         super.setUp()
         
-        userDefaults      = UserDefaults.standard
-        backupUserDefaults()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        
-        restoreUserDefaults()
-    }
-    
-    // InitViewController Unit Tests
-    // Two paths checked: pollUpdate and noPollUpdate (actual database update skipped for now)
-    //
-    func testInitViewController_pollUpdate() {
         // Check the requirements
         //
         if (!HTTPUtils.networkIsReachable()) {
@@ -36,55 +26,82 @@ class InitViewControllerTests: RGButterflyBaseTests {
             XCTFail("No REST API connectivty")
         }
         
-        var initVC: InitViewController = InitViewController()
-        initVC = storyboard.instantiateInitialViewController() as! InitViewController
-        
-        userDefaults.setValue(true, forKey:DB_POLL_UPDATE_KEY)
-        
+        controller = storyboard.instantiateViewController(withIdentifier: controllerName) as! InitViewController
+
         // Instantiate
         //
-        initVC.viewDidLoad()
-        initVC.viewDidAppear(true)
+        controller.viewDidLoad()
+        controller.viewDidAppear(true)
         
-        view = initVC.view
+        userDefaults      = UserDefaults.standard
+        backupUserDefaults()
         
-        XCTAssertNotNil(view)
-        XCTAssertNotNil(initVC.title!)
-        
-        // Test for segues
+        // Initialize
         //
-        runSeguesTests(viewController:initVC, seguesList:["InitViewControllerSegue"])
-
+        userDefaults.setValue(true, forKey:DB_POLL_UPDATE_KEY)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
         
-        // Test the background image (currently fails)
-        //
+        restoreUserDefaults()
+    }
+    
+    // Controller exists
+    //
+    func testControllerExists() {
+        XCTAssertNotNil(controller, "'\(controllerName)' is nil")
+    }
+    
+    // Main View
+    //
+    func testMainView() {
+        XCTAssertNotNil(controller.view)
+    }
+    
+    // Main View Title
+    //
+    func testMainViewTitle() {
+        XCTAssertNotNil(controller.title!)
+    }
+    
+    // Test for segues
+    //
+    func testSegues() {
+        runSeguesTests(viewController:controller, seguesList:["InitViewControllerSegue"])
+    }
+    
+    // Test the background image (currently fails)
+    //
+    func testBackgroundImage() {
         //XCTAssertEqual(view.backgroundColor, UIColor(patternImage: UIImage(named:BACKGROUND_IMAGE_TITLE)!))
-        
+    }
+    
+    // Test activity indicator animating
+    //
+    func testActivityIndicatorAnimating() {
         // Check the update label and spinner initial states
         //
-        let updateLabel = view.viewWithTag(Int(INIT_LABEL_TAG)) as? UILabel
+        let updateLabel = controller.view.viewWithTag(Int(INIT_LABEL_TAG)) as? UILabel
         XCTAssertEqual(updateLabel?.text, SPINNER_LABEL_LOAD, "Initial spinner label")
         
-        let spinner     = view.viewWithTag(Int(INIT_SPINNER_TAG)) as? UIActivityIndicatorView
-        XCTAssert((spinner?.isAnimating)!, "Spinner active")
-        
-        // Final state
-        //
-        initVC.viewWillDisappear(true)
-        XCTAssertFalse((spinner?.isAnimating)!, "Spinner inactive")
-        
-        // Need to invoke the UIAlertController actions (states for initVC.updateStat)
+        spinner     = (controller.view.viewWithTag(Int(INIT_SPINNER_TAG)) as? UIActivityIndicatorView)!
+        XCTAssert((spinner.isAnimating), "Spinner active")
+    }
+    
+    // Test activity indicator not animating (final state)
+    //
+    func testActivityIndicatorNotAnimating() {
+        controller.viewWillDisappear(true)
+        XCTAssertFalse((spinner.isAnimating), "Spinner inactive")
     }
     
     // InitViewController Unit Tests (without pollUpdate, all dynamic checks are skipped)
     // Static checks were performed in the preceding testInitViewController_pollUpdate
     //
-    func testInitViewController_noPollUpdate() {
-        var initVC: InitViewController = InitViewController()
-        initVC = storyboard.instantiateInitialViewController() as! InitViewController
-        
+    func testNoPollUpdate() {
+        let controller = storyboard.instantiateInitialViewController() as! InitViewController
         userDefaults.setValue(false, forKey:DB_POLL_UPDATE_KEY)
-        
-        initVC.viewDidLoad()
+        controller.viewDidLoad()
     }
 }

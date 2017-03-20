@@ -23,7 +23,7 @@ class AddMixTableViewControllerTests: RGButterflyBaseTests {
         super.tearDown()
     }
     
-    // AddMixTableViewController exists
+    // Controller exists
     //
     func testControllerExists() {
       XCTAssertNotNil(controller, "'\(controllerName)' is nil")
@@ -92,11 +92,16 @@ class AddMixTableViewControllerTests: RGButterflyBaseTests {
         XCTAssertTrue(navController.topViewController is AddMixTableViewController, "'\(controllerName)' is embedded in UINavigationController")
     }
     
-    // Test selectors/actions
+    // Test Unwind Actions
     //
-    func testActions() {
+    func testUnwindActions() {
         let assocTVC = storyboard.instantiateViewController(withIdentifier: "AssocTableViewController") as! AssocTableViewController
         XCTAssertTrue(assocTVC.canPerformUnwindSegueAction(Selector(("unwindToAssocFromAdd:")), from:controller, withSender:self))
+    }
+    
+    // Test Direct Actions
+    //
+    func testDirectActions() {
         XCTAssertTrue(controller.canPerformAction(Selector(("searchMix:")), withSender:self))
     }
 }

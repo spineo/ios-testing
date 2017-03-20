@@ -23,7 +23,7 @@ class AboutViewControllerTests: RGButterflyBaseTests {
         super.tearDown()
     }
 
-    // AboutViewController exists
+    // Controller exists
     //
     func testControllerExists() {
         XCTAssertNotNil(controller, "'\(controllerName)' is nil")
@@ -72,7 +72,7 @@ class AboutViewControllerTests: RGButterflyBaseTests {
         
     // Top Navigation Bar action
     //
-    func testCanPerformActions() {
+    func testDirectActions() {
         XCTAssertTrue(controller.canPerformAction(Selector(("goBack:")), withSender:self))
     }
 }
