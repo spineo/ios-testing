@@ -189,13 +189,10 @@ class MainViewControllerTests: RGButterflyBaseTests {
         let navController = storyboard.instantiateViewController(withIdentifier: "NavViewController") as! UINavigationController
         XCTAssertTrue(navController.topViewController is MainViewController, "'\(controller)' is embedded in UINavigationController")
     }
-
-    // MainViewController Unit Tests
+    
+    // Test direct actions
     //
-    func testMainViewController() {
-        
-        // Test actions
-        //
+    func testDirectActions() {
         // NavBar
         //
         verifyDirectActions(viewController:controller, actionList:["showPhotoOptions:", "search"])
@@ -207,12 +204,11 @@ class MainViewControllerTests: RGButterflyBaseTests {
         // Toolbar ('Home' button is inactive and 'Settings' button triggers a segue)
         //
         verifyDirectActions(viewController:controller, actionList:["showListingOptions:"])
-        
-        // Test the delegates
-        //
-        
-        // Test the IBOutlet
-        //
+    }
+
+    // Test the IBOutlets
+    //
+    func testIBOutlets() {
         XCTAssertNotNil(controller.colorTableView, "IBOutlet 'colorTableView' is nil")
     }
 
