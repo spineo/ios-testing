@@ -17,77 +17,114 @@ class SettingsTableViewControllerTests: RGButterflyBaseTests {
         super.setUp()
         
         controller = storyboard.instantiateViewController(withIdentifier: controllerName) as! SettingsTableViewController
+        
+        controller.viewDidLoad()
     }
     
     override func tearDown() {
         super.tearDown()
     }
     
-    // SettingsTableViewController
+    // Controller exists
     //
-    func testSettingsViewController() {
-        var settingsTVC: SettingsTableViewController = SettingsTableViewController()
-        settingsTVC = storyboard.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
-        settingsTVC.viewDidLoad()
-        
-        backButton = settingsTVC.navigationItem.leftBarButtonItem!
-        
-        toolbarItems    = settingsTVC.toolbarItems!
-        homeButton      = toolbarItems.removeFirst() as! UIBarButtonItem
-        flexibleSpace   = toolbarItems.removeFirst() as! UIBarButtonItem
-        settingsButton  = toolbarItems.removeFirst() as! UIBarButtonItem
-        
-        XCTAssertNotNil(settingsTVC.tableView)
+    func testControllerExists() {
+        XCTAssertNotNil(controller, "'\(controllerName)' is nil")
+    }
+    
+    // NavigationItem Back Button
+    //
+    func testBackButton() {
+        let backButton = controller.navigationItem.leftBarButtonItem!
+        XCTAssertNotNil(backButton)
         XCTAssertEqual(backButton.tag, Int(BACK_BTN_TAG))
-        XCTAssertNotNil(settingsTVC.navigationItem.title!)
-        XCTAssertNotNil(settingsTVC.title!)
-        
-        // Toolbar Items
-        //
-        XCTAssertEqual(homeButton.tag,     Int(HOME_BTN_TAG))
-        XCTAssertEqual(flexibleSpace.tag,  Int(FLEXIBLE_SPACE_TAG))
-        XCTAssertEqual(settingsButton.tag, Int(SETTINGS_BTN_TAG))
-        
-        // Check enabled
-        //
         XCTAssertTrue(backButton.isEnabled)
-        XCTAssertTrue(homeButton.isEnabled)
-        XCTAssertTrue(settingsButton.isEnabled)
+    }
+    
+    // NavigationItem Title
+    //
+    func testNavTitle() {
+        XCTAssertNotNil(controller.navigationItem.title!)
+    }
+    
+    // Main View
+    //
+    func testMainView() {
+        XCTAssertNotNil(controller.view)
+    }
+    
+    // Main View Title
+    //
+    func testMainViewTitle() {
+        XCTAssertNotNil(controller.title!)
+    }
+    
+    // TableView exists
+    //
+    func testTableView() {
+        let tableView    = controller.tableView
+        XCTAssertNotNil(tableView, "'\(controllerName)' tableview is nil")
+    }
+
+    // Toolbar Items
+    //
+    func testToolbarItems() {
+        var toolbarItems   = controller.toolbarItems!
         
-        // Instantiate and test tableView sections/rows count
-        //
-        let settingsTableView = settingsTVC.tableView
-        XCTAssertEqual(settingsTVC.numberOfSections(in:settingsTableView!), Int(SETTINGS_MAX_SECTIONS))
+        let homeButton     = toolbarItems.removeFirst()
+        XCTAssertEqual(homeButton.tag,     Int(HOME_BTN_TAG))
+        XCTAssertTrue(homeButton.isEnabled)
+        
+        let flexibleSpace  = toolbarItems.removeFirst()
+        XCTAssertEqual(flexibleSpace.tag, Int(FLEXIBLE_SPACE_TAG))
+        
+        let settingsButton = toolbarItems.removeFirst()
+        XCTAssertEqual(settingsButton.tag, Int(SETTINGS_BTN_TAG))
+        XCTAssertTrue(settingsButton.isEnabled)
+    }
+    
+    // Instantiate and test tableView sections/rows count
+    //
+    func testTableViewSectionsCount() {
+        let settingsTableView = controller.tableView
+        XCTAssertEqual(controller.numberOfSections(in:settingsTableView!), Int(SETTINGS_MAX_SECTIONS))
         
         for section in 1...SETTINGS_MAX_SECTIONS {
-            XCTAssertGreaterThan(settingsTVC.tableView.numberOfRows(inSection:Int(section)), 0)
+            XCTAssertGreaterThan(controller.tableView.numberOfRows(inSection:Int(section)), 0)
         }
-        
-        // Test for segues
-        //
-        runSeguesTests(viewController:settingsTVC, seguesList:["AboutSegue", "DisclaimerSegue", "UnwindToViewControllerSegue"])
-        
-        // Test the NavigationController
-        //
-        var settingsNC: UINavigationController = UINavigationController()
-        settingsNC = storyboard.instantiateViewController(withIdentifier: "NavSettingsTableViewController") as! UINavigationController
-        XCTAssertTrue(settingsNC.topViewController is SettingsTableViewController, "SettingsTableViewController is embedded in UINavigationController")
-        
-        // Test selectors/actions
-        //
+    }
+
+    // Confirm no segues
+    //
+    func testSegues() {
+        runSeguesTests(viewController:controller, seguesList:["AboutSegue", "DisclaimerSegue", "UnwindToViewControllerSegue"])
+    }
+    
+    // Test the NavigationController
+    //
+    func testNavController() {
+        let navController = storyboard.instantiateViewController(withIdentifier: "NavSettingsTableViewController") as! UINavigationController
+        XCTAssertTrue(navController.topViewController is SettingsTableViewController, "'\(controllerName)' is embedded in UINavigationController")
+    }
+    
+    // Top Navigation Bar action
+    //
+    func testDirectActions() {
         // Top Navigation Bar
         //
-        XCTAssertTrue(settingsTVC.canPerformAction(Selector(("goBack:")), withSender:self))
-        XCTAssertTrue(settingsTVC.canPerformAction(#selector(NSManagedObjectContext.save), withSender:self))
+        XCTAssertTrue(controller.canPerformAction(Selector(("goBack:")), withSender:self))
+        XCTAssertTrue(controller.canPerformAction(#selector(NSManagedObjectContext.save), withSender:self))
         
         // TableView Actions
         //
-        verifyDirectActions(viewController:settingsTVC, actionList:["setDbPollUpdateSwitchState:", "setDbForceUpdateSwitchState:", "setPSSwitchState:", "setMASwitchState:", "tapAreaStepperPressed", "changeShape", "matchNumStepperPressed", "doneWithNumberPad", "setRGBDisplayState", "doneWithTextView", "setAlertsFilterSwitchState:"])
-
+        verifyDirectActions(viewController:controller, actionList:["setDbPollUpdateSwitchState:", "setDbForceUpdateSwitchState:", "setPSSwitchState:", "setMASwitchState:", "tapAreaStepperPressed", "changeShape", "matchNumStepperPressed", "doneWithNumberPad", "setRGBDisplayState", "doneWithTextView", "setAlertsFilterSwitchState:"])
+    }
+    
+    // Unwind Actions
+    //
+    func testUnwindActions() {
         // Bottom Toolbar (the 'Settings' button has no action)
         //
-        var mainVC: MainViewController = MainViewController()
-        mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
-        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(#selector(MainViewController.unwind(toViewController:)), from:settingsTVC, withSender:self))
+        let mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+        XCTAssertTrue(mainVC.canPerformUnwindSegueAction(#selector(MainViewController.unwind(toViewController:)), from:controller, withSender:self))
     }
 }
