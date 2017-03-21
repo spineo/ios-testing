@@ -7,7 +7,11 @@ Requirements for InitViewControllerTests:
 * There is Network Connectivity
 * The Jenkins server is running during the test
 
-RGButterflyTests is the main class used for initialization and testing the datamodel counts and relations. Controller class tests test the controller components and relations.
+## General Structure
+* Bridging header (RGButterflyTests-Bridging-Header.h): Interfaces with the Objective-C RGButterfly application
+* Base Class (RGButterflyBaseTests.swift): Contains methods/assertions common to more than one controller test class.
+* Model (DataModelTests.swift): Datamodel unit tests (uses CoreData/ManagedObject)
+* Controllers: View Controllers unit tests (subclasses Base Class)
 
 ## Tests Common to All Controllers
 
