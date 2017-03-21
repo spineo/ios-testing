@@ -23,28 +23,42 @@ class PickerViewControllerTests: RGButterflyBaseTests {
         super.tearDown()
     }
     
-    // PickerViewController
+    // Controller exists
     //
-    func testPickerViewController() {
-        var pickerVC: PickerViewController = PickerViewController()
-        pickerVC = storyboard.instantiateViewController(withIdentifier: "PickerViewController") as! PickerViewController
-        
-        backButton = pickerVC.navigationItem.leftBarButtonItem!
-        
-        XCTAssertNotNil(pickerVC.view)
-        XCTAssertNotNil(pickerVC.title!)
+    func testControllerExists() {
+        XCTAssertNotNil(controller, "'\(controllerName)' is nil")
+    }
+    
+    // NavigationItem Back Button
+    //
+    func testBackButton() {
+        let backButton = controller.navigationItem.leftBarButtonItem!
+        XCTAssertNotNil(backButton)
         XCTAssertEqual(backButton.tag, Int(BACK_BTN_TAG))
-        
-        // Check enabled
-        //
         XCTAssertTrue(backButton.isEnabled)
-        
-        // Test for segues
-        //
-        runSeguesTests(viewController:pickerVC, seguesList:["ImageViewSegue"])
-        
-        // Test selectors/actions
-        //
-        XCTAssertTrue(pickerVC.canPerformAction(Selector(("dismissPicker:")), withSender:self))
+    }
+    
+    // Main View
+    //
+    func testMainView() {
+        XCTAssertNotNil(controller.view)
+    }
+    
+    // Main View Title
+    //
+    func testMainViewTitle() {
+        XCTAssertNotNil(controller.title!)
+    }
+    
+    // Confirm no segues
+    //
+    func testSegues() {
+        runSeguesTests(viewController:controller, seguesList:["ImageViewSegue"])
+    }
+    
+    // Selector action
+    //
+    func testDirectActions() {
+        XCTAssertTrue(controller.canPerformAction(Selector(("dismissPicker:")), withSender:self))
     }
 }
