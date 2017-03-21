@@ -233,7 +233,7 @@ class MainViewControllerTests: RGButterflyBaseTests {
     func verifycontrollerSectionsCounts(viewController:MainViewController, tableView:UITableView, listingType:String) {
         viewController.listingType = listingType
         viewController.loadData()
-        entityCount = Int(viewController.sectionsCount)
+        let entityCount = Int(viewController.sectionsCount)
         XCTAssertGreaterThan(Int(entityCount), 0)
         XCTAssertEqual(viewController.numberOfSections(in:tableView), entityCount)
     }

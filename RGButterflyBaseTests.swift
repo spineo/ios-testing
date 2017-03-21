@@ -11,56 +11,11 @@ import XCTest
 class RGButterflyBaseTests: XCTestCase {
   
     let storyboard    : UIStoryboard    = UIStoryboard(name: "Main", bundle: Bundle.main)
-    var view          : UIView          = UIView()
-    var tableView     : UITableView     = UITableView()
-    var tableViewCell : UITableViewCell = UITableViewCell()
-    var scrollView    : UIScrollView    = UIScrollView()
-    var imageView     : UIImageView     = UIImageView()
-    var titleView     : UIView          = UIView()
-    var searchBar     : UISearchBar     = UISearchBar()
-    var cancelButton  : UIButton        = UIButton()
-    var imageLibButton: UIBarButtonItem = UIBarButtonItem()
-    var backButton    : UIBarButtonItem = UIBarButtonItem()
-    var searchButton  : UIBarButtonItem = UIBarButtonItem()
-    var toolbar       : UIToolbar       = UIToolbar()
-    var toolbarItems  : [AnyObject]     = [AnyObject]()
-    var homeButton    : UIBarButtonItem = UIBarButtonItem()
-    var listingButton : UIBarButtonItem = UIBarButtonItem()
-    var settingsButton: UIBarButtonItem = UIBarButtonItem()
-    var decrAlgButton : UIBarButtonItem = UIBarButtonItem()
-    var matchButton   : UIBarButtonItem = UIBarButtonItem()
-    var incrAlgButton : UIBarButtonItem = UIBarButtonItem()
-    var viewButton    : UIBarButtonItem = UIBarButtonItem()
-    var decrTapButton : UIBarButtonItem = UIBarButtonItem()
-    var incrTapButton : UIBarButtonItem = UIBarButtonItem()
-    var rgbButton     : UIBarButtonItem = UIBarButtonItem()
-    var doneButton    : UIBarButtonItem = UIBarButtonItem()
-
-    var flexibleSpace : UIBarButtonItem = UIBarButtonItem()
-    var flexibleSpace2: UIBarButtonItem = UIBarButtonItem()
-    var fixedSpace    : UIBarButtonItem = UIBarButtonItem()
-
-    var entityCount   : Int             = Int()
-    var fileCount     : Int             = Int()
-    var dict_id       : Int             = Int()
-    var type_id       : Int             = Int()
     
     // UserDefaults
     //
     var userDefaults  : UserDefaults    = UserDefaults()
     var pollUpdate    : Bool            = Bool()
-    
-    // CoreDataUtils
-    //
-    var objects       = [AnyObject]()
-    var objSet        : NSSet             = NSSet()
-    var objArray      = [AnyObject]()
-    var objName       : String            = String()
-    var swatchType    : PaintSwatchType   = PaintSwatchType()
-    var mixAssoc      : MixAssociation    = MixAssociation()
-    var paintSwatch   : PaintSwatches     = PaintSwatches()
-    var assocSwatches = [MixAssocSwatch]()
-    var tapAreas      = [TapArea]()
  
     override func setUp() {
         super.setUp()

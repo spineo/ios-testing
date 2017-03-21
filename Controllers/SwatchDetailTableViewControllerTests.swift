@@ -91,6 +91,6 @@ class SwatchDetailTableViewControllerTests: RGButterflyBaseTests {
     // Sections in TableView
     //
     func testTableViewSectionsCount() {
-        XCTAssertEqual(Int32(controller.numberOfSections(in:tableView)), DETAIL_MAX_SECTION-3)
+        XCTAssertEqual(Int32(controller.numberOfSections(in:controller.tableView)), DETAIL_MAX_SECTION-3)
     }
 }

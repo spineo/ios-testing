@@ -20,7 +20,6 @@
 #import "AddMixTableViewController.h"
 
 #import "ImageViewNavigationController.h"
-#import "SwatchDetailTableViewController.h"
 
 // HTTPUtils and External Utilities (for testing the requirements)
 //
