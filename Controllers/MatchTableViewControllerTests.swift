@@ -10,87 +10,121 @@ import XCTest
 
 class MatchTableViewControllerTests: RGButterflyBaseTests {
     
+    let controllerName = "MatchTableViewController"
+    var controller: MatchTableViewController = MatchTableViewController()
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
+        controller = storyboard.instantiateViewController(withIdentifier: controllerName) as! MatchTableViewController
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    // MatchTableViewController
+    // Controller exists
     //
-    func testMatchTableViewController() {
-        var matchTVC: MatchTableViewController = MatchTableViewController()
-        matchTVC = storyboard.instantiateViewController(withIdentifier: "MatchTableViewController") as! MatchTableViewController
-        
-        tableView  = matchTVC.tableView
-        backButton = matchTVC.navigationItem.leftBarButtonItem!
-        
-        toolbarItems    = matchTVC.toolbarItems!
-        rgbButton       = toolbarItems.removeFirst() as! UIBarButtonItem
-        flexibleSpace   = toolbarItems.removeFirst() as! UIBarButtonItem
-        decrAlgButton   = toolbarItems.removeFirst() as! UIBarButtonItem
-        matchButton     = toolbarItems.removeFirst() as! UIBarButtonItem
-        incrAlgButton   = toolbarItems.removeFirst() as! UIBarButtonItem
-        flexibleSpace2  = toolbarItems.removeFirst() as! UIBarButtonItem
-        decrTapButton   = toolbarItems.removeFirst() as! UIBarButtonItem
-        fixedSpace      = toolbarItems.removeFirst() as! UIBarButtonItem
-        incrTapButton   = toolbarItems.removeFirst() as! UIBarButtonItem
-        
-        XCTAssertNotNil(tableView)
+    func testControllerExists() {
+        XCTAssertNotNil(controller, "'\(controllerName)' is nil")
+    }
+    
+    // Controller title
+    //
+    func testControllerTitle() {
+        XCTAssertNotNil(controller.title!)
+    }
+    
+    // TableView exists
+    //
+    func testTableView() {
+        let tableView    = controller.tableView
+        XCTAssertNotNil(tableView, "'\(controllerName)' tableview is nil")
+    }
+    
+    // NavigationItem Back Button
+    //
+    func testBackButton() {
+        let backButton   = controller.navigationItem.leftBarButtonItem!
+        XCTAssertNotNil(backButton)
         XCTAssertEqual(backButton.tag, Int(BACK_BTN_TAG))
-        XCTAssertNotNil(matchTVC.navigationItem.title!)
-        XCTAssertNotNil(matchTVC.title!)
-        
-        // Toolbar Items
-        //
-        XCTAssertEqual(rgbButton.tag,      Int(RGB_BTN_TAG))
-        XCTAssertEqual(flexibleSpace.tag,  Int(FLEXIBLE_SPACE_TAG))
-        XCTAssertEqual(decrAlgButton.tag,  Int(DECR_ALG_BTN_TAG))
-        XCTAssertEqual(matchButton.tag,    Int(MATCH_BTN_TAG))
-        XCTAssertEqual(incrAlgButton.tag,  Int(INCR_ALG_BTN_TAG))
-        XCTAssertEqual(flexibleSpace2.tag, Int(FLEXIBLE_SPACE_TAG))
-        XCTAssertEqual(decrTapButton.tag,  Int(DECR_TAP_BTN_TAG))
-        XCTAssertEqual(fixedSpace.tag,     Int(FIXED_SPACE_TAG))
-        XCTAssertEqual(incrTapButton.tag,  Int(INCR_TAP_BTN_TAG))
-        
-        // Check enabled
-        //
         XCTAssertTrue(backButton.isEnabled)
+    }
+    
+    // NavigationItem Title
+    //
+    func testNavTitle() {
+        XCTAssertNotNil(controller.navigationItem.title!)
+    }
+    
+    // Toolbar Items
+    //
+    func testToolbarItems() {
+        var toolbarItems   = controller.toolbarItems!
+        
+        let rgbButton       = toolbarItems.removeFirst()
+        XCTAssertEqual(rgbButton.tag,      Int(RGB_BTN_TAG))
         XCTAssertTrue(rgbButton.isEnabled)
+        
+        let flexibleSpace   = toolbarItems.removeFirst()
+        XCTAssertEqual(flexibleSpace.tag, Int(FLEXIBLE_SPACE_TAG))
+        
+        let decrAlgButton   = toolbarItems.removeFirst()
+        XCTAssertEqual(decrAlgButton.tag,  Int(DECR_ALG_BTN_TAG))
         XCTAssertTrue(decrAlgButton.isEnabled)
+        
+        let matchButton     = toolbarItems.removeFirst()
+        XCTAssertEqual(matchButton.tag,    Int(MATCH_BTN_TAG))
         XCTAssertTrue(matchButton.isEnabled)
+        
+        let incrAlgButton   = toolbarItems.removeFirst()
+        XCTAssertEqual(incrAlgButton.tag,  Int(INCR_ALG_BTN_TAG))
         XCTAssertTrue(incrAlgButton.isEnabled)
+        
+        let flexibleSpace2  = toolbarItems.removeFirst()
+        XCTAssertEqual(flexibleSpace2.tag, Int(FLEXIBLE_SPACE_TAG))
+        
+        let decrTapButton   = toolbarItems.removeFirst()
+        XCTAssertEqual(decrTapButton.tag,  Int(DECR_TAP_BTN_TAG))
         XCTAssertFalse(decrTapButton.isEnabled)
+        
+        let fixedSpace      = toolbarItems.removeFirst()
+        XCTAssertEqual(fixedSpace.tag, Int(FIXED_SPACE_TAG))
+        
+        let incrTapButton   = toolbarItems.removeFirst()
+        XCTAssertEqual(incrTapButton.tag,  Int(INCR_TAP_BTN_TAG))
         XCTAssertFalse(incrTapButton.isEnabled)
-        
-        // Test for segues
-        //
-        runSeguesTests(viewController:matchTVC, seguesList:["unwindToImageViewFromMatch", "ShowSwatchDetailSegue", "unwindToImageViewFromMatch"])
-        
-        // Test the NavigationController
-        //
-        var matchNC: UINavigationController = UINavigationController()
-        matchNC = storyboard.instantiateViewController(withIdentifier: "NavMatchTableViewController") as! UINavigationController
-        XCTAssertTrue(matchNC.topViewController is MatchTableViewController, "MatchTableViewController is embedded in UINavigationController")
-        
-        // Test actions
-        //
-        // NavBar
-        //
-        var imageVC: ImageViewController = ImageViewController()
-        imageVC = storyboard.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
-        XCTAssertTrue(imageVC.canPerformUnwindSegueAction(Selector(("unwindToImageViewFromMatch:")), from:matchTVC, withSender:self))
-        
+    }
+    
+    // Test for segues
+    //
+    func testSegues() {
+        runSeguesTests(viewController:controller, seguesList:["unwindToImageViewFromMatch", "ShowSwatchDetailSegue", "unwindToImageViewFromMatch"])
+    }
+    
+    // Test the NavigationController
+    //
+    func testNavController() {
+        let navController = storyboard.instantiateViewController(withIdentifier: "NavMatchTableViewController") as! UINavigationController
+        XCTAssertTrue(navController.topViewController is MatchTableViewController, "'\(controllerName)' is embedded in UINavigationController")
+    }
+    
+    // Test Unwind Actions
+    //
+    func testUnwindActions() {
+        let imageVC = storyboard.instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
+        XCTAssertTrue(imageVC.canPerformUnwindSegueAction(Selector(("unwindToImageViewFromMatch:")), from: controller, withSender:self))
+    }
+    
+    // Test direct actions
+    //
+    func testDirectActions() {
         // Internal Views
         //
-        verifyDirectActions(viewController:matchTVC, actionList:["pressCell:"])
+        verifyDirectActions(viewController:controller, actionList:["pressCell:"])
         
         // Toolbar
         //
-        verifyDirectActions(viewController:matchTVC, actionList:["toggleRGB:", "decr:", "toggleAction:", "incr:", "removeTableRows:", "addTableRows:"])
+        verifyDirectActions(viewController:controller, actionList:["toggleRGB:", "decr:", "toggleAction:", "incr:", "removeTableRows:", "addTableRows:"])
     }
 }
