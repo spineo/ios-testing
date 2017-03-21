@@ -48,6 +48,7 @@ Requirements for InitViewControllerTests:
 * Actions associated with item/view selectors exist and can be performed
 * Unwind Segues associated with item/view selectors exist and can be performed
 * IBOutlets associated with item/view are not Nil
+* Delegates associated with controller views
 
 #### TitleView/NavBar/Toolbar Items
 * SearchBars/Buttons associated with the TitleView are not Nil
