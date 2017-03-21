@@ -25,6 +25,7 @@ class MainViewControllerTests: RGButterflyBaseTests {
         //
         controller.viewDidLoad()
         controller.viewWillAppear(true)
+        controller.viewDidAppear(true)
     }
     
     override func tearDown() {
@@ -81,6 +82,12 @@ class MainViewControllerTests: RGButterflyBaseTests {
         XCTAssertEqual(controller.keywordsIndexTitles.count, 26, "Not all alphabet letters showing")
     }
     
+    // Test the loaded PaintSwatches
+    //
+    func testLoadedPaintSwatches() {
+        XCTAssertGreaterThan(controller.paintSwatches.count, 0, "Paint Swatches count is zero")
+    }
+    
     // TableView exists
     //
     func testTableView() {
@@ -126,7 +133,7 @@ class MainViewControllerTests: RGButterflyBaseTests {
         
         let listingButton      = toolbarItems.removeFirst()
         XCTAssertEqual(listingButton.tag,    Int(LISTING_BTN_TAG))
-        XCTAssertFalse(listingButton.isEnabled)
+        XCTAssertTrue(listingButton.isEnabled)
         
         let flexibleSpace2  = toolbarItems.removeFirst()
         XCTAssertEqual(flexibleSpace2.tag, Int(FLEXIBLE_SPACE_TAG))
@@ -155,12 +162,6 @@ class MainViewControllerTests: RGButterflyBaseTests {
     func testSegues() {
         runSeguesTests(viewController:controller, seguesList:["MainSwatchDetailSegue", "VCToAssocSegue", "ImagePickerSegue",
                                                               "ImageSelectionSegue", "SettingsSegue"])
-    }
-    
-    // Test the loaded PaintSwatches
-    //
-    func testLoadedPaintSwatches() {
-        XCTAssertGreaterThan(controller.paintSwatches.count, 0, "Paint Swatches count is zero")
     }
     
     // Verify tableView section counts
@@ -218,13 +219,13 @@ class MainViewControllerTests: RGButterflyBaseTests {
         controller.viewDidLoad()
         controller.viewWillAppear(true)
 
-//        self.measure {
-//            for type in listingTypes {
-//                print("*** Measuring Listing Type '\(type)' for Performance ***")
-//                controller.listingType = type
-//                controller.loadData()
-//            }
-//        }
+        self.measure {
+            for type in self.listingTypes {
+                print("*** Measuring Listing Type '\(type)' for Performance ***")
+                self.controller.listingType = type
+                self.controller.loadData()
+            }
+        }
     }
     
     // Supporting methods
