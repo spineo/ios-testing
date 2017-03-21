@@ -127,4 +127,11 @@ class MatchTableViewControllerTests: RGButterflyBaseTests {
         //
         verifyDirectActions(viewController:controller, actionList:["toggleRGB:", "decr:", "toggleAction:", "incr:", "removeTableRows:", "addTableRows:"])
     }
+    
+    // Test the Delegates
+    //
+    func testDelegates() {
+        XCTAssertTrue(controller.tableView.delegate is UITextFieldDelegate)
+        XCTAssertTrue(controller.tableView.delegate is UIGestureRecognizerDelegate)
+    }
 }

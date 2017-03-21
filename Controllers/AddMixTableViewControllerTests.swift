@@ -104,4 +104,10 @@ class AddMixTableViewControllerTests: RGButterflyBaseTests {
     func testDirectActions() {
         XCTAssertTrue(controller.canPerformAction(Selector(("searchMix:")), withSender:self))
     }
+    
+    // Test the Delegates
+    //
+    func testDelegates() {
+        XCTAssertTrue(controller.tableView.delegate is UISearchBarDelegate)
+    }
 }

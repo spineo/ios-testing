@@ -166,4 +166,15 @@ class ImageViewControllerTests: RGButterflyBaseTests {
         XCTAssertNotNil(controller.imageView, "IBOutlet 'imageView' is nil")
         XCTAssertNotNil(controller.imageTableView, "IBOutlet 'imageTableView' is nil")
     }
+    
+    // Test the Delegates
+    //
+    func testDelegates() {
+        XCTAssertTrue(controller.imageScrollView.delegate is UIImagePickerControllerDelegate)
+        XCTAssertTrue(controller.imageTableView.delegate is UIScrollViewDelegate)
+        XCTAssertTrue(controller.imageScrollView.delegate is UITableViewDelegate)
+        XCTAssertTrue(controller.imageScrollView.delegate is UITableViewDataSource)
+        XCTAssertTrue(controller.imageTableView.delegate is UICollectionViewDataSource)
+        XCTAssertTrue(controller.imageTableView.delegate is UICollectionViewDelegate)
+    }
 }

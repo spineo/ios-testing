@@ -212,6 +212,16 @@ class MainViewControllerTests: RGButterflyBaseTests {
     func testIBOutlets() {
         XCTAssertNotNil(controller.colorTableView, "IBOutlet 'colorTableView' is nil")
     }
+    
+    // Test the Delegates
+    //
+    func testDelegates() {
+        XCTAssertTrue(controller.colorTableView.delegate is UITableViewDataSource)
+        XCTAssertTrue(controller.colorTableView.delegate is UICollectionViewDataSource)
+        XCTAssertTrue(controller.colorTableView.delegate is UICollectionViewDelegate)
+        XCTAssertTrue(controller.colorTableView.delegate is NSFetchedResultsControllerDelegate)
+        XCTAssertTrue(controller.colorTableView.delegate is UISearchBarDelegate)
+    }
 
     // Measure times to display each listing
     //

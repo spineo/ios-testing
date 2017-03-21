@@ -103,4 +103,14 @@ class AssocTableViewControllerTests: RGButterflyBaseTests {
     func testDirectActions() {
         verifyDirectActions(viewController:controller, actionList:["showAssocTypePicker", "showCoveragePicker", "showMixRatiosPicker", "applyRenaming", "ratiosSelection", "assocTypeSelection", "coverageSelection"])
     }
+    
+    // Test the Delegates
+    //
+    func testDelegates() {
+        XCTAssertTrue(controller.tableView.delegate is UITextFieldDelegate)
+        XCTAssertTrue(controller.tableView.delegate is NSFetchedResultsControllerDelegate)
+        XCTAssertTrue(controller.tableView.delegate is UIPickerViewDelegate)
+        XCTAssertTrue(controller.tableView.delegate is UIPickerViewDataSource)
+        XCTAssertTrue(controller.tableView.delegate is UIGestureRecognizerDelegate)
+    }
 }

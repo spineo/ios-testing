@@ -127,4 +127,12 @@ class SettingsTableViewControllerTests: RGButterflyBaseTests {
         let mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         XCTAssertTrue(mainVC.canPerformUnwindSegueAction(#selector(MainViewController.unwind(toViewController:)), from:controller, withSender:self))
     }
+    
+    // Test the Delegates
+    //
+    func testDelegates() {
+        XCTAssertTrue(controller.tableView.delegate is UITextFieldDelegate)
+        XCTAssertTrue(controller.tableView.delegate is UITextViewDelegate)
+        XCTAssertTrue(controller.tableView.delegate is MFMailComposeViewControllerDelegate)
+    }
 }

@@ -93,4 +93,17 @@ class SwatchDetailTableViewControllerTests: RGButterflyBaseTests {
     func testTableViewSectionsCount() {
         XCTAssertEqual(Int32(controller.numberOfSections(in:controller.tableView)), DETAIL_MAX_SECTION-3)
     }
+    
+    // Test the Delegates
+    //
+    func testDelegates() {
+        XCTAssertTrue(controller.tableView.delegate is UIPickerViewDataSource)
+        XCTAssertTrue(controller.tableView.delegate is UIPickerViewDelegate)
+        XCTAssertTrue(controller.tableView.delegate is UIActionSheetDelegate)
+        XCTAssertTrue(controller.tableView.delegate is UITextFieldDelegate)
+        XCTAssertTrue(controller.tableView.delegate is UITextViewDelegate)
+        XCTAssertTrue(controller.tableView.delegate is UIGestureRecognizerDelegate)
+        XCTAssertTrue(controller.tableView.delegate is UICollectionViewDataSource)
+        XCTAssertTrue(controller.tableView.delegate is UICollectionViewDelegate)
+    }
 }
