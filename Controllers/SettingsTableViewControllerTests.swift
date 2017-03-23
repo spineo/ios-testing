@@ -131,6 +131,8 @@ class SettingsTableViewControllerTests: RGButterflyBaseTests {
     // Test the Delegates
     //
     func testDelegates() {
+        XCTAssertTrue(controller.tableView.delegate is UIPickerViewDataSource)
+        XCTAssertTrue(controller.tableView.delegate is UIPickerViewDelegate)
         XCTAssertTrue(controller.tableView.delegate is UITextFieldDelegate)
         XCTAssertTrue(controller.tableView.delegate is UITextViewDelegate)
         XCTAssertTrue(controller.tableView.delegate is MFMailComposeViewControllerDelegate)

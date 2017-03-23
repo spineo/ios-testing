@@ -242,7 +242,7 @@ class RGButterflyUITests: XCTestCase {
     func testFullListingCategories() {
         let app = XCUIApplication()
         app.toolbars.children(matching: .button).element(boundBy: 1).tap()
-        app.alerts["Colors Listings"].buttons["Full Colors Listings"].tap()
+        app.alerts["Colors Listings"].buttons["Single"].tap()
     }
     
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -273,7 +273,7 @@ class RGButterflyUITests: XCTestCase {
         
         let app = XCUIApplication()
         app.toolbars.buttons["text list 1"].tap()
-        app.alerts["Colors Listings"].buttons["Full Colors Listings"].tap()
+        app.alerts["Colors Listings"].buttons["Single"].tap()
     }
     
     // Switch to Keywords Listing and segue to Swatch Detail
