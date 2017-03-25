@@ -59,12 +59,11 @@ class MainViewControllerTests: RGButterflyBaseTests {
     // Test activity indicator animating
     //
     func testActivityIndicatorAnimating() {
-        // Re-nstantiate
+        // Re-instantiate
         //
         controller = storyboard.instantiateViewController(withIdentifier: controllerName) as! MainViewController
         controller.viewDidLoad()
         controller.viewWillAppear(true)
-
         
         // Check the update label and spinner initial states
         //
