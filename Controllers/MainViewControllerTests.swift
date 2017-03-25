@@ -14,7 +14,7 @@ class MainViewControllerTests: RGButterflyBaseTests {
     var controller: MainViewController = MainViewController()
     var spinner   : UIActivityIndicatorView = UIActivityIndicatorView()
     
-    let listingTypes = [MIX_TYPE, MATCH_TYPE, FULL_LISTING_TYPE, KEYWORDS_TYPE, COLORS_TYPE];
+    let listingTypes = [MIX_LIST_TYPE, MATCH_LIST_TYPE, FULL_LISTING_TYPE, KEYWORDS_TYPE, COLORS_TYPE];
     
     override func setUp() {
         super.setUp()
@@ -59,6 +59,13 @@ class MainViewControllerTests: RGButterflyBaseTests {
     // Test activity indicator animating
     //
     func testActivityIndicatorAnimating() {
+        // Re-nstantiate
+        //
+        controller = storyboard.instantiateViewController(withIdentifier: controllerName) as! MainViewController
+        controller.viewDidLoad()
+        controller.viewWillAppear(true)
+
+        
         // Check the update label and spinner initial states
         //
         let updateLabel = controller.view.viewWithTag(Int(INIT_LABEL_TAG)) as? UILabel
@@ -175,13 +182,13 @@ class MainViewControllerTests: RGButterflyBaseTests {
     // Verify Match collection view counts
     //
     func testMatchCollectionViewCounts() {
-        verifyCollectionView(viewController:controller, tableView:controller.colorTableView!, listingType:MATCH_TYPE)
+        verifyCollectionView(viewController:controller, tableView:controller.colorTableView!, listingType:MATCH_LIST_TYPE)
     }
     
     // Verify Mix collection view counts
     //
     func testMixCollectionViewCounts() {
-        verifyCollectionView(viewController:controller, tableView:controller.colorTableView!, listingType:MIX_TYPE)
+        verifyCollectionView(viewController:controller, tableView:controller.colorTableView!, listingType:MIX_LIST_TYPE)
     }
     
     // Test the NavigationController
