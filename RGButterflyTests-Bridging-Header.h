@@ -37,3 +37,4 @@
 #import "MixAssociation.h"
 #import "MixAssocSwatch.h"
 #import "PaintSwatches.h"
+#import "TapAreaSwatch.h"

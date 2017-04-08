@@ -86,7 +86,6 @@ class DataModelTests: XCTestCase {
     // MixAssociation must have children
     //
     func testMixAssociationHasChildren() {
-
         let objects = coreDataObj.fetchEntity("MixAssociation")! as! [MixAssociation]
         for assoc in objects {
             let objSet  = assoc.mix_assoc_swatch as NSSet
