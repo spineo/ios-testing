@@ -129,7 +129,7 @@ class DataModelTests: XCTestCase {
 
         // Check for PaintSwatch orphans (skipping "MatchAssoc")
         //
-        for type in ["Unknown", "Reference", "MixAssoc", "Ref & Mix", "Generic"] {
+        for type in ["Other", "Reference", "MixAssoc", "Ref & Mix", "Generic"] {
             verifyMixSwatchTypes(type:type)
         }
     }
