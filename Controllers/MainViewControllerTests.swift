@@ -85,7 +85,9 @@ class MainViewControllerTests: RGButterflyBaseTests {
     //
     func testDictionariesCounts() {
         XCTAssertGreaterThan(controller.subjColorNames.count, 0, "No dictionary colors loaded")
-        XCTAssertEqual(controller.portraitKeywordsIndex.count, 26, "Not all alphabet letters showing")
+        XCTAssertEqual(controller.portraitKeywordsIndex.count, 26, "Portrait: Not all alphabet letters showing")
+        XCTAssertEqual(controller.landscapeKeywordsIndex.count, 18, "Landscape: Not all alphabet letters subset showing")
+        XCTAssertEqual(controller.smallKeywordsIndex.count, 16, "Small Screen: Not all alphabet letters subset showing")
     }
     
     // Test the loaded PaintSwatches
