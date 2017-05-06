@@ -119,7 +119,7 @@ class DataModelTests: XCTestCase {
     func testTapAreasAreInMatchAssociation() {
         let tapAreas = coreDataObj.fetchEntity("TapArea")! as! [TapArea]
         for assoc in tapAreas {
-            XCTAssertNotNil(assoc.match_association, "Fount TapArea that is not part of a MatchAssociation.")
+            XCTAssertNotNil(assoc.match_association, "Found TapArea that is not part of a MatchAssociation.")
         }
     }
     

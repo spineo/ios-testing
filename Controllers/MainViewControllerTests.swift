@@ -208,7 +208,7 @@ class MainViewControllerTests: RGButterflyBaseTests {
         
         // Tableview
         //
-        verifyDirectActions(viewController:controller, actionList:["showAllColors", "filterByReference", "filterByGenerics", "searchBarSetFrames", "pressCancel", "expandAllSections", "expandOrCollapseSection:", "collapseAllSections", "mergeChanges:"])
+        verifyDirectActions(viewController:controller, actionList:["showAllColors", "filterByReference", "filterByGenerics", "filterByRefAndMix", "pressCancel", "expandAllSections", "expandOrCollapseSection:", "collapseAllSections", "mergeChanges:"])
         
         // Toolbar ('Home' button is inactive and 'Settings' button triggers a segue)
         //

@@ -77,6 +77,13 @@ class SettingsTableViewControllerTests: RGButterflyBaseTests {
         let flexibleSpace  = toolbarItems.removeFirst()
         XCTAssertEqual(flexibleSpace.tag, Int(FLEXIBLE_SPACE_TAG))
         
+        let shareButton = toolbarItems.removeFirst()
+        XCTAssertEqual(shareButton.tag, Int(SHARE_BTN_TAG))
+        XCTAssertTrue(shareButton.isEnabled)
+        
+        let flexibleSpace2  = toolbarItems.removeFirst()
+        XCTAssertEqual(flexibleSpace2.tag, Int(FLEXIBLE_SPACE_TAG))
+        
         let settingsButton = toolbarItems.removeFirst()
         XCTAssertEqual(settingsButton.tag, Int(SETTINGS_BTN_TAG))
         XCTAssertTrue(settingsButton.isEnabled)
@@ -96,7 +103,7 @@ class SettingsTableViewControllerTests: RGButterflyBaseTests {
     // Confirm no segues
     //
     func testSegues() {
-        runSeguesTests(viewController:controller, seguesList:["AboutSegue", "DisclaimerSegue", "UnwindToViewControllerSegue"])
+        runSeguesTests(viewController:controller, seguesList:["AboutSegue", "DisclaimerSegue"])
     }
     
     // Test the NavigationController
