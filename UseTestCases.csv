@@ -1,1 +1,4 @@
-Test Case ID,Priority,Description,Target,Status,CommentsT1,10,"After removing the database ensure that update takes place without problems, in a single step",Any Simulator,PEND,
+Test Case ID,Priority,Component,Description,Target,Status,Comments
+T1,10,Init VC,"After removing the database ensure that update takes place without problems, in a single step",Any Simulator,PEND,
+T2,10,Image VC,"Get an image and fill the photo with tapped areas and save, test the up/down arrows, scrolling collection views, going in/out of Match VCs, remove add tap areas, and finally remove all tap areas and Match assoc (verify in simulator DB that all components got removed)",iPhone/Simulator,PEND,
+T3,10,,,,,
