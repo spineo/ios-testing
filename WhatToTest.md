@@ -4,11 +4,11 @@ Please note that any feedback I receive is useful, whether you just spend 3 minu
 
 Throughout the process feel free to do whatever you want including randomly clicking buttons, scrolling, adding/editing and even deleting data (don't worry, all data is localized so it can easily be restored). If something breaks awesome, I can fix it now before it hits the App Store. 
 
-Don't worry about trying all features as there are many to cover! Some of the things I am interested in learning about include:
+Some of the things I am interested in learning about include:
 
-* Usability: How easy it is to navigate and understand the features without having necessarily read the documentation? (docs are accessible at http://rgbutterfly.com if interested)
+* Usability: How easy it is to navigate and understand the features without having necessarily read the documentation?
 
-* Performance: How well does the App perform on your device? Any slowness? (chances are that many of you "hitting" it on various devices might uncover a few useful edge cases)
+* Performance: How well does the App perform on your device? Any slowness?
 
 * Aesthetics: How would you change the look? (this includes buttons, fonts, and colors combinations)
 
@@ -16,7 +16,7 @@ Don't worry about trying all features as there are many to cover! Some of the th
 
 * Accuracy: Are the results produced what you might expect? (I have uncovered some areas where App needs improvement)
 
-Below are a few suggestions to get you started:
+Below are a few areas to get you started and/or feel free to view docs accessible from rgbutterfly.com
 
 From the Main (default) View:
 * Test all the buttons in this view (at any point the back button, cancel, or home button will get you back)
@@ -41,9 +41,9 @@ From the Image View (following photo selection):
 
 From the Swatch Detail View (accessible from any swatch listing):
 * Edit any parameter/save
+* Try adding keywords and see if they render in the Main View Keywords display
 
 From the Settings View (accessible by clicking the bottom-right gear button on most views):
 * Test any (or all) settings and see how they affect the App behavior
-* Try modifying any of the settings without saving
-* Be sure to visit the About/Disclaimer sections and clicking on the links
+* Be sure to visit the About/Disclaimer sections and clicking on the URLs
 * Try the "Provide Feedback" and share buttons
