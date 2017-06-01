@@ -1,6 +1,6 @@
 # Beta App Test Description Section for TestFlight Beta Testing
 
-The main purpose of this iPhone App is to suggest Acrylic paints associated with tapped areas on a photo. It does this by applying a selected Match Algorithm against a database of reference paints, paint mixes, and generic paint references (see https://spineo.github.io/RGButterflyDocs/ for details)
+The main purpose of this iPhone App is to suggest Acrylic paints associated with tapped areas on a photo. It does this by applying a selected Match Algorithm against a database of reference paints, paint mixes, and generic paint references (see http://rgbutterfly.com/ to access detailed documentation)
 
 The three main tasks this App performs are Reference & Search, Image Area(s) Match against a reference database, and the Paints Data Capture.
 
