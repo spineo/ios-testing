@@ -71,11 +71,6 @@ class InitViewControllerTests: RGButterflyBaseTests {
         runSeguesTests(viewController:controller, seguesList:["InitViewControllerSegue"])
     }
     
-    // Test the background image (currently fails)
-    //
-    func testBackgroundImage() {
-        //XCTAssertEqual(view.backgroundColor, UIColor(patternImage: UIImage(named:BACKGROUND_IMAGE_TITLE)!))
-    }
     
     // Test activity indicator animating
     //
